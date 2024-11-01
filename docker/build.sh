@@ -1,0 +1,1 @@
+docker build -f docker/game.dockerfile -t card_game_image .

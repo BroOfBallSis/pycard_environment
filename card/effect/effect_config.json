@@ -1,0 +1,88 @@
+{
+    "cause_damage": {
+        "target": "target",
+        "component": "character",
+        "attribute": "hp",
+        "function": "decrease",
+        "description": "造成{}点伤害",
+        "priority": 2
+    },
+    "cause_stun": {
+        "target": "target",
+        "component": "character",
+        "attribute": "rp",
+        "function": "decrease",
+        "description": "造成{}点硬直",
+        "priority": 2
+    },
+    "cause_delay": {
+        "target": "target",
+        "component": "character",
+        "attribute": "delay",
+        "function": "increase",
+        "description": "造成{}点延迟",
+        "priority": 2
+    },
+    "resist_damage": {
+        "target": "source",
+        "component": "character",
+        "attribute": "hp",
+        "function": "increase_resist",
+        "description": "抵抗{}点伤害",
+        "priority": 0
+    },
+    "resist_stun": {
+        "target": "source",
+        "component": "character",
+        "attribute": "rp",
+        "function": "increase_resist",
+        "description": "抵抗{}点硬直",
+        "priority": 0
+    },
+    "recover_hp": {
+        "target": "source",
+        "component": "character",
+        "attribute": "hp",
+        "function": "increase",
+        "description": "恢复{}点生命",
+        "priority": 3
+    },
+    "recover_ep": {
+        "target": "source",
+        "component": "character",
+        "attribute": "ep",
+        "function": "increase",
+        "description": "恢复{}点体力",
+        "priority": 3
+    },
+    "recover_rp": {
+        "target": "source",
+        "component": "character",
+        "attribute": "rp",
+        "function": "increase",
+        "description": "恢复{}点韧性",
+        "priority": 3
+    },
+    "reduce_delay": {
+        "target": "source",
+        "component": "character",
+        "attribute": "delay",
+        "function": "decrease",
+        "description": "减少{}点延迟",
+        "priority": 0
+    },
+    "draw_card": {
+        "target": "source",
+        "component": "card_manager",
+        "function": "draw_cards",
+        "description": "抽{}张牌",
+        "priority": 3
+    },
+    "gain_singleton_status": {
+        "target": "source",
+        "component": "character",
+        "function": "append_status",
+        "description": "{}",
+        "priority": 1
+    }
+}
