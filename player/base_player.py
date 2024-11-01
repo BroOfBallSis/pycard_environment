@@ -89,8 +89,6 @@ class BasePlayer:
         每回合对战开始时的操作
         """
         self.character.start_turn()
-        # 更新手牌信息
-        self.update_hand()
         self.policy.start_turn()
 
     def end_turn(self, base_delay):
@@ -126,6 +124,8 @@ class BasePlayer:
             # 根据角色的装备调整卡牌的属性
 
     def get_action_in_play_phase(self):
+        # 更新手牌信息
+        self.update_hand()
         # 拥有破绽, 跳过出牌
         flaws_status = self.character.has_status(CharacterStatusType.FLAWS)
         if flaws_status:

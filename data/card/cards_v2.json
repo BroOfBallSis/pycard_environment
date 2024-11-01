@@ -1,5 +1,5 @@
 {
-    "a00001": {
+    "b00001": {
         "name": "挥砍",
         "card_type": "wind",
         "is_base": true,
@@ -21,7 +21,7 @@
             }
         ]
     },
-    "a00002": {
+    "b00002": {
         "name": "翻滚",
         "card_type": "forest",
         "is_base": true,
@@ -48,12 +48,12 @@
             }
         ]
     },
-    "a00003": {
+    "b00003": {
         "name": "撤离",
         "card_type": "forest",
         "is_base": true,
         "ep_cost": 0,
-        "time_cost": 6,
+        "time_cost": 4,
         "conditions": [
             {
                 "condition_type": "maintain",
@@ -68,15 +68,18 @@
                 "condition_type": "true",
                 "effects": [
                     {
+                        "effect_type": "draw_card",
+                        "amount": 1
+                    },
+                    {
                         "effect_type": "recover_ep",
-                        "amount": 4,
-                        "immediate": true
+                        "amount": 4
                     }
                 ]
             }
         ]
     },
-    "a00004": {
+    "b00004": {
         "name": "长剑突刺",
         "card_type": "wind",
         "ep_cost": 3,
@@ -106,7 +109,7 @@
             }
         ]
     },
-    "a00005": {
+    "b00005": {
         "name": "先发制人",
         "card_type": "wind",
         "ep_cost": 4,
@@ -136,7 +139,7 @@
             }
         ]
     },
-    "a00006": {
+    "b00006": {
         "name": "长剑上挑",
         "card_type": "shadow",
         "ep_cost": 4,
@@ -161,7 +164,7 @@
             }
         ]
     },
-    "a00007": {
+    "b00007": {
         "name": "长剑竖劈",
         "card_type": "fire",
         "ep_cost": 7,
@@ -171,7 +174,7 @@
                 "condition_type": "switch",
                 "effects": [
                     {
-                        "effect_type": "reduce_delay",
+                        "effect_type": "recover_time",
                         "amount": 1,
                         "immediate": true
                     }
@@ -192,7 +195,7 @@
             }
         ]
     },
-    "a00008": {
+    "b00008": {
         "name": "保持戒备",
         "card_type": "forest",
         "ep_cost": 2,
@@ -218,7 +221,7 @@
             }
         ]
     },
-    "a00009": {
+    "b00009": {
         "name": "重整旗鼓",
         "card_type": "mountain",
         "ep_cost": 0,
@@ -243,7 +246,7 @@
             }
         ]
     },
-    "a00010": {
+    "b00010": {
         "name": "生命药剂",
         "card_type": "forest",
         "ep_cost": 0,
@@ -261,7 +264,7 @@
             }
         ]
     },
-    "a00011": {
+    "b00011": {
         "name": "便携手弩",
         "card_type": "thunder",
         "ep_cost": 1,

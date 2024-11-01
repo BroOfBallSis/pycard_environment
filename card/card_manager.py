@@ -50,7 +50,7 @@ class CardManager:
                 print(f"牌堆和弃牌堆为空, 结束抽牌")
                 break
         now_value = len(self.hand)
-        right_value_str = f"{now_value}(max)" if now_value == hand_limit else f"{now_value}"
+        right_value_str = f"{now_value} (max)" if now_value == hand_limit else f"{now_value}"
         self.logger.info(f"手牌数量: {old_value} ↑ {right_value_str}", 2)
 
     def discard_card(self, card) -> None:
@@ -60,7 +60,7 @@ class CardManager:
         if not card.consumable and not card.is_base:
             self.discard_pile.append(card)
         elif card.consumable:
-            print(f"\t{self.player.name}: 消耗 {card.name}")
+            self.logger.info(f"消耗 {card.name}", 2)
 
     def shuffle_discard_pile_into_deck(self) -> None:
         """将弃牌堆的牌洗牌并放入牌堆"""

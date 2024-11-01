@@ -44,10 +44,10 @@ class BaseCharacter:
         self.logger = self.player.logger if self.player else None
 
     def start_round(self):
-        self.ep.increase(self.ep.max_value)
-        self.rp.increase(self.rp.max_value)
+        self.ep.set_value(self.ep.max_value)
+        self.rp.set_value(self.rp.max_value)
         self.statuses = []
-        self.delay.decrease(self.delay.value)
+        self.delay.set_value(0)
 
     def start_turn(self):
         self.update_status()

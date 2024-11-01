@@ -1,8 +1,10 @@
 # 内存占用的调试
-import psutil
+# import psutil
 
 
 def print_memory_info():
+    return
+
     # 获取当前进程
     process = psutil.Process()
 

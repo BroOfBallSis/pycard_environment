@@ -14,7 +14,7 @@ class CharacterAttribute:
     def increase(self, amount: int):
         old_value = self.value
         self.value = min(self.value + amount, self.max_value)
-        right_value_str = f"{self.value}(max)" if self.value == self.max_value else f"{self.value}"
+        right_value_str = f"{self.value} (max)" if self.value == self.max_value else f"{self.value}"
         self.logger.info(f"{self.name}: {old_value} ↑ {right_value_str}", 2)
 
         # 不统计增加的值
@@ -54,7 +54,9 @@ class CharacterAttribute:
         self.resist_value = value
 
     def set_value(self, value: int):
+        old_value = self.value
         self.value = value
+        self.logger.info(f"{self.name}: {old_value} → {self.value}", 2)
 
     def __str__(self) -> str:
         return f"{self.name}:{self.value}/{self.max_value}"

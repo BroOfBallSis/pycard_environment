@@ -110,7 +110,7 @@ class SwordPolicy(BasePolicy):
             if self.player.posture != CardType.WIND:
                 priority_dict["长剑突刺"] = 6
             if self.player.posture != CardType.FIRE and character.rp.value > 2:
-                priority_dict["长剑竖劈"] = 20
+                priority_dict["长剑竖劈"] = 50
             if character.hp.max_value - character.hp.value >= 10 and character.rp.value > 2:
                 priority_dict["生命药剂"] = 6
             elif self.player.posture == CardType.FOREST and character.ep.value <= 8:
