@@ -47,12 +47,16 @@ class Battle:
                 self.start_turn()
 
                 # 出牌阶段
-                print(f"---------------- 出 牌 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
+                print(
+                    f"---------------- 出 牌 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
+                )
                 for player in self.player_list:
                     self.play_phase(player)
 
                 # 结算阶段
-                print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
+                print(
+                    f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
+                )
                 self.resolve_phase()
 
                 # 回合结束
