@@ -96,8 +96,8 @@ class BaseCharacter:
             status = CharacterStatus(self.player, CharacterStatusType.FLAWS, 1)
             self.statuses.append(status)
             self.logger.info(f"获得 {status}", 2)
+            self.logger.info(f"- 清空 延迟", 2)
             self.delay.set_value(0)
-            self.logger.info(f"清空 {self.delay.attribute_type.value}", 2)
 
     def append_status(self, status_type_str, layers=None):
         status_type_upper = status_type_str.upper()

@@ -78,7 +78,7 @@
         "time_cost": 3,
         "conditions": [
             {
-                "condition_type": "maintain",
+                "condition_type": "switch",
                 "effects": [
                     {
                         "effect_type": "draw_card",

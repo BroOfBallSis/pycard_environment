@@ -113,6 +113,6 @@ class SwordPolicy(BasePolicy):
                 priority_dict["长剑竖劈"] = 50
             if character.hp.max_value - character.hp.value >= 10 and character.rp.value > 2:
                 priority_dict["生命药剂"] = 6
-            elif self.player.posture == CardType.FOREST and character.ep.value <= 8:
+            elif character.ep.value <= 6:
                 priority_dict["撤离"] = 2
             self.update_available_hand(priority_dict)
