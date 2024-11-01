@@ -56,17 +56,12 @@
         "time_cost": 6,
         "conditions": [
             {
-                "condition_type": "maintain",
+                "condition_type": "true",
                 "effects": [
                     {
                         "effect_type": "gain_singleton_status",
                         "status": "withdraw"
-                    }
-                ]
-            },
-            {
-                "condition_type": "true",
-                "effects": [
+                    },
                     {
                         "effect_type": "recover_ep",
                         "amount": 4,
