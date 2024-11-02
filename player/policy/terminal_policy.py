@@ -1,4 +1,4 @@
-from utils.draw_text import color_text, center_text, clear_terminal
+from utils.draw_text import color_text, center_text, clear_terminal, display_help
 from character.character_define import CharacterStatusType
 from player.policy.base_policy import BasePolicy
 import copy
@@ -42,7 +42,7 @@ class TerminalPolicy(BasePolicy):
     def display_card_manager_with_command(self) -> str:
         # 使用 color_text 函数将命令显示为绿色
         card_manager_command_0 = f"{color_text('[q]', 'green')} " + center_text("查看牌堆", 12)
-        card_manager_command_1 = f"{color_text('[w]', 'green')} " + center_text("出牌记录", 12)
+        card_manager_command_1 = f"{color_text('[h]', 'green')} " + center_text("查看教程", 12)
         print(f"{card_manager_command_0} {card_manager_command_1}")
 
     def display_player(self, player):
@@ -81,6 +81,11 @@ class TerminalPolicy(BasePolicy):
                 # 检查用户是否想要查看手牌
                 if user_input.lower() == "q":
                     self.display_deck()
+                    continue  # 继续循环，等待下一个输入
+
+                # 检查用户是否想要查看教程
+                if user_input.lower() == "h":
+                    display_help()
                     continue  # 继续循环，等待下一个输入
 
                 # 尝试将输入转换为整数

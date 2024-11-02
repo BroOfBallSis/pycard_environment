@@ -32,8 +32,6 @@ class Battle:
 
     def main_loop(self):
         while not self.is_battle_over():
-            input(color_text("输入回车键继续……", "gray"))
-            clear_terminal()
 
             # 轮开始
             self.start_round()
@@ -65,6 +63,10 @@ class Battle:
             # 弃牌阶段
             for player in self.player_list:
                 self.discard_phase(player)
+
+            if not self.is_battle_over():
+                input(color_text("输入回车键继续……", "gray"))
+                clear_terminal()
 
         self.conclude_battle()
 

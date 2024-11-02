@@ -30,7 +30,7 @@ class SwordPolicy(BasePolicy):
                 card_name = self.player.card_manager.hand[hand_index].name
                 available_hand_str += f"{hand_index}:{card_name}({self.available_hand[hand_index]});\t"
 
-            print(f"sword_ai: {available_hand_str}")
+            # print(f"sword_ai: {available_hand_str}")
             total_priority = sum(self.available_hand.values())
             if total_priority == 0:
                 return random.choice(list(self.available_hand.keys()))
