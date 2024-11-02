@@ -1,6 +1,7 @@
 import unicodedata
 import os
 
+
 def display_help():
     help_str = """
 角色:
@@ -25,6 +26,7 @@ def display_help():
 - 即使是同时结算, 不同效果也有先后顺序, 一般的按照: 抵抗类 -> 状态类 -> 伤害类 -> 恢复类
     """
     print(help_str)
+
 
 def clear_terminal():
     # 检测操作系统并执行相应的清空命令

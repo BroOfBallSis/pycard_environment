@@ -3,8 +3,11 @@ class BasePolicy:
         self.player = player
         self.policy_context = policy_context
 
-    def action_in_play_phase(self):
-        raise NotImplementedError("子类必须实现 action_in_play_phase 方法")
+    def action(self, battle_info):
+        raise NotImplementedError("子类必须实现 action 方法")
+
+    def auto_discard_phase(self, battle_info):
+        pass
 
     def start_turn(self):
         pass

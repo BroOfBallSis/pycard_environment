@@ -4,15 +4,7 @@ from character.status.base_status import CharacterStatusType
 import time
 from utils.draw_text import color_text, clear_terminal
 from utils.debug import print_memory_info
-
-
-class BattlePhase(Enum):
-    INITIALIZATION = "initialization"
-    PLAY_PHASE = "play_phase"
-    RESOLVE_PHASE = "resolve_phase"
-    END_TURN = "end_turn"
-    DISCARD_PHASE = "discard_phase"
-    CONCLUDE = "conclude"
+from scene.scene_define import BattlePhase
 
 
 class Battle:
@@ -45,9 +37,8 @@ class Battle:
                 self.start_turn()
 
                 # 出牌阶段
-                print(
-                    f"---------------- 出 牌 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
-                )
+
+                self.current_phase = BattlePhase.PLAY_PHASE
                 for player in self.player_list:
                     self.play_phase(player)
 
@@ -55,12 +46,16 @@ class Battle:
                 print(
                     f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
                 )
+                self.current_phase = BattlePhase.RESOLVE_PHASE
                 self.resolve_phase()
 
                 # 回合结束
                 self.end_turn()
 
             # 弃牌阶段
+            input(color_text("输入回车键继续……", "gray"))
+            clear_terminal()
+            self.current_phase = BattlePhase.DISCARD_PHASE
             for player in self.player_list:
                 self.discard_phase(player)
 
@@ -87,7 +82,12 @@ class Battle:
             player.start_turn()
 
     def play_phase(self, player):
-        command = player.get_action_in_play_phase()
+        battle_info = {
+            "round_cnt": self.round_cnt,
+            "turn_cnt": self.turn_cnt,
+            "current_phase": self.current_phase,
+        }
+        command = player.get_action(battle_info)
         player.play_card_by_hand_index(command)
 
     def players_evaluate_and_update_status(self):
@@ -150,8 +150,23 @@ class Battle:
             player.end_turn(base_delay)
 
     def discard_phase(self, player):
-        pass
-        # 这里添加弃牌阶段的逻辑
+        battle_info = {
+            "round_cnt": self.round_cnt,
+            "turn_cnt": self.turn_cnt,
+            "current_phase": self.current_phase,
+        }
+        if player.policy_name == "terminal":
+            while True:
+                command = player.get_action(battle_info)
+                if command < 0:
+                    print(color_text(f"\t结束 弃牌阶段", "yellow"))
+                    break
+                else:
+                    player.discard_card_by_hand_index(command)
+                input(color_text("输入回车键继续……", "gray"))
+                clear_terminal()
+        else:
+            player.auto_discard_phase(battle_info)
 
     def is_battle_over(self):
         return not self.player1.character.is_alive() or not self.player2.character.is_alive()

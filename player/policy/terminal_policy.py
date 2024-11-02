@@ -2,23 +2,24 @@ from utils.draw_text import color_text, center_text, clear_terminal, display_hel
 from character.character_define import CharacterStatusType
 from player.policy.base_policy import BasePolicy
 import copy
+from scene.scene_define import BattlePhase
 
 
 class TerminalPolicy(BasePolicy):
     def __init__(self, player, policy_context):
         super().__init__(player, policy_context)
 
-    def action_in_play_phase(self):
+    def action(self, battle_info):
         # 返回出牌动作
-        hand_card_index = self.get_command_from_console()
+        hand_card_index = self.get_command_from_console(battle_info)
         return hand_card_index
 
-    def display_hand(self) -> str:
+    def display_hand(self, current_phase) -> str:
         hand_str = []
         raw_hand = self.player.card_manager.hand
         for index, card in enumerate(raw_hand):
             # 根据体力显示能否打出卡牌
-            if self.player.character.ep.value < card.ep_cost.real_value:
+            if current_phase == BattlePhase.PLAY_PHASE and self.player.character.ep.value < card.ep_cost.real_value:
                 index_color = "gray"
             else:
                 index_color = "green"
@@ -41,8 +42,8 @@ class TerminalPolicy(BasePolicy):
 
     def display_card_manager_with_command(self) -> str:
         # 使用 color_text 函数将命令显示为绿色
-        card_manager_command_0 = f"{color_text('[q]', 'green')} " + center_text("查看牌堆", 12)
-        card_manager_command_1 = f"{color_text('[h]', 'green')} " + center_text("查看教程", 12)
+        card_manager_command_0 = f"{color_text('[q]', 'green')} {center_text('查看牌堆', 12)}"
+        card_manager_command_1 = f"{color_text('[h]', 'green')} {center_text('查看教程', 12)}"
         print(f"{card_manager_command_0} {card_manager_command_1}")
 
     def display_player(self, player):
@@ -63,19 +64,30 @@ class TerminalPolicy(BasePolicy):
         if player.character.statuses:
             print(f"  ∟ 状态: {', '.join(str(statu) for statu in player.character.statuses)}")
 
-    def get_command_from_console(self) -> int:
+    def get_command_from_console(self, battle_info) -> int:
         """
         从命令行获取出牌命令
 
         :return: 选择的手牌索引
         """
+        current_phase = battle_info["current_phase"]
+        current_phase_str = current_phase.value
+        if current_phase == BattlePhase.PLAY_PHASE:
+            current_phase_str = color_text(current_phase_str, "green")
+        elif current_phase == BattlePhase.DISCARD_PHASE:
+            current_phase_str = color_text(current_phase_str, "yellow")
+        print(
+            f"---------------- {current_phase_str} ( 第 {battle_info['round_cnt']} 轮 - 第 {battle_info['turn_cnt']} 回 合 )----------------"
+        )
         self.display_player(self.player)
         self.display_player(self.player.opponent)
         self.display_card_manager_with_command()
-        self.display_hand()
+        self.display_hand(current_phase)
         while True:
             try:
                 # 获取用户输入
+                if current_phase == BattlePhase.DISCARD_PHASE:
+                    print(f"{color_text('[e]', 'green')} {center_text('结束弃牌', 12)}")
                 user_input = input("请输入指令: ")
 
                 # 检查用户是否想要查看手牌
@@ -88,13 +100,17 @@ class TerminalPolicy(BasePolicy):
                     display_help()
                     continue  # 继续循环，等待下一个输入
 
+                # 检查用户是否想要查看教程
+                if user_input.lower() == "e" and current_phase == BattlePhase.DISCARD_PHASE:
+                    return -1
+
                 # 尝试将输入转换为整数
                 hand_index = int(user_input)
 
                 temp_hand = self.player.card_manager.hand
                 if 0 <= hand_index < len(temp_hand):
                     card_ep_cost = temp_hand[hand_index].ep_cost.real_value
-                    if card_ep_cost > self.player.character.ep.value:
+                    if current_phase == BattlePhase.PLAY_PHASE and card_ep_cost > self.player.character.ep.value:
                         print(
                             color_text(
                                 f"\t没有足够的体力(体力:{self.player.character.ep.value}, 费用:{card_ep_cost}), 请重新输入",

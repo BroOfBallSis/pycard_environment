@@ -16,12 +16,24 @@ class SwordPolicy(BasePolicy):
             if card_ep_cost <= self.player.character.ep.value:
                 self.available_hand[i] = 0
 
+    def auto_discard_phase(self, battle_info):
+        discard_cnt = 0
+        temp_card = []
+        for i in range(len(self.player.card_manager.hand)):
+            card_id = self.player.card_manager.hand[i].card_id
+            if card_id in temp_card:
+                self.player.card_manager.discard_card_by_hand_index(i)
+                discard_cnt += 1
+            else:
+                temp_card.append(card_id)
+        self.player.logger.info(f"弃置 {discard_cnt} 张手牌", 1)
+
     def update_available_hand(self, priority_dict):
         for hand_index in self.available_hand:
             card_name = self.player.card_manager.hand[hand_index].name
             self.available_hand[hand_index] = max(self.available_hand[hand_index], priority_dict.get(card_name, 0))
 
-    def action_in_play_phase(self):
+    def action(self, battle_info):
         self.get_available_hand()
         self.get_priority_based_on_scenario()
         if self.available_hand:

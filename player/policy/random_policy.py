@@ -6,7 +6,7 @@ class RandomPolicy(BasePolicy):
     def __init__(self, player, policy_context):
         super().__init__(player, policy_context)
 
-    def action_in_play_phase(self):
+    def action(self, battle_info):
         available_hand_index = []
         # 获取当前体力可用的手牌索引
         for i in range(len(self.player.card_manager.hand)):

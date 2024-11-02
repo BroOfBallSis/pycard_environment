@@ -53,7 +53,7 @@ class CardManager:
         right_value_str = f"{now_value} (max)" if now_value == hand_limit else f"{now_value}"
         self.logger.info(f"手牌数量: {old_value} ↑ {right_value_str}", 2)
 
-    def discard_card(self, card) -> None:
+    def discard_played_card(self, card) -> None:
         """将卡牌从手牌移到弃牌堆"""
         if not card.is_base and card in self.hand:
             self.hand.remove(card)
@@ -61,6 +61,20 @@ class CardManager:
             self.discard_pile.append(card)
         elif card.consumable:
             self.logger.info(f"消耗 {card.name}", 2)
+
+    def discard_card_by_hand_index(self, hand_index) -> None:
+        """将卡牌从手牌移到弃牌堆"""
+        if 0 <= hand_index < len(self.hand):
+            card = self.hand[hand_index]
+            if card.is_base:
+                self.logger.info(f"无法弃置 '基础' 卡牌: {card.name}")
+            else:
+                self.hand.remove(card)
+                self.discard_pile.append(card)
+                if self.player.policy_name == "terminal":
+                    self.logger.info(f"弃置: {card.name}")
+        else:
+            print(color_text(f"\t无效的索引, 请重新输入", "yellow"))
 
     def shuffle_discard_pile_into_deck(self) -> None:
         """将弃牌堆的牌洗牌并放入牌堆"""

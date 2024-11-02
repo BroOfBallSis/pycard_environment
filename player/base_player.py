@@ -11,6 +11,7 @@ from player.policy.policy_define import PolicyFactory
 import copy
 from utils.logger import Logger
 import gc
+from scene.scene_define import BattlePhase
 
 
 class BasePlayer:
@@ -27,6 +28,7 @@ class BasePlayer:
         self.camp = camp
         policy_context = None
         self.policy = PolicyFactory.create_policy(self, policy, policy_context)
+        self.policy_name = policy
         self.opponent = None
         self.scene = scene
         self.logger = Logger(self.name)
@@ -54,6 +56,18 @@ class BasePlayer:
             self.current_card = self.card_manager.hand[hand_index]
         else:
             raise IndexError("无效的手牌索引")
+
+    def discard_card_by_hand_index(self, hand_index) -> BaseCard:
+        """
+        根据手牌索引弃牌
+
+        :param hand_index: 手牌索引
+        :return: 出牌的卡牌实例
+        """
+        if 0 <= hand_index < len(self.card_manager.hand):
+            self.card_manager.discard_card_by_hand_index(hand_index)
+        else:
+            print(color_text(f"\t无效的索引, 请重新输入", "yellow"))
 
     def resolve_card_effect(self, context):
         """
@@ -97,7 +111,7 @@ class BasePlayer:
         """
         if self.current_card:
             # 弃牌
-            self.card_manager.discard_card(self.current_card)
+            self.card_manager.discard_played_card(self.current_card)
             # 支付体力
             self.character.ep.decrease(self.current_card.ep_cost.real_value)
             # 计算延迟
@@ -123,7 +137,8 @@ class BasePlayer:
             # 根据角色状态调整卡牌的属性
             # 根据角色的装备调整卡牌的属性
 
-    def get_action_in_play_phase(self):
+    def get_action(self, battle_info):
+        current_phase = battle_info["current_phase"]
         # 更新手牌信息
         self.update_hand()
         # 拥有破绽, 跳过出牌
@@ -133,21 +148,28 @@ class BasePlayer:
             return -1
 
         # 通过策略获取出牌索引
-        hand_index = self.policy.action_in_play_phase()
+        hand_index = self.policy.action(battle_info)
 
-        # 检查出牌索引是否合法
-        if isinstance(hand_index, int) and 0 <= hand_index < len(self.card_manager.hand):
-            card_ep_cost = self.card_manager.hand[hand_index].ep_cost.real_value
+        if current_phase == BattlePhase.PLAY_PHASE:
+            # 检查出牌索引是否合法
+            if isinstance(hand_index, int) and 0 <= hand_index < len(self.card_manager.hand):
+                card_ep_cost = self.card_manager.hand[hand_index].ep_cost.real_value
 
-            # 检查是否有足够的体力
-            if card_ep_cost > self.character.ep.value:
-                print(color_text(f"\t{self.name} 体力不足, 视为打出 '破绽'", "red"))
+                # 检查是否有足够的体力
+                if card_ep_cost > self.character.ep.value:
+                    print(color_text(f"\t{self.name} 体力不足, 视为打出 '破绽'", "red"))
+                    return -1
+
+                # 合法的出牌索引
+                return hand_index
+            else:
+                print(color_text(f"\t{self.name} 非法动作, 视为打出 '破绽'", "red"))
                 return -1
-
-            return hand_index
         else:
-            print(color_text(f"\t{self.name} 非法动作, 视为打出 '破绽'", "red"))
-            return -1
+            return hand_index
+
+    def auto_discard_phase(self, battle_info):
+        self.policy.auto_discard_phase(battle_info)
 
     def __str__(self) -> str:
         """
