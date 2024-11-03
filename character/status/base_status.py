@@ -33,13 +33,15 @@ class CharacterStatus:
             self.logger.info(f"- 恢复 韧性", 2)
             self.player.character.rp.set_value(self.player.character.rp.max_value)
             if self.player.opponent.character.delay.value > 0:
-                self.logger.info(f"- 清空 延迟", 2)
+                self.logger.info(f"- 对手清空 延迟", 2)
                 self.player.opponent.character.delay.set_value(0)
-        pass
 
     def on_trigger(self) -> None:
         """当状态被触发时调用"""
-        pass
+        if self.status_type == CharacterStatusType.SLOW:
+            self.logger.info(f"{self}: 开始阶段 增加 1点延迟", 2)
+            self.player.character.delay.increase(1)
+            self.decrease(1)
 
     def __str__(self) -> str:
         if self.layers > 0:

@@ -39,6 +39,13 @@ class CharacterAttribute:
         self.value = self.value - real_amount
         self.logger.info(f"{self.name}: {old_value} ↓ {self.value}", 2)
 
+        if self.attribute_type == CharacterAttributeType.RP and self.value < 0:
+            self.logger.info(f"负数韧性 转化为 缓慢 ", 2)
+            layers = -self.player.character.rp.value
+            self.set_value(0)
+            self.player.character.append_status("slow", layers)
+
+        # 回合统计
         if self.attribute_type in self.player.round_info:
             self.player.round_info[self.attribute_type] -= real_amount
         else:

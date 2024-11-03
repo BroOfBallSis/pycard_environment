@@ -39,6 +39,7 @@ class Effect:
         self.end = context.get("end", False)
         self.status = context.get("status", None)
         self.layers = context.get("layers", -1)
+        self.sub_effect = None
 
         # config: 取决于效果类型
         config = effect_config.get(self.effect_type.value)
@@ -88,6 +89,14 @@ class Effect:
                 return False
 
         print(f"\t{source.name} -> {target_object.name}: {self}")
+
+        # 状态类效果:组件(角色)->方法
+        if self.status and self.sub_effect:
+            function_object = getattr(component_object, self.effect_function, None)
+            if function_object:
+                function_object(self.status, self.sub_effect)
+            else:
+                raise ValueError(f"Does not have function {function_object}")
         # 状态类效果:组件(角色)->方法
         if self.status:
             function_object = getattr(component_object, self.effect_function, None)
@@ -133,6 +142,8 @@ class Effect:
             attribute_object = getattr(component_object, self.effect_attribute, None)
             if self.amount >= attribute_object.value:
                 return True
+        if self.effect_type == EffectType.DETONATE_STATUS:
+            return component_object.has_status(self.status_type)
         return False
 
     def __str__(self) -> str:
@@ -141,6 +152,8 @@ class Effect:
             effect_str = self.description.format(self.status_type.value)
         elif self.effect_type == EffectType.GAIN_STATUS:
             effect_str = self.description.format(self.layers, self.status_type.value)
+        elif self.effect_type == EffectType.DETONATE_STATUS:
+            effect_str = self.description.format(self.status_type.value, self.sub_effect)
         elif placeholder_count == 1:
             effect_str = self.description.format(self.amount)
         else:

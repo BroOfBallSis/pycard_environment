@@ -40,3 +40,6 @@ class EffectType(Enum):
 
     # 获得状态
     GAIN_STATUS = "gain_status"  # 例如：中毒、增益等
+
+    # 引爆状态
+    DETONATE_STATUS = "detonate_status"

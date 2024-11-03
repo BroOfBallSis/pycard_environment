@@ -19,13 +19,16 @@ class SwordPolicy(BasePolicy):
     def auto_discard_phase(self, battle_info):
         discard_cnt = 0
         temp_card = []
+        to_discard_index = []
         for i in range(len(self.player.card_manager.hand)):
             card_id = self.player.card_manager.hand[i].card_id
             if card_id in temp_card:
-                self.player.card_manager.discard_card_by_hand_index(i)
+                to_discard_index.append(i)
                 discard_cnt += 1
             else:
                 temp_card.append(card_id)
+        for index in to_discard_index:
+            self.player.card_manager.discard_card_by_hand_index(index)
         self.player.logger.info(f"弃置 {discard_cnt} 张手牌", 1)
 
     def update_available_hand(self, priority_dict):

@@ -1,6 +1,7 @@
 # /character/base_character.py
 
 from data.character import character_library_instance
+from data.item import item_library_instance
 from typing import Dict, Any, List
 from character.status.base_status import CharacterStatus, CharacterStatusType
 from character.character_attribute import CharacterAttribute, CharacterAttributeType
@@ -16,6 +17,8 @@ class BaseCharacter:
         rp: int,
         delay: int,
         hand_limit: int,
+        main_weapon,
+        sub_weapon,
         items: List[str],
         cards: List[str],
     ):
@@ -38,10 +41,24 @@ class BaseCharacter:
         self.rp = CharacterAttribute(self.player, CharacterAttributeType.RP, rp)
         self.delay = CharacterAttribute(self.player, CharacterAttributeType.DELAY, delay, 0)
         self.hand_limit = CharacterAttribute(self.player, CharacterAttributeType.HANDLIMIT, 10, hand_limit)
+        self.main_weapon = main_weapon
+        self.sub_weapon = sub_weapon
         self.items = items  # 道具列表
         self.cards = cards  # 卡牌列表
         self.statuses = []  # 状态列表
+        self.new_statuses = []  # 状态列表
         self.logger = self.player.logger if self.player else None
+        self._init_cards()
+
+    def _init_cards(self):
+        self._add_cards_from_source(self.main_weapon)
+        self._add_cards_from_source(self.sub_weapon)
+        for item in self.items:
+            self._add_cards_from_source(item)
+
+    def _add_cards_from_source(self, source_id):
+        item_info = item_library_instance.get_item_info(source_id)
+        self.cards.extend(item_info.get("cards", []))
 
     def start_round(self):
         self.ep.set_value(self.ep.max_value)
@@ -50,7 +67,7 @@ class BaseCharacter:
         self.delay.set_value(0)
 
     def start_turn(self):
-        self.update_status()
+        self.start_turn_update_status()
         for attr in [self.hp, self.ep, self.rp, self.delay]:
             attr.set_resist(0)
 
@@ -110,12 +127,35 @@ class BaseCharacter:
             self.statuses.append(status)
             self.logger.info(f"获得 {status}", 2)
 
-    def update_status(self):
+    def detonate_status(self, status_type_str, sub_effect=None):
+        status_type_upper = status_type_str.upper()
+
+        if status_type_upper in CharacterStatusType.__members__:
+            status_type = CharacterStatusType[status_type_upper]
+            to_remove_status = None
+            for status in self.statuses:
+                if status.status_type == status_type:
+                    to_remove_status = status
+                    while status.layers > 0:
+                        status.on_trigger()
+                        if sub_effect:
+                            sub_effect.execute(self.player.opponent, self.player)
+
+            if to_remove_status:
+                self.logger.info(f"移除 {to_remove_status}", 2)
+                to_remove_status.on_remove()
+                self.statuses.remove(to_remove_status)
+
+    def start_turn_update_status(self):
+        to_remove_statuses = []
         for status in self.statuses:
+            status.on_trigger()
             if status.layers <= 0:
-                self.statuses.remove(status)
+                to_remove_statuses.append(status)
                 self.logger.info(f"移除 {status}", 2)
                 status.on_remove()
+        for status in to_remove_statuses:
+            self.statuses.remove(status)
 
     @classmethod
     def from_json(cls, player, json_data: Dict[str, Any]) -> "BaseCharacter":
@@ -134,7 +174,9 @@ class BaseCharacter:
             hand_limit = json_data["hand_limit"]
             items = json_data.get("items", [])
             cards = json_data.get("cards", [])
-            return cls(player, name, hp, ep, rp, delay, hand_limit, items, cards)
+            main_weapon = json_data.get("main_weapon")
+            sub_weapon = json_data.get("sub_weapon")
+            return cls(player, name, hp, ep, rp, delay, hand_limit, main_weapon, sub_weapon, items, cards)
         except KeyError as e:
             raise ValueError(f"Missing key in JSON data: {e}")
 

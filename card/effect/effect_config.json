@@ -84,5 +84,12 @@
         "function": "append_status",
         "description": "{}",
         "priority": 1
+    },
+    "detonate_status": {
+        "target": "target",
+        "component": "character",
+        "function": "detonate_status",
+        "description": "引爆{}:每层{}",
+        "priority": 4
     }
 }
