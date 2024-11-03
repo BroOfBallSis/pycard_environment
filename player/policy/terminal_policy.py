@@ -51,7 +51,7 @@ class TerminalPolicy(BasePolicy):
             "无": "gray",
             "风": "cyan",
             "火": "red",
-            "山": "brown",  # 或者 "green"
+            "山": "brown",
             "林": "green",
             "阴": "purple",
             "雷": "yellow",

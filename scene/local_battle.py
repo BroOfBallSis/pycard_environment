@@ -37,15 +37,11 @@ class Battle:
                 self.start_turn()
 
                 # 出牌阶段
-
                 self.current_phase = BattlePhase.PLAY_PHASE
                 for player in self.player_list:
                     self.play_phase(player)
 
                 # 结算阶段
-                print(
-                    f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
-                )
                 self.current_phase = BattlePhase.RESOLVE_PHASE
                 self.resolve_phase()
 
@@ -53,13 +49,12 @@ class Battle:
                 self.end_turn()
 
             # 弃牌阶段
-            input(color_text("输入回车键继续……", "gray"))
-            clear_terminal()
-            self.current_phase = BattlePhase.DISCARD_PHASE
-            for player in self.player_list:
-                self.discard_phase(player)
-
             if not self.is_battle_over():
+                input(color_text("输入回车键继续……", "gray"))
+                clear_terminal()
+                self.current_phase = BattlePhase.DISCARD_PHASE
+                for player in self.player_list:
+                    self.discard_phase(player)
                 input(color_text("输入回车键继续……", "gray"))
                 clear_terminal()
 
@@ -121,6 +116,7 @@ class Battle:
             self.resolve_synchronous_card_effects()
 
     def resolve_phase(self):
+        print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
         for player in self.player_list:
             print(f"{player.name} : {player.current_card}")
 
