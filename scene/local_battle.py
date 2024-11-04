@@ -8,9 +8,9 @@ from scene.scene_define import BattlePhase
 
 
 class Battle:
-    def __init__(self):
-        self.player1 = BasePlayer("player1", 1, "ch00001", "terminal", self)
-        self.player2 = BasePlayer("player2", 2, "ch00001", "sword_ai", self)
+    def __init__(self, characters):
+        self.player1 = BasePlayer("player1", 1, characters[0], "terminal", self)
+        self.player2 = BasePlayer("player2", 2, characters[1], "sword_ai", self)
         self.player_list = [self.player1, self.player2]
         self.player1.opponent = self.player2
         self.player2.opponent = self.player1
