@@ -18,17 +18,20 @@ class SwordPolicy(BasePolicy):
 
     def auto_discard_phase(self, battle_info):
         discard_cnt = 0
-        temp_card = []
-        to_discard_index = []
-        for i in range(len(self.player.card_manager.hand)):
-            card_id = self.player.card_manager.hand[i].card_id
-            if card_id in temp_card:
-                to_discard_index.append(i)
+        exist_card_ids = set()  # 使用集合提高查找效率
+        card_index = 0
+
+        while card_index < len(self.player.card_manager.hand):
+            card_id = self.player.card_manager.hand[card_index].card_id
+            if card_id in exist_card_ids:
+                # 弃置重复的卡牌
+                self.player.card_manager.discard_card_by_hand_index(card_index)
                 discard_cnt += 1
+                # 不增加 card_index，继续检查当前索引的卡牌
             else:
-                temp_card.append(card_id)
-        for index in to_discard_index:
-            self.player.card_manager.discard_card_by_hand_index(index)
+                exist_card_ids.add(card_id)  # 使用集合的 add 方法
+                card_index += 1  # 只有在没有弃置时才增加索引
+
         self.player.logger.info(f"弃置 {discard_cnt} 张手牌", 1)
 
     def update_available_hand(self, priority_dict):

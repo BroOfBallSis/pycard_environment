@@ -43,8 +43,8 @@ class BaseCharacter:
         self.hand_limit = CharacterAttribute(self.player, CharacterAttributeType.HANDLIMIT, 10, hand_limit)
         self.main_weapon = main_weapon
         self.sub_weapon = sub_weapon
-        self.items = items  # 道具列表
-        self.cards = cards  # 卡牌列表
+        self.items = items[::]  # 道具列表
+        self.cards = cards[::]  # 卡牌列表
         self.statuses = []  # 状态列表
         self.new_statuses = []  # 状态列表
         self.logger = self.player.logger if self.player else None
