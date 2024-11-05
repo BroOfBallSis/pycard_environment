@@ -30,10 +30,10 @@ class CharacterStatus:
     def on_remove(self) -> None:
         """当状态被移除时调用"""
         if self.status_type == CharacterStatusType.BREAK:
-            self.logger.info(f"\t移除 打断: 恢复韧性", 2)
+            self.logger.info(f"移除 打断 → 恢复韧性", 2)
             self.player.character.rp.set_value(self.player.character.rp.max_value)
             if self.player.opponent.character.delay.value > 0:
-                self.logger.info(f"\t移除 打断: 清空对手延迟", 2)
+                self.logger.info(f"移除 打断 → 清空对手延迟", 2)
                 self.player.opponent.character.delay.set_value(0)
 
     def on_trigger(self) -> None:
