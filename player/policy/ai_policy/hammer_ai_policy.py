@@ -132,7 +132,10 @@ class HammerPolicy(BasePolicy):
             priority_dict["顶盾撞击"] = 10
         if character.ep.value <= 6:
             priority_dict["撤离"] = 5
-        if self.player.opponent.character.has_status(CharacterStatusType.SLOW) or self.player.opponent.character.rp.value <= 2:
+        if (
+            self.player.opponent.character.has_status(CharacterStatusType.SLOW)
+            or self.player.opponent.character.rp.value <= 2
+        ):
             priority_dict["下颚粉碎"] = 50
 
         self.update_available_hand(priority_dict)

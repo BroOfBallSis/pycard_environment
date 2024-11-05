@@ -4,6 +4,7 @@ from utils.draw_text import color_text, clear_terminal
 from scene.scene_define import BattlePhase
 from card.base_card import BaseCard
 
+
 class TutorialBattle2(BaseBattle):
     def __init__(self, characters):
         self.player1 = BasePlayer("player1", 1, "th00001", "terminal", self)
@@ -35,17 +36,25 @@ class TutorialBattle2(BaseBattle):
                 self.current_phase = BattlePhase.PLAY_PHASE
                 if self.round_cnt == 1 and self.turn_cnt == 1:
                     print(f"\t{color_text('教程:','yellow')} \"先手\"条件, 要求 卡牌在对手卡牌之前的时刻结算")
-                    print(f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"先发制人\"")
+                    print(
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"先发制人\""
+                    )
                 if self.round_cnt == 1 and self.turn_cnt == 2:
                     print(f"\t{color_text('教程:','yellow')} 角色的 架势 记录了角色上一回合出牌的 卡牌类型")
                     print(f"\t{color_text('教程:','yellow')} \"切换\"条件, 要求 卡牌类型 与 你当前的架势 不同")
-                    print(f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"翻滚\"")
+                    print(
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"翻滚\""
+                    )
                 if self.round_cnt == 1 and self.turn_cnt == 3:
                     print(f"\t{color_text('教程:','yellow')} 为了展示 \"撤离\" 的效果, 手动将 你的体力 设置为 0")
                     self.player1.character.ep.set_value(0)
                     print(f"\t{color_text('教程:','yellow')} 在 没有体力 或 没有手牌 的情况下, 可以考虑打出 \"撤离\"")
-                    print(f"\t{color_text('教程:','yellow')} \"挥砍\", \"翻滚\", \"撤离\" 都是 基础卡牌, 会常驻在手牌中")
-                    print(f"\t{color_text('教程:','yellow')} {color_text('输入 [2] 并按回车键','yellow')}, 打出手牌中的 \"撤离\"")
+                    print(
+                        f"\t{color_text('教程:','yellow')} \"挥砍\", \"翻滚\", \"撤离\" 都是 基础卡牌, 会常驻在手牌中"
+                    )
+                    print(
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [2] 并按回车键','yellow')}, 打出手牌中的 \"撤离\""
+                    )
                 if self.round_cnt == 2 and self.turn_cnt == 1:
                     print(f"\t{color_text('教程:','yellow')} 你已经完成了当前教程的内容, 请尝试击败对手")
 
@@ -69,7 +78,6 @@ class TutorialBattle2(BaseBattle):
                     self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00002"))
                     self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00003"))
 
-
                 # 回合结束
                 self.end_turn()
                 if self.round_cnt == 1 and self.turn_cnt == 1:
@@ -78,15 +86,18 @@ class TutorialBattle2(BaseBattle):
                     print(f"\t{color_text('教程:','yellow')} 满足 \"切换\"条件 后, \"翻滚\" 使你获得了 \"闪避\"状态")
                     print(f"\t{color_text('教程:','yellow')} \"闪避\"状态下, 角色不再受到 对手出牌 的效果结算")
                 if self.round_cnt == 1 and self.turn_cnt == 3:
-                    print(f"\t{color_text('教程:','yellow')} \"撤离\" 使你获得了 \"撤离\"状态, \"撤离\"状态 包含了闪避的效果")
+                    print(
+                        f"\t{color_text('教程:','yellow')} \"撤离\" 使你获得了 \"撤离\"状态, \"撤离\"状态 包含了闪避的效果"
+                    )
                     print(f"\t{color_text('教程:','yellow')} 任意角色进入 \"撤离\"状态 , 双方进入 弃牌阶段,")
-
 
             # 弃牌阶段
             if not self.is_battle_over():
                 input(color_text("输入回车键继续……", "gray"))
                 clear_terminal()
-                print(f"\t{color_text('教程:','yellow')} {color_text('输入 [e] 并按回车键','yellow')}, 结束 弃牌阶段, 开始新一轮战斗")
+                print(
+                    f"\t{color_text('教程:','yellow')} {color_text('输入 [e] 并按回车键','yellow')}, 结束 弃牌阶段, 开始新一轮战斗"
+                )
                 self.current_phase = BattlePhase.DISCARD_PHASE
                 for player in self.player_list:
                     self.discard_phase(player)
@@ -98,7 +109,6 @@ class TutorialBattle2(BaseBattle):
                 self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00005"))
                 self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00006"))
                 self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00007"))
-
 
         self.conclude_battle()
 

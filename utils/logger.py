@@ -1,5 +1,6 @@
 import logging
 
+
 class Logger:
     _loggers = {}
 
@@ -12,21 +13,21 @@ class Logger:
             return instance
 
     def __init__(self, player_name):
-        if hasattr(self, 'initialized'):
+        if hasattr(self, "initialized"):
             return
         self.player_name = player_name
         self.logger = logging.getLogger(player_name)
-        
+
         # 移除已经存在的处理程序
         if self.logger.hasHandlers():
             self.logger.handlers.clear()
-        
+
         handler = logging.StreamHandler()
         formatter = logging.Formatter(f"%(message)s")  # 只格式化消息部分
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
         self.logger.setLevel(logging.INFO)
-        
+
         self.initialized = True
 
     def info(self, message, level=0):
@@ -48,6 +49,7 @@ class Logger:
 
     def critical(self, message):
         self.logger.critical(message)
+
 
 # 示例用法
 if __name__ == "__main__":

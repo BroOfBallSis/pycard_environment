@@ -133,10 +133,10 @@ class BasePlayer:
 
             # 根据延迟调整卡牌的时间消耗
             card.time_cost.increase_mod(self.character.delay.value)
-            
+
             # 根据角色状态调整卡牌的属性
             # 根据角色的装备调整卡牌的属性
-            
+
         if self.current_card:
             self.current_card.clear_mod()
 

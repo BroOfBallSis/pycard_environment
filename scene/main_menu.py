@@ -1,5 +1,6 @@
 from utils.draw_text import color_text, clear_terminal
 
+
 class MenuItem:
     def __init__(self, text, action, *args, **kwargs):
         self.text = text
@@ -36,7 +37,7 @@ class Menu:
             clear_terminal()
             return self.items[int(choice) - 1].execute(game)
         elif choice == str(len(self.items) + 1):
-            if self.parent :
+            if self.parent:
                 clear_terminal()
                 return game.navigate_to(self.parent)
             elif self.name != "主菜单":
@@ -74,6 +75,6 @@ menu_dict = {
         "开始对战",
         [
             MenuItem("开始对战", "start_battle"),
-        ]
+        ],
     ),
 }

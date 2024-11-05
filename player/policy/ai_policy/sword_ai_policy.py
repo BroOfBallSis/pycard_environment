@@ -131,5 +131,5 @@ class SwordPolicy(BasePolicy):
                 priority_dict["生命药剂"] = 6
             elif character.ep.value <= 6:
                 priority_dict["撤离"] = 2
-            
+
         self.update_available_hand(priority_dict)
