@@ -51,7 +51,7 @@ class SwordPolicy(BasePolicy):
             # print(f"sword_ai: {available_hand_str}")
             total_priority = sum(self.available_hand.values())
             if total_priority == 0:
-                raise ValueError("错误的 get_priority_based_on_scenario 方法")
+                return random.choice(list(self.available_hand.keys()))
 
             # 按照概率随机采样
             weights = [self.available_hand[i] / total_priority for i in self.available_hand]
