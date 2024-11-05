@@ -26,7 +26,7 @@
         "card_type": "forest",
         "is_base": true,
         "ep_cost": 4,
-        "time_cost": 3,
+        "time_cost": 4,
         "conditions": [
             {
                 "condition_type": "switch",
