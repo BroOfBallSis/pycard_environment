@@ -25,7 +25,7 @@
         "name": "格挡",
         "card_type": "mountain",
         "is_base": true,
-        "ep_cost": 2,
+        "ep_cost": 5,
         "time_cost": 5,
         "conditions": [
             {
@@ -105,7 +105,7 @@
     "b00005": {
         "name": "侧身打击",
         "card_type": "shadow",
-        "ep_cost": 5,
+        "ep_cost": 4,
         "time_cost": 5,
         "conditions": [
             {
@@ -161,8 +161,8 @@
     "b00007": {
         "name": "下颚粉碎",
         "card_type": "thunder",
-        "ep_cost": 5,
-        "time_cost": 5,
+        "ep_cost": 6,
+        "time_cost": 6,
         "conditions": [
             {
                 "condition_type": "true",
@@ -176,7 +176,7 @@
                         "status": "slow",
                         "sub_effect": {
                             "effect_type": "cause_damage",
-                            "amount": 1
+                            "amount": 2
                         }
                     }
                 ]

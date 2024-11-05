@@ -5,6 +5,7 @@ from player.policy.random_policy import RandomPolicy
 from player.policy.rl_policy import RLPolicy
 from player.policy.terminal_policy import TerminalPolicy
 from player.policy.ai_policy.sword_ai_policy import SwordPolicy
+from player.policy.ai_policy.hammer_ai_policy import HammerPolicy
 
 
 class PolicyType(Enum):
@@ -14,6 +15,7 @@ class PolicyType(Enum):
     RL = RLPolicy
     TERMINAL = TerminalPolicy
     SWORD_AI = SwordPolicy
+    HAMMER_AI = HammerPolicy
 
 
 class PolicyFactory:

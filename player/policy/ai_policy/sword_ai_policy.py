@@ -51,7 +51,7 @@ class SwordPolicy(BasePolicy):
             # print(f"sword_ai: {available_hand_str}")
             total_priority = sum(self.available_hand.values())
             if total_priority == 0:
-                return random.choice(list(self.available_hand.keys()))
+                raise ValueError("错误的 get_priority_based_on_scenario 方法")
 
             # 按照概率随机采样
             weights = [self.available_hand[i] / total_priority for i in self.available_hand]
@@ -80,7 +80,6 @@ class SwordPolicy(BasePolicy):
             if character.rp.value <= 2:
                 priority_dict["保持戒备"] = 6
                 priority_dict["重整旗鼓"] = 4
-            self.update_available_hand(priority_dict)
 
         # 有延迟时的出牌
         elif character.delay.value > 0:
@@ -103,7 +102,6 @@ class SwordPolicy(BasePolicy):
                 priority_dict["翻滚"] = 4
             elif character.ep.value <= 8:
                 priority_dict["撤离"] = 6
-            self.update_available_hand(priority_dict)
 
         # 没有延迟的出牌
         else:
@@ -133,4 +131,5 @@ class SwordPolicy(BasePolicy):
                 priority_dict["生命药剂"] = 6
             elif character.ep.value <= 6:
                 priority_dict["撤离"] = 2
-            self.update_available_hand(priority_dict)
+            
+        self.update_available_hand(priority_dict)

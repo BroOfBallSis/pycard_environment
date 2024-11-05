@@ -4,7 +4,7 @@ import random
 from character.character_define import CharacterStatusType
 
 
-class SwordPolicy(BasePolicy):
+class HammerPolicy(BasePolicy):
     def __init__(self, player, policy_context):
         super().__init__(player, policy_context)
         self.available_hand = {}
@@ -80,7 +80,6 @@ class SwordPolicy(BasePolicy):
             }
             if character.rp.value <= 2:
                 priority_dict["重整旗鼓"] = 20
-            self.update_available_hand(priority_dict)
 
         # 有延迟时的出牌
         elif character.delay.value > 0:
@@ -102,7 +101,6 @@ class SwordPolicy(BasePolicy):
                 priority_dict["格挡"] = 10
             elif self.player.posture == CardType.MOUNTAIN:
                 priority_dict["顶盾撞击"] = 50
-            self.update_available_hand(priority_dict)
 
         # 没有延迟的出牌
         else:
@@ -137,4 +135,4 @@ class SwordPolicy(BasePolicy):
         if self.player.opponent.character.has_status(CharacterStatusType.SLOW) or self.player.opponent.character.rp.value <= 2:
             priority_dict["下颚粉碎"] = 50
 
-            self.update_available_hand(priority_dict)
+        self.update_available_hand(priority_dict)
