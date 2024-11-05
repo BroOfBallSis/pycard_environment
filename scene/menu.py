@@ -1,0 +1,67 @@
+class MenuItem:
+    def __init__(self, text, action, *args, **kwargs):
+        self.text = text
+        self.action = action
+        self.args = args
+        self.kwargs = kwargs
+
+    def execute(self, game):
+        if isinstance(self.action, str):
+            return game.navigate_to(self.action, *self.args, **self.kwargs)
+        else:
+            return self.action(*self.args, **self.kwargs)
+
+
+class Menu:
+    def __init__(self, name, items, parent=None):
+        self.name = name
+        self.items = items
+        self.parent = parent
+
+    def display(self, game):
+        print(f"\n{self.name}:")
+        for index, item in enumerate(self.items, start=1):
+            print(f"{index}. {item.text}")
+        if self.parent:
+            print(f"{len(self.items) + 1}. 返回上一级")
+        choice = input("\n请输入你的选择: ")
+        return self.handle_choice(choice, game)
+
+    def handle_choice(self, choice, game):
+        if choice.isdigit() and 1 <= int(choice) <= len(self.items):
+            return self.items[int(choice) - 1].execute(game)
+        elif self.parent and choice == str(len(self.items) + 1):
+            return game.navigate_to(self.parent)
+        else:
+            print("无效的选择，请重新输入。")
+            return self.display(game)
+
+
+menu_dict = {
+    "main_menu": Menu("主菜单", [MenuItem("进入教程", "tutorial_menu"), MenuItem("对战AI", "pve_menu")]),
+    "tutorial_menu": Menu(
+        "教程菜单",
+        [
+            MenuItem("时间与韧性", "time_and_resilience_tutorial"),
+            MenuItem("闪避与撤离", "evasion_and_retreat_tutorial"),
+        ],
+        parent="main_menu",
+    ),
+    "pve_menu": Menu(
+        "选择玩家角色",
+        [MenuItem("剑士", "select_character", "ch00001", 0), MenuItem("近卫", "select_character", "ch00002", 0)],
+        parent="main_menu",
+    ),
+    "pve_enemy_menu": Menu(
+        "选择对手角色",
+        [MenuItem("剑士", "select_character", "ch00001", 1), MenuItem("近卫", "select_character", "ch00002", 1)],
+        parent="pve_menu",
+    ),
+    "pve_start_menu": Menu(
+        "开始对战",
+        [
+            MenuItem("开始对战", "start_battle"),
+        ],
+        parent="pve_enemy_menu",
+    ),
+}
