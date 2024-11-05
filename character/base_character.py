@@ -57,8 +57,10 @@ class BaseCharacter:
             self._add_cards_from_source(item)
 
     def _add_cards_from_source(self, source_id):
-        item_info = item_library_instance.get_item_info(source_id)
-        self.cards.extend(item_info.get("cards", []))
+        if source_id:
+            item_info = item_library_instance.get_item_info(source_id)
+            if item_info:
+                self.cards.extend(item_info.get("cards", []))
 
     def start_round(self):
         self.ep.set_value(self.ep.max_value)

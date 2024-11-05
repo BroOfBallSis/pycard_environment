@@ -12,7 +12,7 @@ class CharacterAttributeType(Enum):
 class CharacterStatusType(Enum):
     DEAD = "死亡"
     BREAK = "打断"
-    WITHDRAW = "撤离"
+    RETREAT = "撤离"
     SLOW = "缓慢"
     WEAKNESS = "虚弱"
     VULNERABLE = "易伤"

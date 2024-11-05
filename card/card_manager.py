@@ -47,7 +47,7 @@ class CardManager:
             if self.deck:
                 self.hand.append(self.deck.pop())
             else:
-                print(f"牌堆和弃牌堆为空, 结束抽牌")
+                # print(f"牌堆和弃牌堆为空, 结束抽牌")
                 break
         now_value = len(self.hand)
         right_value_str = f"{now_value} (max)" if now_value == hand_limit else f"{now_value}"

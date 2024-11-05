@@ -7,7 +7,7 @@ from utils.debug import print_memory_info
 from scene.scene_define import BattlePhase
 
 
-class Battle:
+class BaseBattle:
     def __init__(self, characters):
         self.player1 = BasePlayer("player1", 1, characters[0], "terminal", self)
         self.player2 = BasePlayer("player2", 2, characters[1], "sword_ai", self)
@@ -68,9 +68,6 @@ class Battle:
             player.start_round()
 
     def start_turn(self):
-        # 关注内存占用情况
-        print_memory_info()
-
         self.turn_cnt += 1
         print(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
         for player in self.player_list:
@@ -168,8 +165,8 @@ class Battle:
         return not self.player1.character.is_alive() or not self.player2.character.is_alive()
 
     def is_round_over(self):
-        return self.player1.character.has_status(CharacterStatusType.WITHDRAW) or self.player2.character.has_status(
-            CharacterStatusType.WITHDRAW
+        return self.player1.character.has_status(CharacterStatusType.RETREAT) or self.player2.character.has_status(
+            CharacterStatusType.RETREAT
         )
 
     def conclude_battle(self):
@@ -178,10 +175,13 @@ class Battle:
         elif not self.player2.character.is_alive():
             print(f"{self.player2.name} has been defeated! {self.player1.name} wins!")
 
+        input(color_text("输入回车键继续……", "gray"))
+        clear_terminal()
+
 
 if __name__ == "__main__":
     # 创建战斗实例
-    battle = Battle()
+    battle = BaseBattle(["ch00001", "ch00001"])
 
     # 初始化战斗
     battle.initialize_battle()

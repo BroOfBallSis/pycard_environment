@@ -81,8 +81,8 @@ class Effect:
             if target_object.character.has_status(CharacterStatusType.DODGE):
                 print(f"\t{source.name} -> {target_object.name} [{CharacterStatusType.DODGE.value}]: {self}")
                 return False
-            elif target_object.character.has_status(CharacterStatusType.WITHDRAW):
-                print(f"\t{source.name} -> {target_object.name} [{CharacterStatusType.WITHDRAW.value}]: {self}")
+            elif target_object.character.has_status(CharacterStatusType.RETREAT):
+                print(f"\t{source.name} -> {target_object.name} [{CharacterStatusType.RETREAT.value}]: {self}")
                 return False
             elif source.character.has_status(CharacterStatusType.DEAD):
                 print(f"\t{source.name} [{CharacterStatusType.DEAD.value}]: {self} ")

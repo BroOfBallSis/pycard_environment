@@ -102,4 +102,4 @@ class BaseCard:
             addition_str += " 基础 "
         if self.consumable:
             addition_str += " 消耗 "
-        return f"{name_str} ({card_type_str} 体力:{ep_cost_str} 时间:{time_cost_str}{addition_str})  {conditions_str}"
+        return f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str} {addition_str}) {conditions_str}"

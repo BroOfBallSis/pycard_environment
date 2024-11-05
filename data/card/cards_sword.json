@@ -60,7 +60,7 @@
                 "effects": [
                     {
                         "effect_type": "gain_singleton_status",
-                        "status": "withdraw"
+                        "status": "retreat"
                     },
                     {
                         "effect_type": "recover_ep",

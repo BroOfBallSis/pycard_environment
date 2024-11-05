@@ -6,8 +6,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 现在可以安全地导入模块了
 from player.base_player import BasePlayer
-from scene.local_battle import Battle
-from scene.menu import menu_dict, Menu, MenuItem
+from scene.base_battle import BaseBattle
+from scene.tutorial.time_and_resilience_tutorial import TutorialBattle1
+from scene.tutorial.dodge_and_retreat_tutorial import TutorialBattle2
+from scene.main_menu import menu_dict, Menu, MenuItem
 from utils.draw_text import color_text, clear_terminal, center_text
 
 
@@ -48,15 +50,32 @@ class Game:
             return self.current_menu.display(self)
 
     def time_and_resilience_tutorial(self):
-        print("\n你选择了：时间与韧性")
-        # 在这里添加时间与韧性的教程内容
 
-    def evasion_and_retreat_tutorial(self):
-        print("\n你选择了：闪避与撤离")
-        # 在这里添加闪避与撤离的教程内容
+        # 创建战斗实例
+        battle = TutorialBattle1(self.characters)
+
+        # 初始化战斗
+        battle.initialize_battle()
+
+        # 进入主循环
+        battle.main_loop()
+
+        del battle
+
+    def dodge_and_retreat_tutorial(self):
+
+        # 创建战斗实例
+        battle = TutorialBattle2(self.characters)
+
+        # 初始化战斗
+        battle.initialize_battle()
+
+        # 进入主循环
+        battle.main_loop()
+
+        del battle
 
     def select_character(self, character_id, player_index):
-        print(f"\n你选择了：{character_id}")
         self.characters[player_index] = character_id
         if player_index == 0:
             return self.navigate_to("pve_enemy_menu")
@@ -66,7 +85,7 @@ class Game:
     def start_battle(self):
         print("开始对战！")
         # 创建战斗实例
-        battle = Battle(self.characters)
+        battle = BaseBattle(self.characters)
 
         # 初始化战斗
         battle.initialize_battle()
@@ -74,7 +93,12 @@ class Game:
         # 进入主循环
         battle.main_loop()
 
+        del battle
+        self.current_menu = self.menu_dict["main_menu"]
+
 
 if __name__ == "__main__":
+
     game = Game(menu_dict)
-    game.run()
+    while True:
+        game.run()
