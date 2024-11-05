@@ -5,6 +5,7 @@ from data.item import item_library_instance
 from typing import Dict, Any, List
 from character.status.base_status import CharacterStatus, CharacterStatusType
 from character.character_attribute import CharacterAttribute, CharacterAttributeType
+from utils.logger import Logger
 
 
 class BaseCharacter:
@@ -47,7 +48,7 @@ class BaseCharacter:
         self.cards = cards[::]  # 卡牌列表
         self.statuses = []  # 状态列表
         self.new_statuses = []  # 状态列表
-        self.logger = self.player.logger if self.player else None
+        self.logger = Logger(self.player.name)
         self._init_cards()
 
     def _init_cards(self):
@@ -96,29 +97,38 @@ class BaseCharacter:
         self.check_break_status()
 
     def check_death_status(self):
+        self.logger.increase_depth()
         """检查角色是否死亡并更新状态"""
         if self.hp.value <= 0 and not self.has_status(CharacterStatusType.DEAD):
             status = CharacterStatus(self.player, CharacterStatusType.DEAD, -1)
             self.statuses.append(status)
-            self.logger.info(f"获得 {status}", 2)
+            self.logger.info(f"获得 {status}")
+        self.logger.decrease_depth()
 
     def check_break_status(self):
+        self.logger.increase_depth()
         """检查角色是否打断并更新状态"""
         if self.rp.value <= 0 and not self.has_status(CharacterStatusType.BREAK):
             status = CharacterStatus(self.player, CharacterStatusType.BREAK, -1)
             self.statuses.append(status)
-            self.logger.info(f"获得 {status}", 2)
+            self.logger.info(f"获得 {status}")
+        self.logger.decrease_depth()
 
     def check_flaws_status(self):
+        self.logger.increase_depth()
         """检查角色是否破绽并更新状态"""
         if self.delay.value >= self.delay.max_value and not self.has_status(CharacterStatusType.FLAWS):
             status = CharacterStatus(self.player, CharacterStatusType.FLAWS, 1)
             self.statuses.append(status)
-            self.logger.info(f"获得 {status}", 2)
-            self.logger.info(f"- 清空 延迟", 2)
+            self.logger.info(f"获得 {status}")
+            self.logger.increase_depth()
+            self.logger.info(f"清空 延迟")
             self.delay.set_value(0)
+            self.logger.decrease_depth()
+        self.logger.decrease_depth()
 
     def append_status(self, status_type_str, layers=None):
+        self.logger.increase_depth()
         status_type_upper = status_type_str.upper()
         if layers is None:
             layers = 1
@@ -127,11 +137,11 @@ class BaseCharacter:
             status_type = CharacterStatusType[status_type_upper]
             status = CharacterStatus(self.player, status_type, layers)
             self.statuses.append(status)
-            self.logger.info(f"获得 {status}", 2)
+            self.logger.info(f"获得 {status}")
+        self.logger.decrease_depth()
 
     def detonate_status(self, status_type_str, sub_effect=None):
         status_type_upper = status_type_str.upper()
-
         if status_type_upper in CharacterStatusType.__members__:
             status_type = CharacterStatusType[status_type_upper]
             to_remove_status = None
@@ -144,20 +154,27 @@ class BaseCharacter:
                             sub_effect.execute(self.player.opponent, self.player)
 
             if to_remove_status:
-                self.logger.info(f"移除 {to_remove_status}", 2)
+                self.logger.increase_depth()
+                self.logger.info(f"移除 {to_remove_status}")
                 to_remove_status.on_remove()
                 self.statuses.remove(to_remove_status)
+                self.logger.decrease_depth()
 
     def start_turn_update_status(self):
+        
         to_remove_statuses = []
         for status in self.statuses:
             status.on_trigger()
             if status.layers <= 0:
+                self.logger.increase_depth()
                 to_remove_statuses.append(status)
-                self.logger.info(f"移除 {status}", 2)
+                self.logger.info(f"移除 {status}")
                 status.on_remove()
+                self.logger.decrease_depth()
+                
         for status in to_remove_statuses:
             self.statuses.remove(status)
+        
 
     @classmethod
     def from_json(cls, player, json_data: Dict[str, Any]) -> "BaseCharacter":

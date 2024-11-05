@@ -1,5 +1,6 @@
 # /status/base_status.py
 from character.character_define import CharacterStatusType
+from utils.logger import Logger
 
 
 class CharacterStatus:
@@ -13,35 +14,47 @@ class CharacterStatus:
         self.player = player
         self.status_type = status_type
         self.layers = layers
-        self.logger = self.player.logger if self.player else None
+        self.logger = Logger(self.player.name)
 
     def increase(self, amount: int) -> None:
         """增加状态值"""
+        self.logger.increase_depth()
+        old_value = self.layers
         self.layers += amount
+        self.logger.info(f"{self.status_type.value}: {old_value} ↑ {self.layers}")
+        self.logger.decrease_depth()
 
     def decrease(self, amount: int) -> None:
         """减少状态值"""
+        self.logger.increase_depth()
+        old_value = self.layers
         self.layers -= amount
+        self.logger.info(f"{self.status_type.value}: {old_value} ↓ {self.layers}")
+        self.logger.decrease_depth()
 
     def on_add(self) -> None:
         """当状态首次添加时调用"""
         pass
 
     def on_remove(self) -> None:
+        self.logger.increase_depth()
         """当状态被移除时调用"""
         if self.status_type == CharacterStatusType.BREAK:
-            self.logger.info(f"移除 打断 → 恢复韧性", 2)
+            self.logger.info(f"恢复韧性")
             self.player.character.rp.set_value(self.player.character.rp.max_value)
             if self.player.opponent.character.delay.value > 0:
-                self.logger.info(f"移除 打断 → 清空对手延迟", 2)
+                self.logger.info(f"清空对手延迟")
                 self.player.opponent.character.delay.set_value(0)
+        self.logger.decrease_depth()
 
     def on_trigger(self) -> None:
+        self.logger.increase_depth()
         """当状态被触发时调用"""
         if self.status_type == CharacterStatusType.SLOW:
-            self.logger.info(f"{self}: 开始阶段 增加 1点延迟", 2)
+            self.logger.info(f"{self}: 增加1点延迟")
             self.player.character.delay.increase(1)
             self.decrease(1)
+        self.logger.decrease_depth()
 
     def __str__(self) -> str:
         if self.layers > 0:
@@ -49,8 +62,3 @@ class CharacterStatus:
         else:
             return f"{self.status_type.value}"
 
-    def __str__(self) -> str:
-        if self.layers > 0:
-            return f"{self.status_type.value}({self.layers})"
-        else:
-            return f"{self.status_type.value}"

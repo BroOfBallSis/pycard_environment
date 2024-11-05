@@ -4,6 +4,7 @@ import os
 from typing import List, Dict, Any
 from card.base_card import BaseCard
 from utils.draw_text import center_text, color_text
+from utils.logger import Logger
 
 
 class CardManager:
@@ -19,7 +20,7 @@ class CardManager:
         self.hand = []
         self.discard_pile = []
         self._initialize_deck()
-        self.logger = self.player.logger if self.player else None
+        self.logger = Logger(self.player.name)
 
     def _initialize_deck(self) -> None:
         """初始化牌堆，将所有卡牌实例化并放入牌堆"""
@@ -38,6 +39,7 @@ class CardManager:
         :param n: 要抽的牌数
         :param hand_limit: 手牌上限
         """
+        self.logger.increase_depth()
         old_value = len(self.hand)
         for _ in range(n):
             if len(self.hand) >= hand_limit:
@@ -51,16 +53,19 @@ class CardManager:
                 break
         now_value = len(self.hand)
         right_value_str = f"{now_value} (max)" if now_value == hand_limit else f"{now_value}"
-        self.logger.info(f"手牌数量: {old_value} ↑ {right_value_str}", 2)
+        self.logger.info(f"手牌数量: {old_value} ↑ {right_value_str}")
+        self.logger.decrease_depth()
 
     def discard_played_card(self, card) -> None:
+        self.logger.increase_depth()
         """将卡牌从手牌移到弃牌堆"""
         if not card.is_base and card in self.hand:
             self.hand.remove(card)
         if not card.consumable and not card.is_base:
             self.discard_pile.append(card)
         elif card.consumable:
-            self.logger.info(f"消耗 {card.name}", 2)
+            self.logger.info(f"消耗 {card.name}")
+        self.logger.decrease_depth()
 
     def discard_card_by_hand_index(self, hand_index) -> None:
         """将卡牌从手牌移到弃牌堆"""

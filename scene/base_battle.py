@@ -5,6 +5,7 @@ import time
 from utils.draw_text import color_text, clear_terminal
 from utils.debug import print_memory_info
 from scene.scene_define import BattlePhase
+from utils.logger import Logger
 
 
 class BaseBattle:
@@ -18,6 +19,7 @@ class BaseBattle:
         self.round_cnt = 0
         self.turn_cnt = 0
         self.current_phase = BattlePhase.INITIALIZATION
+        self.logger = Logger("battle")
 
     def initialize_battle(self):
         clear_terminal()
@@ -65,14 +67,17 @@ class BaseBattle:
         self.round_cnt += 1
         self.turn_cnt = 0
         print(f"---------------- 第 {self.round_cnt} 轮 ----------------")
+        self.logger.log_to_file(f"第 {self.round_cnt} 轮:")
         for player in self.player_list:
             player.start_round()
 
     def start_turn(self):
         self.turn_cnt += 1
         print(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
+        self.logger.log_to_file(f"-- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) --")
         for player in self.player_list:
             player.start_turn()
+            self.logger.log_to_file(f"{player.name}: {player.character}, 架势:{player.posture.value}\t{player.card_manager}")
 
     def play_phase(self, player):
         battle_info = {
@@ -116,7 +121,8 @@ class BaseBattle:
     def resolve_phase(self):
         print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
         for player in self.player_list:
-            print(f"{player.name} : {player.current_card}")
+            print(f"{player.name_with_color} : {player.current_card}")
+            self.logger.log_to_file(f"{player.name} : {player.current_card}")
 
         # 执行 priority 为 0 的效果，如(立即)的效果
         print(f"开 始:")

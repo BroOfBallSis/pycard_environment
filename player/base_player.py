@@ -24,7 +24,8 @@ class BasePlayer:
         :param character_id: 控制的角色ID
         :param policy: 使用的策略
         """
-        self.name = color_text(name, "blue" if camp == 1 else "red")
+        self.name = name
+        self.name_with_color = color_text(name, "blue" if camp == 1 else "red")
         self.camp = camp
         policy_context = None
         self.policy = PolicyFactory.create_policy(self, policy, policy_context)
@@ -32,6 +33,7 @@ class BasePlayer:
         self.opponent = None
         self.scene = scene
         self.logger = Logger(self.name)
+        self.logger.set_source_name(self.name_with_color)
 
         # 根据 character_id 加载角色
         self.character = BaseCharacter.from_json(self, character_library_instance.get_character_info(character_id))
@@ -83,12 +85,13 @@ class BasePlayer:
         """
         每轮对战开始时的操作
         """
+        self.logger.set_depth(0)
         round_info_str = ""
         for attr in [CharacterAttributeType.HP, CharacterAttributeType.EP, CharacterAttributeType.RP]:
             if attr in self.round_info:
                 round_info_str += f"{attr.value}: {self.round_info[attr]}, "
         if round_info_str:
-            self.logger.info(f"上轮统计: {round_info_str}", 1)
+            self.logger.info(f"{self.name_with_color}: 上轮统计: {round_info_str}")
         # 角色恢复韧性、体力、延迟
         self.character.start_round()
         self.posture = CardType.NONE
@@ -104,6 +107,7 @@ class BasePlayer:
         """
         self.character.start_turn()
         self.policy.start_turn()
+        self.logger.set_depth(0)
 
     def end_turn(self, base_delay):
         """

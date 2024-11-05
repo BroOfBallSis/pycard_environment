@@ -7,6 +7,7 @@ from utils.draw_text import color_text, clear_terminal
 from utils.debug import print_memory_info
 from scene.scene_define import BattlePhase
 from card.base_card import BaseCard
+from utils.logger import Logger
 
 
 class TutorialBattle1(BaseBattle):
@@ -21,6 +22,7 @@ class TutorialBattle1(BaseBattle):
         self.current_phase = BattlePhase.INITIALIZATION
         self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00007"))
         self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00001"))
+        self.logger = Logger("battle")
 
     def main_loop(self):
         while not self.is_battle_over():

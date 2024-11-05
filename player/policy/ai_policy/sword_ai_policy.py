@@ -32,7 +32,7 @@ class SwordPolicy(BasePolicy):
                 exist_card_ids.add(card_id)  # 使用集合的 add 方法
                 card_index += 1  # 只有在没有弃置时才增加索引
 
-        self.player.logger.info(f"弃置 {discard_cnt} 张手牌", 1)
+        self.player.logger.info(f"弃置 {discard_cnt} 张手牌")
 
     def update_available_hand(self, priority_dict):
         for hand_index in self.available_hand:

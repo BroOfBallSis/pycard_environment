@@ -7,6 +7,7 @@ import os
 from character.character_define import CharacterStatusType
 from card.card_define import EffectType
 from utils.draw_text import color_text
+from utils.logger import Logger
 
 # 获取当前脚本文件的目录
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -31,6 +32,7 @@ class Effect:
         self.effect_type = effect_type
         self.player = player
         self.card = card
+        self.logger = Logger(self.player.name)
 
         # context: 取决于具体卡牌
         self.context = context
@@ -73,22 +75,26 @@ class Effect:
             print(f"Invalid effect type: {self.effect_type}")
             return
 
+        self.logger.increase_depth()
         target_object = source if self.effect_target == "source" else target
         component_object = getattr(target_object, self.effect_component, None)
 
         # 闪避, 撤离 状态下跳过效果结算
         if target_object != source:
             if target_object.character.has_status(CharacterStatusType.DODGE):
-                print(f"\t{source.name} -> {target_object.name} [{CharacterStatusType.DODGE.value}]: {self}")
+                self.logger.info(f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.DODGE.value}]: {self}", show_source=False)
+                self.logger.decrease_depth()
                 return False
             elif target_object.character.has_status(CharacterStatusType.RETREAT):
-                print(f"\t{source.name} -> {target_object.name} [{CharacterStatusType.RETREAT.value}]: {self}")
+                self.logger.info(f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.RETREAT.value}]: {self}", show_source=False)
+                self.logger.decrease_depth()
                 return False
             elif source.character.has_status(CharacterStatusType.DEAD):
-                print(f"\t{source.name} [{CharacterStatusType.DEAD.value}]: {self} ")
+                self.logger.info(f"{source.name_with_color} [{CharacterStatusType.DEAD.value}]: {self}", show_source=False)
+                self.logger.decrease_depth()
                 return False
 
-        print(f"\t{source.name} -> {target_object.name}: {self}")
+        self.logger.info(f"{source.name_with_color} -> {target_object.name_with_color}: {self}", show_source=False)
 
         # 状态类效果:组件(角色)->方法
         if self.status and self.sub_effect:
@@ -119,6 +125,7 @@ class Effect:
                 function_object(self.amount)
             else:
                 raise ValueError(f"Does not have function {function_object}")
+        self.logger.decrease_depth()
         return True
 
     def mock_execute(self) -> bool:

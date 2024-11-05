@@ -59,7 +59,7 @@ class TerminalPolicy(BasePolicy):
         posture_str = player.posture.value
         posture_color = color_mapping[posture_str]
         print(
-            f"{player.name}: {player.character}, 架势:{color_text(posture_str, posture_color)}\t{player.card_manager}"
+            f"{player.name_with_color}: {player.character}, 架势:{color_text(posture_str, posture_color)}\t{player.card_manager}"
         )
         if player.character.statuses:
             print(f"  ∟ 状态: {', '.join(str(statu) for statu in player.character.statuses)}")
