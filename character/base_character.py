@@ -161,7 +161,7 @@ class BaseCharacter:
                 self.logger.decrease_depth()
 
     def start_turn_update_status(self):
-        
+
         to_remove_statuses = []
         for status in self.statuses:
             status.on_trigger()
@@ -171,10 +171,9 @@ class BaseCharacter:
                 self.logger.info(f"移除 {status}")
                 status.on_remove()
                 self.logger.decrease_depth()
-                
+
         for status in to_remove_statuses:
             self.statuses.remove(status)
-        
 
     @classmethod
     def from_json(cls, player, json_data: Dict[str, Any]) -> "BaseCharacter":

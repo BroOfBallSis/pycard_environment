@@ -4,6 +4,7 @@ import re
 import sys
 from datetime import datetime
 
+
 class Logger:
     _loggers = {}
     _depth = 0
@@ -40,8 +41,8 @@ class Logger:
         log_dir = "log"
         os.makedirs(log_dir, exist_ok=True)
         log_filename = os.path.join(log_dir, f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_battle.log")
-        file_handler = logging.FileHandler(log_filename, encoding='utf-8')
-        file_formatter = logging.Formatter('%(message)s')
+        file_handler = logging.FileHandler(log_filename, encoding="utf-8")
+        file_formatter = logging.Formatter("%(message)s")
         file_handler.setFormatter(file_formatter)
         self.file_logger.addHandler(file_handler)
         self.file_logger.setLevel(logging.INFO)

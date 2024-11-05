@@ -82,15 +82,23 @@ class Effect:
         # 闪避, 撤离 状态下跳过效果结算
         if target_object != source:
             if target_object.character.has_status(CharacterStatusType.DODGE):
-                self.logger.info(f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.DODGE.value}]: {self}", show_source=False)
+                self.logger.info(
+                    f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.DODGE.value}]: {self}",
+                    show_source=False,
+                )
                 self.logger.decrease_depth()
                 return False
             elif target_object.character.has_status(CharacterStatusType.RETREAT):
-                self.logger.info(f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.RETREAT.value}]: {self}", show_source=False)
+                self.logger.info(
+                    f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.RETREAT.value}]: {self}",
+                    show_source=False,
+                )
                 self.logger.decrease_depth()
                 return False
             elif source.character.has_status(CharacterStatusType.DEAD):
-                self.logger.info(f"{source.name_with_color} [{CharacterStatusType.DEAD.value}]: {self}", show_source=False)
+                self.logger.info(
+                    f"{source.name_with_color} [{CharacterStatusType.DEAD.value}]: {self}", show_source=False
+                )
                 self.logger.decrease_depth()
                 return False
 

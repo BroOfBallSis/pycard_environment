@@ -1,6 +1,7 @@
 from character.character_define import CharacterAttributeType
 from utils.logger import Logger
 
+
 class CharacterAttribute:
     def __init__(self, player, attribute_type: "CharacterAttributeType", max_value: int, value: int = -1):
         self.player = player
@@ -56,7 +57,7 @@ class CharacterAttribute:
             self.player.round_info[self.attribute_type] -= real_amount
         else:
             self.player.round_info[self.attribute_type] = -real_amount
-        
+
         self.logger.decrease_depth()
 
     def increase_resist(self, amount: int):

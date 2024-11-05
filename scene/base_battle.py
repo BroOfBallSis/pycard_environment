@@ -77,7 +77,9 @@ class BaseBattle:
         self.logger.log_to_file(f"-- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) --")
         for player in self.player_list:
             player.start_turn()
-            self.logger.log_to_file(f"{player.name}: {player.character}, 架势:{player.posture.value}\t{player.card_manager}")
+            self.logger.log_to_file(
+                f"{player.name}: {player.character}, 架势:{player.posture.value}\t{player.card_manager}"
+            )
 
     def play_phase(self, player):
         battle_info = {

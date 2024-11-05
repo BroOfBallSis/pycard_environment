@@ -5,6 +5,7 @@ from scene.scene_define import BattlePhase
 from card.base_card import BaseCard
 from utils.logger import Logger
 
+
 class TutorialBattle2(BaseBattle):
     def __init__(self, characters):
         self.player1 = BasePlayer("player1", 1, "th00001", "terminal", self)

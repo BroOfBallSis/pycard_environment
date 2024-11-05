@@ -61,4 +61,3 @@ class CharacterStatus:
             return f"{self.status_type.value}({self.layers})"
         else:
             return f"{self.status_type.value}"
-
