@@ -28,10 +28,10 @@ class TerminalPolicy(BasePolicy):
         print("\n".join(hand_str))
 
     def display_deck(self) -> str:
-        # 深拷贝玩家的牌组
-        temp_deck = copy.deepcopy(self.player.card_manager.deck)
+        # 使用切片创建玩家牌组的副本
+        temp_deck = self.player.card_manager.deck[::]
 
-        # 根据 card.name 对 temp_deck 进行排序
+        # 根据 card.card_id 对 temp_deck 进行排序
         temp_deck.sort(key=lambda card: card.card_id)
 
         # 打印排序后的牌组

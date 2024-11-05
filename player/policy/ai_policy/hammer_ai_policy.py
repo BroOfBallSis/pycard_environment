@@ -1,6 +1,7 @@
 from card.card_define import CardType
 from player.policy.base_policy import BasePolicy
 import random
+from character.character_define import CharacterStatusType
 
 
 class SwordPolicy(BasePolicy):
@@ -65,72 +66,75 @@ class SwordPolicy(BasePolicy):
         # 第1张出牌 或者 破绽后的出牌
         if self.player.posture == CardType.NONE:
             priority_dict = {
-                "挥砍": 2,
-                "翻滚": 0,
+                "打击": 10,
+                "格挡": 5,
                 "撤离": 0,
-                "长剑突刺": 2,
-                "先发制人": 2,
-                "长剑上挑": 6,
-                "长剑竖劈": 4,
-                "保持戒备": 0,
+                "前倾打击": 0,
+                "顶盾撞击": 0,
+                "侧身打击": 5,
+                "重锤打击": 5,
+                "下颚粉碎": 0,
                 "重整旗鼓": 0,
                 "生命药剂": 0,
                 "便携手弩": 0,
             }
             if character.rp.value <= 2:
-                priority_dict["保持戒备"] = 6
-                priority_dict["重整旗鼓"] = 4
+                priority_dict["重整旗鼓"] = 20
             self.update_available_hand(priority_dict)
 
         # 有延迟时的出牌
         elif character.delay.value > 0:
             priority_dict = {
-                "挥砍": 2,
-                "翻滚": 0,
+                "打击": 5,
+                "格挡": 5,
                 "撤离": 0,
-                "长剑突刺": 6,
-                "先发制人": 0,
-                "长剑上挑": 0,
-                "长剑竖劈": 2,
-                "保持戒备": 6,
+                "前倾打击": 0,
+                "顶盾撞击": 0,
+                "侧身打击": 0,
+                "重锤打击": 30,
+                "下颚粉碎": 0,
                 "重整旗鼓": 0,
                 "生命药剂": 0,
                 "便携手弩": 0,
             }
             if character.rp.value <= 2:
-                priority_dict["保持戒备"] = 10
-                priority_dict["重整旗鼓"] = 4
-                priority_dict["翻滚"] = 4
-            elif character.ep.value <= 8:
-                priority_dict["撤离"] = 6
+                priority_dict["重整旗鼓"] = 20
+                priority_dict["格挡"] = 10
+            elif self.player.posture == CardType.MOUNTAIN:
+                priority_dict["顶盾撞击"] = 50
             self.update_available_hand(priority_dict)
 
         # 没有延迟的出牌
         else:
             priority_dict = {
-                "挥砍": 2,
-                "翻滚": 0,
+                "打击": 10,
+                "格挡": 0,
                 "撤离": 0,
-                "长剑突刺": 0,
-                "先发制人": 6,
-                "长剑上挑": 6,
-                "长剑竖劈": 0,
-                "保持戒备": 0,
+                "前倾打击": 5,
+                "顶盾撞击": 5,
+                "侧身打击": 5,
+                "重锤打击": 0,
+                "下颚粉碎": 0,
                 "重整旗鼓": 0,
                 "生命药剂": 0,
-                "便携手弩": 6,
+                "便携手弩": 0,
             }
             if character.rp.value <= 2:
-                priority_dict["保持戒备"] = 6
-                priority_dict["重整旗鼓"] = 4
-            if self.player.posture != CardType.FOREST:
-                priority_dict["翻滚"] = 4
+                priority_dict["重整旗鼓"] = 10
             if self.player.posture != CardType.WIND:
-                priority_dict["长剑突刺"] = 6
-            if self.player.posture != CardType.FIRE and character.rp.value > 2:
-                priority_dict["长剑竖劈"] = 50
-            if character.hp.max_value - character.hp.value >= 10 and character.rp.value > 2:
-                priority_dict["生命药剂"] = 6
-            elif character.ep.value <= 6:
-                priority_dict["撤离"] = 2
+                priority_dict["前倾打击"] = 10
+            if self.player.posture != CardType.FIRE and self.player.opponent.character.delay.value >= 2:
+                priority_dict["重锤打击"] = 50
+            if self.player.opponent.character.rp.value <= 2:
+                priority_dict["便携手弩"] = 50
+
+        if character.hp.max_value - character.hp.value >= 10 and character.rp.value > 2:
+            priority_dict["生命药剂"] = 10
+        if self.player.posture == CardType.MOUNTAIN:
+            priority_dict["顶盾撞击"] = 10
+        if character.ep.value <= 6:
+            priority_dict["撤离"] = 5
+        if self.player.opponent.character.has_status(CharacterStatusType.SLOW) or self.player.opponent.character.rp.value <= 2:
+            priority_dict["下颚粉碎"] = 50
+
             self.update_available_hand(priority_dict)

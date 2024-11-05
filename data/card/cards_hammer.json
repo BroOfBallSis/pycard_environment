@@ -33,7 +33,7 @@
                 "effects": [
                     {
                         "effect_type": "resist_damage",
-                        "amount": 4,
+                        "amount": 3,
                         "immediate": true
                     },
                     {
@@ -49,6 +49,29 @@
         ]
     },
     "b00003": {
+        "name": "撤离",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "retreat"
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 4,
+                        "immediate": true
+                    }
+                ]
+            }
+        ]
+    },
+    "b00004": {
         "name": "前倾打击",
         "card_type": "wind",
         "ep_cost": 4,
@@ -69,36 +92,6 @@
                 "effects": [
                     {
                         "effect_type": "cause_damage",
-                        "amount": 3
-                    },
-                    {
-                        "effect_type": "cause_stun",
-                        "amount": 2
-                    }
-                ]
-            }
-        ]
-    },
-    "b00004": {
-        "name": "顶盾撞击",
-        "card_type": "mountain",
-        "ep_cost": 3,
-        "time_cost": 4,
-        "conditions": [
-            {
-                "condition_type": "maintain",
-                "effects": [
-                    {
-                        "effect_type": "cause_stun",
-                        "amount": 1
-                    }
-                ]
-            },
-            {
-                "condition_type": "true",
-                "effects": [
-                    {
-                        "effect_type": "resist_damage",
                         "amount": 3
                     },
                     {
@@ -168,7 +161,7 @@
     "b00007": {
         "name": "下颚粉碎",
         "card_type": "thunder",
-        "ep_cost": 3,
+        "ep_cost": 5,
         "time_cost": 5,
         "conditions": [
             {
@@ -176,17 +169,45 @@
                 "effects": [
                     {
                         "effect_type": "cause_stun",
-                        "amount": 3
+                        "amount": 4
                     },
                     {
                         "effect_type": "detonate_status",
                         "status": "slow",
-                        "layers": 5,
                         "sub_effect": {
                             "effect_type": "cause_damage",
-                            "amount": 1           
+                            "amount": 1
                         }
-
+                    }
+                ]
+            }
+        ]
+    },
+    "b00008": {
+        "name": "顶盾撞击",
+        "card_type": "mountain",
+        "ep_cost": 3,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "maintain",
+                "effects": [
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 1
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "resist_damage",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 2
                     }
                 ]
             }
