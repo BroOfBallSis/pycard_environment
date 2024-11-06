@@ -43,8 +43,8 @@ class MockResult(Enum):
 
 
 class EffectType(Enum):
-    CAUSE_DAMAGE = "cause_damage"
-    CAUSE_STUN = "cause_stun"
+    DAMAGE_HP = "damage_hp"
+    DAMAGE_RP = "damage_rp"
     CAUSE_DELAY = "cause_delay"
     RESIST_DAMAGE = "resist_damage"
     RESIST_STUN = "resist_stun"

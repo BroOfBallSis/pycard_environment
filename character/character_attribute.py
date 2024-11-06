@@ -42,6 +42,8 @@ class CharacterAttribute:
             self.logger.info(f"抵抗生效: {amount} ↓ {real_amount}")
 
         self.value = self.value - real_amount
+        if self.attribute_type == CharacterAttributeType.EP:
+            self.value = max(self.value, 0)
         self.logger.info(f"{self.name}: {old_value} ↓ {self.value}")
 
         if self.attribute_type == CharacterAttributeType.RP and self.value < 0:

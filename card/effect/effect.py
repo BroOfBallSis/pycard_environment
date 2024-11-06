@@ -139,7 +139,7 @@ class Effect:
         component_object = getattr(target_object, self.effect_component, None)
 
         # 属性类效果:组件 -> 属性 -> 方法
-        if self.effect_type in [EffectType.CAUSE_DAMAGE, EffectType.CAUSE_STUN]:
+        if self.effect_type in [EffectType.DAMAGE_HP, EffectType.DAMAGE_RP]:
             attribute_object = getattr(component_object, self.effect_attribute, None)
             if self.amount >= attribute_object.value:
                 return True

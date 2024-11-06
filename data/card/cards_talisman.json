@@ -95,11 +95,11 @@
                 "amount": 1,
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 2
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 4
                     }
                 ]

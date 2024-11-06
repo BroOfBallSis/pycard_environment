@@ -1,18 +1,26 @@
 {
-    "cause_damage": {
+    "damage_hp": {
         "target": "target",
         "component": "character",
         "attribute": "hp",
         "function": "decrease",
-        "description": "造成{}点伤害",
+        "description": "伤害{}点生命",
         "priority": 2
     },
-    "cause_stun": {
+    "damage_ep": {
+        "target": "target",
+        "component": "character",
+        "attribute": "ep",
+        "function": "decrease",
+        "description": "伤害{}点体力",
+        "priority": 2
+    },
+    "damage_rp": {
         "target": "target",
         "component": "character",
         "attribute": "rp",
         "function": "decrease",
-        "description": "造成{}点硬直",
+        "description": "伤害{}点韧性",
         "priority": 2
     },
     "cause_delay": {
@@ -36,7 +44,7 @@
         "component": "character",
         "attribute": "rp",
         "function": "increase_resist",
-        "description": "抵抗{}点硬直",
+        "description": "抵抗{}点韧性伤害",
         "priority": 0
     },
     "recover_hp": {
