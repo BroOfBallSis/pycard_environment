@@ -110,7 +110,7 @@ class BaseCharacter:
     def check_break_status(self):
         self.logger.increase_depth()
         """检查角色是否打断并更新状态"""
-        if self.rp.value <= 0 and not self.has_status(CharacterStatusType.BREAK):
+        if self.rp.value <= 0 and not self.has_status(CharacterStatusType.BREAK) and not self.has_status(CharacterStatusType.DEAD):
             status = CharacterStatus(self.player, CharacterStatusType.BREAK, -1)
             self.statuses.append(status)
             self.logger.info(f"获得 {status}")
@@ -130,17 +130,22 @@ class BaseCharacter:
         self.logger.decrease_depth()
 
     def append_status(self, status_type_str, layers=None):
-        self.logger.increase_depth()
+
         status_type_upper = status_type_str.upper()
         if layers is None:
             layers = 1
 
         if status_type_upper in CharacterStatusType.__members__:
             status_type = CharacterStatusType[status_type_upper]
-            status = CharacterStatus(self.player, status_type, layers)
-            self.statuses.append(status)
-            self.logger.info(f"获得 {status}")
-        self.logger.decrease_depth()
+            status = self.has_status(status_type)
+            if status:
+                status.increase(layers)
+            else:
+                status = CharacterStatus(self.player, status_type, layers)
+                self.statuses.append(status)
+                self.logger.increase_depth()
+                self.logger.info(f"获得 {status}")
+                self.logger.decrease_depth()
 
     def reduce_status(self, status_type_str, layers=None):
         status_type_upper = status_type_str.upper()

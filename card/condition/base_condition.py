@@ -56,7 +56,7 @@ class BaseCondition:
                 for skip_status in [CharacterStatusType.BREAK, CharacterStatusType.DEAD]:
                     if source.character.has_status(skip_status):
                         self.logger.increase_depth()
-                        self.logger.info(f"{effect} [*{skip_status.value}*]")
+                        self.logger.info(f"{color_text(effect, 'gray')} [*{skip_status.value}*]")
                         self.logger.decrease_depth()
                         skip_effect = True
                         break

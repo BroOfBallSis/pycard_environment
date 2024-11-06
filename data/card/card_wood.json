@@ -1,0 +1,136 @@
+{
+    "mw03_0001": {
+        "name": "打击",
+        "card_type": "wind",
+        "is_base": true,
+        "ep_cost": 4,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "cause_damage",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0002": {
+        "name": "引导魔力",
+        "card_type": "wind",
+        "ep_cost": 4,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "switch",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "mana",
+                        "layers": 1
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "cause_damage",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 1
+                    }
+                ]
+            }
+        ]
+    },
+    "mw02_0003": {
+        "name": "侧身打击",
+        "card_type": "shadow",
+        "ep_cost": 4,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "dodge"
+                    },
+                    {
+                        "effect_type": "cause_damage",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "mw02_0004": {
+        "name": "重锤打击",
+        "card_type": "fire",
+        "ep_cost": 6,
+        "time_cost": 7,
+        "conditions": [
+            {
+                "condition_type": "switch",
+                "effects": [
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 1,
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "cause_damage",
+                        "amount": 5
+                    },
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 5
+                    }
+                ]
+            }
+        ]
+    },
+    "mw02_0005": {
+        "name": "下颚粉碎",
+        "card_type": "thunder",
+        "ep_cost": 6,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 4
+                    },
+                    {
+                        "effect_type": "detonate_status",
+                        "status": "slow",
+                        "sub_effect": {
+                            "effect_type": "cause_damage",
+                            "amount": 2
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

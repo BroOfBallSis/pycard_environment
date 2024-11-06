@@ -82,7 +82,7 @@ class Effect:
             for skip_status in [CharacterStatusType.DODGE, CharacterStatusType.RETREAT]:
                 if target_object.character.has_status(skip_status):
                     self.logger.info(
-                        f"{source.name_with_color} -> {target_object.name_with_color}: {self} [*{skip_status.value}*]",
+                        f"{source.name_with_color} -> {target_object.name_with_color}: {color_text(self, 'gray')} [*{skip_status.value}*]",
                         show_source=False,
                     )
                     self.logger.decrease_depth()

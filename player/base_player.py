@@ -159,9 +159,10 @@ class BasePlayer:
         current_phase = battle_info["current_phase"]
         # 更新手牌信息
         self.update_hand()
+        
         # 拥有破绽, 跳过出牌
         flaws_status = self.character.has_status(CharacterStatusType.FLAWS)
-        if flaws_status:
+        if flaws_status and current_phase == BattlePhase.PLAY_PHASE:
             return -1
 
         # 通过策略获取出牌索引

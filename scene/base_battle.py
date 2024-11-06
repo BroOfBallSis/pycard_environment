@@ -16,6 +16,7 @@ class BaseBattle:
         self.player_list = [self.player1, self.player2]
         self.player1.opponent = self.player2
         self.player2.opponent = self.player1
+        self.is_first_round = True
         self.round_cnt = 0
         self.turn_cnt = 0
         self.current_phase = BattlePhase.INITIALIZATION
@@ -30,6 +31,14 @@ class BaseBattle:
 
             # 轮开始
             self.start_round()
+
+            if self.is_first_round:
+                input(color_text("输入回车键继续……", "gray"))
+                clear_terminal()
+                self.is_first_round = False
+                self.current_phase = BattlePhase.DISCARD_PHASE
+                for player in self.player_list:
+                    self.discard_phase(player)
 
             while not self.is_round_over() and not self.is_battle_over():
 
@@ -67,14 +76,14 @@ class BaseBattle:
         self.round_cnt += 1
         self.turn_cnt = 0
         print(f"---------------- 第 {self.round_cnt} 轮 ----------------")
-        self.logger.log_to_file(f"第 {self.round_cnt} 轮:")
+        self.logger.log_to_file(f"---------------- 第 {self.round_cnt} 轮 ----------------")
         for player in self.player_list:
             player.start_round()
 
     def start_turn(self):
         self.turn_cnt += 1
         print(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
-        self.logger.log_to_file(f"-- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) --")
+        self.logger.log_to_file(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
         for player in self.player_list:
             player.start_turn()
             self.logger.log_to_file(
