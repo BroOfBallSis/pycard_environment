@@ -5,7 +5,19 @@
         "ep_cost": 0,
         "time_cost": 6,
         "consumable": true,
-        "conditions": []
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "reduce_status",
+                        "status": "flaws",
+                        "layers": 1,
+                        "immediate": true
+                    }
+                ]
+            }
+        ]
     },
     "i0001_01": {
         "name": "生命药剂",
@@ -520,6 +532,120 @@
                     {
                         "effect_type": "recover_ep",
                         "amount": 6
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0001": {
+        "name": "祷告",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "mana",
+                        "layers": 1
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 4,
+                        "immediate": true
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0002": {
+        "name": "撤离",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "retreat"
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 4,
+                        "immediate": true
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0003": {
+        "name": "生命涌动",
+        "card_type": "forest",
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "pay_mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "recover_hp",
+                        "amount": 5
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "draw_card",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0004": {
+        "name": "念力迸发",
+        "card_type": "thunder",
+        "ep_cost": 2,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "pay_mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "cause_stun",
+                        "amount": 4
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "resist_damage",
+                        "amount": 2,
+                        "immediate": true
+                    },
+                    {
+                        "effect_type": "resist_stun",
+                        "amount": 2
                     }
                 ]
             }

@@ -50,7 +50,7 @@ if __name__ == "__main__":
     sorted_card_dict = {card_id: card_info for card_id, card_info in sorted_cards}
 
     # 写入新的 JSON 文件
-    output_file_path = os.path.join(card_library.card_directory, "all/sorted_cards.json")
+    output_file_path = os.path.join(card_library.card_directory, "all/all_cards.json")
     with open(output_file_path, "w", encoding="utf-8") as output_file:
         json.dump(sorted_card_dict, output_file, ensure_ascii=False, indent=4)
 

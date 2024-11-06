@@ -66,7 +66,11 @@ menu_dict = {
     "pve_menu": Menu(
         "pve_menu",
         "选择玩家角色",
-        [MenuItem("剑士", "select_character", "ch00001", 0), MenuItem("近卫", "select_character", "ch00002", 0)],
+        [
+            MenuItem("剑士", "select_character", "ch00001", 0),
+            MenuItem("近卫", "select_character", "ch00002", 0),
+            MenuItem("牧师(early access)", "select_character", "ch00003", 0),
+        ],
         parent="main_menu",
     ),
     "pve_enemy_menu": Menu(

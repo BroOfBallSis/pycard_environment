@@ -24,9 +24,7 @@ class PayCondition(BaseCondition):
 
     def mock_is_met(self, source: Any, target: Any, context: Any) -> bool:
         mana_status = source.character.has_status(CharacterStatusType.MANA)
-        if not mana_status or mana_status.layers < self.amount:
-            return False
-        return True
+        return MockResult.TRUE if mana_status and mana_status.layers >= self.amount else MockResult.FALSE
 
     def get_condition_type_str(self):
         return self.condition_type.value.format(self.amount)
