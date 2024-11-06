@@ -36,6 +36,12 @@ class ConditionType(Enum):
     PAY_MANA = "支付{}点魔力"
 
 
+class MockResult(Enum):
+    FALSE = -1
+    UNKNOWN = 0
+    TRUE = 1
+
+
 class EffectType(Enum):
     CAUSE_DAMAGE = "cause_damage"
     CAUSE_STUN = "cause_stun"

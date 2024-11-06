@@ -5,6 +5,9 @@ class ConstantCondition(BaseCondition):
     def is_met(self, source: Any, target: Any, context: Any) -> bool:
         return self.condition_type == ConditionType.TRUE
 
+    def mock_is_met(self, source: Any, target: Any, context: Any) -> bool:
+        return MockResult.TRUE if self.condition_type == ConditionType.TRUE else MockResult.FALSE
+
 
 class TimedCondition(BaseCondition):
     def is_met(self, source: Any, target: Any, context: Any) -> bool:
@@ -44,5 +47,4 @@ class TypeConversionCondition(BaseCondition):
             ConditionType.START: posture == CardType.NONE,
             ConditionType.OPPONENT_SWITCH: False,
         }
-
-        return condition_checks.get(self.condition_type, False)
+        return MockResult.TRUE if condition_checks.get(self.condition_type, False) else MockResult.FALSE

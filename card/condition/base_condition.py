@@ -1,6 +1,6 @@
 from enum import Enum
 from card.effect.effect import Effect
-from data.pycard_define import CardType, ConditionType
+from data.pycard_define import CardType, ConditionType, MockResult
 from character.status.base_status import CharacterStatusType
 from typing import Any, List, Dict
 from utils.draw_text import color_text
@@ -32,7 +32,7 @@ class BaseCondition:
         raise NotImplementedError("子类必须实现 is_met 方法")
 
     def mock_is_met(self, source: Any, target: Any, context: Any) -> bool:
-        return False
+        return MockResult.UNKNOWN
 
     def execute_effects(self, source: Any, target: Any, context: Any) -> None:
         """
@@ -67,7 +67,8 @@ class BaseCondition:
         return self.condition_type.value
 
     def get_colored_str(self, get_color=True) -> str:
-        if get_color:
+        is_met = self.mock_is_met(self.player, self.player.opponent, {})
+        if get_color and is_met != MockResult.FALSE:
             effects_str = ", ".join(effect.get_colored_str() for effect in self.effects)
         else:
             effects_str = ", ".join(str(effect) for effect in self.effects)
@@ -76,8 +77,10 @@ class BaseCondition:
         if condition_type_str:
             full_description = f"{condition_type_str}:{effects_str};"
             # 若条件满足
-            if get_color and self.mock_is_met(self.player, self.player.opponent, {}):
+            if get_color and is_met == MockResult.TRUE:
                 full_description = color_text(full_description, "green")
+            elif get_color and is_met == MockResult.FALSE:
+                full_description = color_text(full_description, "gray")
         else:
             full_description = f"{effects_str};"
         return full_description
