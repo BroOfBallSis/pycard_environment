@@ -54,7 +54,7 @@ class BaseCondition:
                     continue
                 effect.execute(source, target, context)
 
-    def get_colored_str(self, get_color=True)  -> str:
+    def get_colored_str(self, get_color=True) -> str:
         if get_color:
             effects_str = ", ".join(effect.get_colored_str() for effect in self.effects)
         else:
@@ -69,7 +69,7 @@ class BaseCondition:
         else:
             full_description = f"{effects_str};"
         return full_description
-    
+
     def __str__(self) -> str:
         return self.get_colored_str(get_color=False)
 

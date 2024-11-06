@@ -191,8 +191,6 @@ class BaseBattle:
             return True
 
 
-
-
 if __name__ == "__main__":
     # 创建战斗实例
     battle = BaseBattle(["ch00001", "ch00001"])

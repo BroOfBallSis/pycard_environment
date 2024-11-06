@@ -35,7 +35,7 @@ class CardAttribute:
             if get_color:
                 real_value_str = color_text(f"{real_value_str}", "yellow")
         return real_value_str
-               
+
     def __str__(self):
         return self.get_colored_str(get_color=False)
 

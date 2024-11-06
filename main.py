@@ -62,7 +62,7 @@ class Game:
         # 进入主循环
         if battle.main_loop() and not self.pass_time_and_resilience_tutorial:
             old_text = menu_dict["tutorial_menu"].items[0].text
-            menu_dict["tutorial_menu"].items[0].text = color_text(old_text, 'gray')
+            menu_dict["tutorial_menu"].items[0].text = color_text(old_text, "gray")
             self.pass_time_and_resilience_tutorial = True
 
         del battle
@@ -78,7 +78,7 @@ class Game:
         # 进入主循环
         if battle.main_loop() and not self.pass_dodge_and_retreat_tutorial:
             old_text = menu_dict["tutorial_menu"].items[1].text
-            menu_dict["tutorial_menu"].items[1].text = color_text(old_text, 'gray')
+            menu_dict["tutorial_menu"].items[1].text = color_text(old_text, "gray")
             self.pass_dodge_and_retreat_tutorial = True
 
         del battle

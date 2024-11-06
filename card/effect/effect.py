@@ -178,7 +178,7 @@ class Effect:
         if get_color and self.mock_execute():
             effect_str = color_text(effect_str, "green")
         return effect_str
-    
+
     def __str__(self) -> str:
         return self.get_colored_str(get_color=False)
 
