@@ -66,11 +66,13 @@ class BaseCharacter:
     def start_round(self):
         self.ep.set_value(self.ep.max_value)
         self.rp.set_value(self.rp.max_value)
-        self.statuses = []
+        for status in self.statuses:
+            status.start_round()
+        self.update_status()
         self.delay.set_value(0)
 
     def start_turn(self):
-        self.start_turn_update_status()
+        self.update_status()
         for attr in [self.hp, self.ep, self.rp, self.delay]:
             attr.set_resist(0)
 
@@ -140,6 +142,16 @@ class BaseCharacter:
             self.logger.info(f"获得 {status}")
         self.logger.decrease_depth()
 
+    def reduce_status(self, status_type_str, layers=None):
+        status_type_upper = status_type_str.upper()
+        if layers is None:
+            layers = 1
+
+        if status_type_upper in CharacterStatusType.__members__:
+            status_type = CharacterStatusType[status_type_upper]
+            status = self.has_status(status_type)
+            status.decrease(layers)
+
     def detonate_status(self, status_type_str, sub_effect=None):
         status_type_upper = status_type_str.upper()
         if status_type_upper in CharacterStatusType.__members__:
@@ -160,11 +172,11 @@ class BaseCharacter:
                 self.statuses.remove(to_remove_status)
                 self.logger.decrease_depth()
 
-    def start_turn_update_status(self):
-
+    def update_status(self):
         to_remove_statuses = []
         for status in self.statuses:
-            status.on_trigger()
+            if status.layers > 0:
+                status.on_trigger()
             if status.layers <= 0:
                 self.logger.increase_depth()
                 to_remove_statuses.append(status)

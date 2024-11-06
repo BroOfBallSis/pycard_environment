@@ -1,5 +1,5 @@
 {
-    "a00001": {
+    "mw01_0001": {
         "name": "挥砍",
         "card_type": "wind",
         "is_base": true,
@@ -21,7 +21,7 @@
             }
         ]
     },
-    "a00002": {
+    "sw01_0001": {
         "name": "翻滚",
         "card_type": "forest",
         "is_base": true,
@@ -48,7 +48,7 @@
             }
         ]
     },
-    "a00003": {
+    "sw01_0002": {
         "name": "撤离",
         "card_type": "forest",
         "is_base": true,
@@ -71,7 +71,7 @@
             }
         ]
     },
-    "a00004": {
+    "mw01_0002": {
         "name": "长剑突刺",
         "card_type": "wind",
         "ep_cost": 3,
@@ -101,7 +101,7 @@
             }
         ]
     },
-    "a00005": {
+    "mw01_0003": {
         "name": "先发制人",
         "card_type": "wind",
         "ep_cost": 4,
@@ -131,7 +131,7 @@
             }
         ]
     },
-    "a00006": {
+    "mw01_0004": {
         "name": "长剑上挑",
         "card_type": "shadow",
         "ep_cost": 4,
@@ -156,7 +156,7 @@
             }
         ]
     },
-    "a00007": {
+    "mw01_0005": {
         "name": "长剑竖劈",
         "card_type": "fire",
         "ep_cost": 7,
@@ -187,7 +187,7 @@
             }
         ]
     },
-    "a00008": {
+    "sw01_0003": {
         "name": "保持戒备",
         "card_type": "forest",
         "ep_cost": 2,
@@ -213,7 +213,7 @@
             }
         ]
     },
-    "a00009": {
+    "sw01_0004": {
         "name": "重整旗鼓",
         "card_type": "mountain",
         "ep_cost": 0,
@@ -238,7 +238,7 @@
             }
         ]
     },
-    "i00010": {
+    "i0001_01": {
         "name": "生命药剂",
         "card_type": "forest",
         "ep_cost": 0,
@@ -256,7 +256,7 @@
             }
         ]
     },
-    "i00011": {
+    "i0002_01": {
         "name": "便携手弩",
         "card_type": "thunder",
         "ep_cost": 1,

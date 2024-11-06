@@ -11,8 +11,8 @@ class TutorialBattle2(BaseBattle):
     def initialize_battle(self):
         clear_terminal()
         print("初始化对战")
-        self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00005"))
-        self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00007"))
+        self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "mw01_0003"))
+        self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0005"))
 
     def main_loop(self):
         while not self.is_battle_over():
@@ -62,19 +62,19 @@ class TutorialBattle2(BaseBattle):
                 self.resolve_phase()
                 # 回合 1
                 if self.round_cnt == 1 and self.turn_cnt == 1:
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00002"))
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00004"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "sw01_0001"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0002"))
                 # 回合 2
                 if self.round_cnt == 1 and self.turn_cnt == 2:
                     self.player1.card_manager.hand = []
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00001"))
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00002"))
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00003"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "mw01_0001"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "sw01_0001"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "sw01_0002"))
                 # 回合 3
                 if self.round_cnt == 1 and self.turn_cnt == 3:
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00001"))
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00002"))
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00003"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0001"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "sw01_0001"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "sw01_0002"))
 
                 # 回合结束
                 self.end_turn()
@@ -104,9 +104,9 @@ class TutorialBattle2(BaseBattle):
 
             # 回合 3
             if self.round_cnt == 1 and self.turn_cnt == 3:
-                self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00005"))
-                self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00006"))
-                self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00007"))
+                self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "mw01_0003"))
+                self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "mw01_0004"))
+                self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "mw01_0005"))
 
         return self.conclude_battle()
 

@@ -78,6 +78,20 @@
         "description": "抽{}张牌",
         "priority": 3
     },
+    "gain_status": {
+        "target": "source",
+        "component": "character",
+        "function": "append_status",
+        "description": "获得{}{}{}",
+        "priority": 1
+    },
+    "reduce_status": {
+        "target": "source",
+        "component": "character",
+        "function": "reduce_status",
+        "description": "减少{}{}{}",
+        "priority": 1
+    },
     "gain_singleton_status": {
         "target": "source",
         "component": "character",

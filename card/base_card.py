@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 from data.pycard_define import CardType
-from card.condition.base_condition import ConditionFactory, BaseCondition
-from card.effect.effect import EffectFactory
+from card.condition.base_condition import BaseCondition
+from card.card_factory import ConditionFactory, EffectFactory
 from utils.draw_text import center_text
 from card.card_attribute import CardAttribute
 from data.card import card_library_instance
@@ -69,7 +69,9 @@ class BaseCard:
                     effect.sub_effect = EffectFactory.create_effect(player, card, sub_effect_type, sub_context)
 
             # 使用条件工厂创建条件实例
-            condition = ConditionFactory.create_condition(player, card, condition_type, effects)
+            condition_param_list = ["amount", "immediate", "status", "layers", "sub_condition"]
+            condition_context = {key: cond[key] for key in condition_param_list if key in cond}
+            condition = ConditionFactory.create_condition(player, card, condition_type, effects, condition_context)
             card.conditions.append(condition)
         return card
 

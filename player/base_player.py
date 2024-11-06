@@ -110,6 +110,10 @@ class BasePlayer:
         self.policy.start_turn()
         self.logger.set_depth(0)
 
+        for _, card in enumerate(self.card_manager.hand):
+            for condition in card.conditions:
+                condition.reset()
+
     def end_turn(self, base_delay):
         """
         每回合对战结束时的操作
@@ -158,7 +162,6 @@ class BasePlayer:
         # 拥有破绽, 跳过出牌
         flaws_status = self.character.has_status(CharacterStatusType.FLAWS)
         if flaws_status:
-            flaws_status.decrease(1)
             return -1
 
         # 通过策略获取出牌索引
@@ -177,7 +180,7 @@ class BasePlayer:
                 # 合法的出牌索引
                 return hand_index
             else:
-                print(color_text(f"\t{self.name} 非法动作, 视为打出 '破绽'", "red"))
+                # print(color_text(f"\t{self.name} 非法动作, 视为打出 '破绽'", "red"))
                 return -1
         else:
             return hand_index

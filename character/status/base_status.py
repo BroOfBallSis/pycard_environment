@@ -32,6 +32,23 @@ class CharacterStatus:
         self.logger.info(f"{self.status_type.value}: {old_value} ↓ {self.layers}")
         self.logger.decrease_depth()
 
+    def set_value(self, value: int):
+        if self.layers < 0:
+            # 单例状态无法设置
+            pass
+        else:
+            self.logger.increase_depth()
+            old_value = self.layers
+            self.layers = value
+            self.logger.info(f"{self.status_type.value}: {old_value} → {self.layers}")
+            self.logger.decrease_depth()
+
+    def start_round(self):
+        if self.status_type == CharacterStatusType.MANA:
+            pass
+        else:
+            self.set_value(0)
+
     def on_add(self) -> None:
         """当状态首次添加时调用"""
         pass

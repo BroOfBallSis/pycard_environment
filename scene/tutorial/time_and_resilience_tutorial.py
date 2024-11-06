@@ -15,8 +15,8 @@ class TutorialBattle1(BaseBattle):
     def initialize_battle(self):
         clear_terminal()
         print("初始化对战")
-        self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00007"))
-        self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00001"))
+        self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "mw01_0005"))
+        self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0001"))
 
     def main_loop(self):
         while not self.is_battle_over():
@@ -48,8 +48,8 @@ class TutorialBattle1(BaseBattle):
                         f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"长剑突刺\""
                     )
                 if self.round_cnt == 1 and self.turn_cnt == 3:
-                    print(f"\t{color_text('教程:','yellow')} 为了展示 延迟 到达上限的情况, 手动将对手的 延迟 设置为 5")
                     self.player2.character.delay.set_value(5)
+                    print(f"\t{color_text('教程:','yellow')} 为了展示 延迟 到达上限的情况, 手动将对手的 延迟 设置为 5")
                     print(
                         f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"长剑突刺\""
                     )
@@ -68,20 +68,20 @@ class TutorialBattle1(BaseBattle):
                 if self.round_cnt == 1 and self.turn_cnt == 1:
                     self.player1.card_manager.hand = []
                     self.player2.card_manager.hand = []
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00004"))
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00007"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "mw01_0002"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0005"))
                 # 回合 2
                 if self.round_cnt == 1 and self.turn_cnt == 2:
                     self.player1.card_manager.hand = []
                     self.player2.card_manager.hand = []
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00004"))
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00007"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "mw01_0002"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0005"))
                 # 回合 3
                 if self.round_cnt == 1 and self.turn_cnt == 3:
                     self.player1.card_manager.hand = []
                     self.player2.card_manager.hand = []
-                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00007"))
-                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00007"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "mw01_0005"))
+                    self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "mw01_0005"))
                 # 回合结束
                 self.end_turn()
                 if self.round_cnt == 1 and self.turn_cnt == 1:
@@ -89,13 +89,13 @@ class TutorialBattle1(BaseBattle):
                     print(f"\t{color_text('教程:','yellow')} 结算完成后, 后手方会增加等于时刻差值的 '延迟'")
                 if self.round_cnt == 1 and self.turn_cnt == 2:
                     print(
-                        f"\t{color_text('教程:','yellow')} 每个时刻结束, 如果角色的 '韧性' 小于等于0, 角色获得 \"打断\"状态"
+                        f"\t{color_text('教程:','yellow')} 每个时刻结束, 如果角色的 '韧性' 小于等于0, 角色获得\"打断\"状态"
                     )
                     print(f"\t{color_text('教程:','yellow')} \"打断\"状态下, 角色不再发起 自身出牌 的效果结算")
                 if self.round_cnt == 1 and self.turn_cnt == 3:
-                    print(f"\t{color_text('教程:','yellow')} 如果角色的 '延迟' 大于等于上限值, 角色获得 \"破绽\"状态")
+                    print(f"\t{color_text('教程:','yellow')} 如果角色的 '延迟' 大于等于上限值, 角色获得\"破绽\"状态")
                     print(
-                        f"\t{color_text('教程:','yellow')} \"破绽\"状态下, 角色会跳过 出牌阶段 , 直接打出一张 时间6 的 \"破绽\" "
+                        f"\t{color_text('教程:','yellow')} \"破绽\"状态下, 角色会跳过 出牌阶段 , 直接打出一张时间6的\"破绽\" "
                     )
 
             # 弃牌阶段

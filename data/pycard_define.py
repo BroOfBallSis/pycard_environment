@@ -33,6 +33,7 @@ class ConditionType(Enum):
     MAINTAIN = "保持"
     START = "启动"
     OPPONENT_SWITCH = "识破"
+    PAY_MANA = "支付{}点魔力"
 
 
 class EffectType(Enum):
@@ -49,6 +50,7 @@ class EffectType(Enum):
     DRAW_CARD = "draw_card"
     GAIN_SINGLETON_STATUS = "gain_singleton_status"  # 单例状态
     GAIN_STATUS = "gain_status"
+    REDUCE_STATUS = "reduce_status"
     DETONATE_STATUS = "detonate_status"
 
 
@@ -72,6 +74,7 @@ class CharacterStatusType(Enum):
     BLEEDING = "流血"
     DULL = "迟钝"
     FLAWS = "破绽"
+    MANA = "魔力"
 
 
 class BattlePhase(Enum):

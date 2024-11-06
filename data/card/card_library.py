@@ -34,3 +34,24 @@ class CardLibrary:
     def get_card_info(self, card_id):
         """根据卡牌 ID 获取卡牌信息。"""
         return self.card_data.get(card_id)
+
+
+if __name__ == "__main__":
+    # 创建 CardLibrary 实例
+    card_library = CardLibrary()
+
+    # 获取所有卡牌信息
+    all_cards = card_library.card_data
+
+    # 将卡牌信息转换为列表并按 card_id 排序
+    sorted_cards = sorted(all_cards.items(), key=lambda item: item[0])  # item[0] 是 card_id
+
+    # 将排序后的卡牌信息转换为字典
+    sorted_card_dict = {card_id: card_info for card_id, card_info in sorted_cards}
+
+    # 写入新的 JSON 文件
+    output_file_path = os.path.join(card_library.card_directory, "all/sorted_cards.json")
+    with open(output_file_path, "w", encoding="utf-8") as output_file:
+        json.dump(sorted_card_dict, output_file, ensure_ascii=False, indent=4)
+
+    print(f"Sorted card data has been written to {output_file_path}")

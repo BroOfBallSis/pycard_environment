@@ -96,7 +96,7 @@ class CardManager:
 
 
 if __name__ == "__main__":
-    card_manager = CardManager(["a00001", "a00002", "a00001", "a00002"])
+    card_manager = CardManager(["mw01_0001", "sw01_0001", "mw01_0001", "sw01_0001"])
     print(card_manager)
     card_manager.draw_cards(2)
     print(card_manager)

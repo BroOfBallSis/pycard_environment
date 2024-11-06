@@ -1,5 +1,3 @@
-# /effect/base_effect.py
-
 from enum import Enum
 from typing import Any, Dict
 import json
@@ -81,26 +79,14 @@ class Effect:
 
         # 闪避, 撤离 状态下跳过效果结算
         if target_object != source:
-            if target_object.character.has_status(CharacterStatusType.DODGE):
-                self.logger.info(
-                    f"{source.name_with_color} -> {target_object.name_with_color}: {self} [*{CharacterStatusType.DODGE.value}*]",
-                    show_source=False,
-                )
-                self.logger.decrease_depth()
-                return False
-            elif target_object.character.has_status(CharacterStatusType.RETREAT):
-                self.logger.info(
-                    f"{source.name_with_color} -> {target_object.name_with_color}: {self}  [*{CharacterStatusType.RETREAT.value}*]",
-                    show_source=False,
-                )
-                self.logger.decrease_depth()
-                return False
-            elif source.character.has_status(CharacterStatusType.DEAD):
-                self.logger.info(
-                    f"{source.name_with_color}: {self} [*{CharacterStatusType.DEAD.value}*]", show_source=False
-                )
-                self.logger.decrease_depth()
-                return False
+            for skip_status in [CharacterStatusType.DODGE, CharacterStatusType.RETREAT]:
+                if target_object.character.has_status(skip_status):
+                    self.logger.info(
+                        f"{source.name_with_color} -> {target_object.name_with_color}: {self} [*{skip_status.value}*]",
+                        show_source=False,
+                    )
+                    self.logger.decrease_depth()
+                    return False
 
         self.logger.info(f"{source.name_with_color} -> {target_object.name_with_color}: {self}", show_source=False)
 
@@ -165,8 +151,11 @@ class Effect:
         placeholder_count = self.description.count("{}")
         if self.effect_type == EffectType.GAIN_SINGLETON_STATUS:
             effect_str = self.description.format(self.status_type.value)
-        elif self.effect_type == EffectType.GAIN_STATUS:
-            effect_str = self.description.format(self.layers, self.status_type.value)
+        elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.REDUCE_STATUS]:
+            if self.status_type in [CharacterStatusType.MANA]:
+                effect_str = self.description.format(self.layers, "点", self.status_type.value)
+            else:
+                effect_str = self.description.format(self.layers, "层", self.status_type.value)
         elif self.effect_type == EffectType.DETONATE_STATUS:
             effect_str = self.description.format(self.status_type.value, self.sub_effect)
         elif placeholder_count == 1:
@@ -181,22 +170,3 @@ class Effect:
 
     def __str__(self) -> str:
         return self.get_colored_str(get_color=False)
-
-
-class EffectFactory:
-    @staticmethod
-    def create_effect(player, card, effect_type_str: str, context: Dict[str, Any]):
-        """
-        创建效果实例的工厂方法
-
-        :param effect_type: 效果类型
-        :param context: 效果上下文，包含必要的参数
-        :return: Effect 实例
-        """
-        # 将 effect_type 转换为大写，以便与枚举类型匹配
-        effect_type_upper = effect_type_str.upper()
-
-        if effect_type_upper in EffectType.__members__:
-            effect_type = EffectType[effect_type_upper]
-            return Effect(player, card, effect_type, context)
-        raise ValueError(f"Unsupported effect type: {effect_type_str}")
