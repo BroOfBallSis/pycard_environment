@@ -34,6 +34,8 @@ class Game:
         self.characters = ["ch00001", "ch00001"]
         self.menu_dict = menu_dict
         self.current_menu = self.menu_dict["main_menu"]
+        self.pass_time_and_resilience_tutorial = False
+        self.pass_dodge_and_retreat_tutorial = False
 
     def run(self):
         self.current_menu.display(self)
@@ -52,26 +54,32 @@ class Game:
     def time_and_resilience_tutorial(self):
 
         # 创建战斗实例
-        battle = TutorialBattle1(self.characters)
+        battle = TutorialBattle1(["th00001", "th00001"])
 
         # 初始化战斗
         battle.initialize_battle()
 
         # 进入主循环
-        battle.main_loop()
+        if battle.main_loop() and not self.pass_time_and_resilience_tutorial:
+            old_text = menu_dict["tutorial_menu"].items[0].text
+            menu_dict["tutorial_menu"].items[0].text = color_text(old_text, 'gray')
+            self.pass_time_and_resilience_tutorial = True
 
         del battle
 
     def dodge_and_retreat_tutorial(self):
 
         # 创建战斗实例
-        battle = TutorialBattle2(self.characters)
+        battle = TutorialBattle2(["th00001", "th00001"])
 
         # 初始化战斗
         battle.initialize_battle()
 
         # 进入主循环
-        battle.main_loop()
+        if battle.main_loop() and not self.pass_dodge_and_retreat_tutorial:
+            old_text = menu_dict["tutorial_menu"].items[1].text
+            menu_dict["tutorial_menu"].items[1].text = color_text(old_text, 'gray')
+            self.pass_dodge_and_retreat_tutorial = True
 
         del battle
 

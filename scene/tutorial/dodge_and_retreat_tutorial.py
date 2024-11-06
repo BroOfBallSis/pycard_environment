@@ -1,24 +1,18 @@
 from scene.base_battle import BaseBattle
 from player.base_player import BasePlayer
 from utils.draw_text import color_text, clear_terminal
-from scene.scene_define import BattlePhase
+from data.pycard_define import BattlePhase
 from card.base_card import BaseCard
 from utils.logger import Logger
 
 
 class TutorialBattle2(BaseBattle):
-    def __init__(self, characters):
-        self.player1 = BasePlayer("player1", 1, "th00001", "terminal", self)
-        self.player2 = BasePlayer("player2", 2, "th00001", "sword_ai", self)
-        self.player_list = [self.player1, self.player2]
-        self.player1.opponent = self.player2
-        self.player2.opponent = self.player1
-        self.round_cnt = 0
-        self.turn_cnt = 0
-        self.current_phase = BattlePhase.INITIALIZATION
+
+    def initialize_battle(self):
+        clear_terminal()
+        print("初始化对战")
         self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00005"))
         self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00007"))
-        self.logger = Logger("battle")
 
     def main_loop(self):
         while not self.is_battle_over():
@@ -72,7 +66,9 @@ class TutorialBattle2(BaseBattle):
                     self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00004"))
                 # 回合 2
                 if self.round_cnt == 1 and self.turn_cnt == 2:
+                    self.player1.card_manager.hand = []
                     self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00001"))
+                    self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00002"))
                     self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00003"))
                 # 回合 3
                 if self.round_cnt == 1 and self.turn_cnt == 3:
@@ -112,7 +108,7 @@ class TutorialBattle2(BaseBattle):
                 self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00006"))
                 self.player1.card_manager.deck.append(BaseCard.from_json(self.player2, "a00007"))
 
-        self.conclude_battle()
+        return self.conclude_battle()
 
     def start_round(self):
         self.round_cnt += 1

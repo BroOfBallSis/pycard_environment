@@ -1,5 +1,5 @@
 # /status/base_status.py
-from character.character_define import CharacterStatusType
+from data.pycard_define import CharacterStatusType
 from utils.logger import Logger
 
 

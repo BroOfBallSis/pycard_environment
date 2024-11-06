@@ -4,8 +4,8 @@ from enum import Enum
 from typing import Any, Dict
 import json
 import os
-from character.character_define import CharacterStatusType
-from card.card_define import EffectType
+from data.pycard_define import CharacterStatusType
+from data.pycard_define import EffectType
 from utils.draw_text import color_text
 from utils.logger import Logger
 
@@ -83,21 +83,21 @@ class Effect:
         if target_object != source:
             if target_object.character.has_status(CharacterStatusType.DODGE):
                 self.logger.info(
-                    f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.DODGE.value}]: {self}",
+                    f"{source.name_with_color} -> {target_object.name_with_color}: {self} [*{CharacterStatusType.DODGE.value}*]",
                     show_source=False,
                 )
                 self.logger.decrease_depth()
                 return False
             elif target_object.character.has_status(CharacterStatusType.RETREAT):
                 self.logger.info(
-                    f"{source.name_with_color} -> {target_object.name_with_color} [{CharacterStatusType.RETREAT.value}]: {self}",
+                    f"{source.name_with_color} -> {target_object.name_with_color}: {self}  [*{CharacterStatusType.RETREAT.value}*]",
                     show_source=False,
                 )
                 self.logger.decrease_depth()
                 return False
             elif source.character.has_status(CharacterStatusType.DEAD):
                 self.logger.info(
-                    f"{source.name_with_color} [{CharacterStatusType.DEAD.value}]: {self}", show_source=False
+                    f"{source.name_with_color}: {self} [*{CharacterStatusType.DEAD.value}*]", show_source=False
                 )
                 self.logger.decrease_depth()
                 return False
@@ -161,7 +161,7 @@ class Effect:
             return component_object.has_status(self.status_type)
         return False
 
-    def __str__(self) -> str:
+    def get_colored_str(self, get_color=True) -> str:
         placeholder_count = self.description.count("{}")
         if self.effect_type == EffectType.GAIN_SINGLETON_STATUS:
             effect_str = self.description.format(self.status_type.value)
@@ -175,9 +175,12 @@ class Effect:
             effect_str = self.description  # 如果没有占位符，直接使用描述
         if self.immediate:
             effect_str += "(立即)"
-        if self.mock_execute():
+        if get_color and self.mock_execute():
             effect_str = color_text(effect_str, "green")
         return effect_str
+    
+    def __str__(self) -> str:
+        return self.get_colored_str(get_color=False)
 
 
 class EffectFactory:

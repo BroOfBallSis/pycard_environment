@@ -1,8 +1,8 @@
 from utils.draw_text import color_text, center_text, clear_terminal, display_help
-from character.character_define import CharacterStatusType
+from data.pycard_define import CharacterStatusType
 from player.policy.base_policy import BasePolicy
 import copy
-from scene.scene_define import BattlePhase
+from data.pycard_define import BattlePhase
 
 
 class TerminalPolicy(BasePolicy):
@@ -24,7 +24,7 @@ class TerminalPolicy(BasePolicy):
             else:
                 index_color = "green"
 
-            hand_str.append(f"{color_text(f'[{index}]', index_color)} {card}")
+            hand_str.append(f"{color_text(f'[{index}]', index_color)} {card.get_colored_str()}")
         print("\n".join(hand_str))
 
     def display_deck(self) -> str:

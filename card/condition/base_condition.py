@@ -1,9 +1,10 @@
 from enum import Enum
 from card.effect.effect import Effect
-from card.card_define import CardType, ConditionType
+from data.pycard_define import CardType, ConditionType
 from character.status.base_status import CharacterStatusType
 from typing import Any, List, Dict
 from utils.draw_text import color_text
+from utils.logger import Logger
 
 
 class BaseCondition:
@@ -12,6 +13,7 @@ class BaseCondition:
         self.effects = effects
         self.card = card
         self.player = player
+        self.logger = Logger(self.player.name)
 
     def is_met(self, source: Any, target: Any, context: Any) -> bool:
         """
@@ -46,22 +48,30 @@ class BaseCondition:
             ):
                 # 效果结算被打断的情况
                 if source.character.has_status(CharacterStatusType.BREAK):
-                    print(f"\t{source.name} [{CharacterStatusType.BREAK.value}]: {effect} ")
+                    self.logger.increase_depth()
+                    self.logger.info(f"{effect.get_colored_str()} [*{CharacterStatusType.BREAK.value}*]")
+                    self.logger.decrease_depth()
                     continue
                 effect.execute(source, target, context)
 
-    def __str__(self) -> str:
-        effects_str = ", ".join(str(effect) for effect in self.effects)
+    def get_colored_str(self, get_color=True)  -> str:
+        if get_color:
+            effects_str = ", ".join(effect.get_colored_str() for effect in self.effects)
+        else:
+            effects_str = ", ".join(str(effect) for effect in self.effects)
         condition_type_name = self.condition_type.value
 
         if condition_type_name:
             full_description = f"{condition_type_name}:{effects_str};"
             # 若条件满足
-            if self.mock_is_met(self.player, self.player.opponent, {}):
+            if get_color and self.mock_is_met(self.player, self.player.opponent, {}):
                 full_description = color_text(full_description, "green")
         else:
             full_description = f"{effects_str};"
         return full_description
+    
+    def __str__(self) -> str:
+        return self.get_colored_str(get_color=False)
 
 
 class ConditionFactory:

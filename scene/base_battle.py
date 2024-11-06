@@ -4,14 +4,14 @@ from character.status.base_status import CharacterStatusType
 import time
 from utils.draw_text import color_text, clear_terminal
 from utils.debug import print_memory_info
-from scene.scene_define import BattlePhase
+from data.pycard_define import BattlePhase, character_to_policy
 from utils.logger import Logger
 
 
 class BaseBattle:
     def __init__(self, characters):
         self.player1 = BasePlayer("player1", 1, characters[0], "terminal", self)
-        enemy_ai = "hammer_ai" if characters[1] == "ch00002" else "sword_ai"
+        enemy_ai = character_to_policy[characters[1]]
         self.player2 = BasePlayer("player2", 2, characters[1], enemy_ai, self)
         self.player_list = [self.player1, self.player2]
         self.player1.opponent = self.player2
@@ -61,7 +61,7 @@ class BaseBattle:
                 input(color_text("输入回车键继续……", "gray"))
                 clear_terminal()
 
-        self.conclude_battle()
+        return self.conclude_battle()
 
     def start_round(self):
         self.round_cnt += 1
@@ -181,11 +181,16 @@ class BaseBattle:
     def conclude_battle(self):
         if not self.player1.character.is_alive():
             print(f"{self.player1.name} has been defeated! {self.player2.name} wins!")
+            input(color_text("输入回车键继续……", "gray"))
+            clear_terminal()
+            return False
         elif not self.player2.character.is_alive():
             print(f"{self.player2.name} has been defeated! {self.player1.name} wins!")
+            input(color_text("输入回车键继续……", "gray"))
+            clear_terminal()
+            return True
 
-        input(color_text("输入回车键继续……", "gray"))
-        clear_terminal()
+
 
 
 if __name__ == "__main__":

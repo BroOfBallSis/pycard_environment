@@ -5,24 +5,18 @@ from character.status.base_status import CharacterStatusType
 import time
 from utils.draw_text import color_text, clear_terminal
 from utils.debug import print_memory_info
-from scene.scene_define import BattlePhase
+from data.pycard_define import BattlePhase
 from card.base_card import BaseCard
 from utils.logger import Logger
 
 
 class TutorialBattle1(BaseBattle):
-    def __init__(self, characters):
-        self.player1 = BasePlayer("player1", 1, "th00001", "terminal", self)
-        self.player2 = BasePlayer("player2", 2, "th00001", "sword_ai", self)
-        self.player_list = [self.player1, self.player2]
-        self.player1.opponent = self.player2
-        self.player2.opponent = self.player1
-        self.round_cnt = 0
-        self.turn_cnt = 0
-        self.current_phase = BattlePhase.INITIALIZATION
+
+    def initialize_battle(self):
+        clear_terminal()
+        print("初始化对战")
         self.player1.card_manager.hand.append(BaseCard.from_json(self.player1, "a00007"))
         self.player2.card_manager.hand.append(BaseCard.from_json(self.player2, "a00001"))
-        self.logger = Logger("battle")
 
     def main_loop(self):
         while not self.is_battle_over():
@@ -114,7 +108,7 @@ class TutorialBattle1(BaseBattle):
                 input(color_text("输入回车键继续……", "gray"))
                 clear_terminal()
 
-        self.conclude_battle()
+        return self.conclude_battle()
 
 
 if __name__ == "__main__":

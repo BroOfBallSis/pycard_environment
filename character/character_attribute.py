@@ -1,4 +1,4 @@
-from character.character_define import CharacterAttributeType
+from data.pycard_define import CharacterAttributeType
 from utils.logger import Logger
 
 

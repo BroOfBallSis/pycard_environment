@@ -23,15 +23,21 @@ class CardAttribute:
     def __repr__(self):
         return f"CardAttribute(name={self.name!r}, base_value={self.base_value}, mod_value={self.mod_value})"
 
-    def __str__(self):
+    def get_colored_str(self, get_color=True) -> str:
         if self.mod_value < 0:
             real_value_str = center_text(f"{self.base_value}{self.mod_value}", 4)
-            return color_text(f"{real_value_str}", "green")
+            if get_color:
+                real_value_str = color_text(f"{real_value_str}", "green")
         elif self.mod_value == 0:
             return center_text(f"{self.base_value}", 4)
         else:
             real_value_str = center_text(f"{self.base_value}+{self.mod_value}", 4)
-            return color_text(f"{real_value_str}", "yellow")
+            if get_color:
+                real_value_str = color_text(f"{real_value_str}", "yellow")
+        return real_value_str
+               
+    def __str__(self):
+        return self.get_colored_str(get_color=False)
 
 
 class CardAttributeFloat(CardAttribute):

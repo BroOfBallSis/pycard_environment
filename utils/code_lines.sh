@@ -1,1 +1,0 @@
-find . -type f -name "*.py" -exec wc -l {} +

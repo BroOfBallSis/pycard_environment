@@ -1,5 +1,5 @@
 from typing import Dict, Any, List
-from card.card_define import CardType
+from data.pycard_define import CardType
 from card.condition.base_condition import ConditionFactory, BaseCondition
 from card.effect.effect import EffectFactory
 from utils.draw_text import center_text
@@ -89,17 +89,25 @@ class BaseCard:
             if condition.is_met(source, target, context):
                 condition.execute_effects(source, target, context)
 
-    def __str__(self) -> str:
+    def get_colored_str(self, get_color=True) -> str:
         # 控制字段宽度
         name_str = center_text(self.name, 12)  # 假设总宽度为12个字符
         card_type_str = center_text(f"{self.card_type.value}", 4)
         ep_cost_str = center_text(f"{self.ep_cost}", 4)
-        time_cost_str = center_text(f"{self.time_cost}", 4)
-
-        conditions_str = " ".join(str(condition) for condition in self.conditions)
+        if get_color:
+            time_cost_str = center_text(f"{self.time_cost.get_colored_str()}", 4)
+        else:
+            time_cost_str = center_text(f"{self.time_cost}", 4)
+        if get_color:
+            conditions_str = " ".join(condition.get_colored_str() for condition in self.conditions)
+        else:
+            conditions_str = " ".join(str(condition) for condition in self.conditions)
         addition_str = ""
         if self.is_base:
             addition_str += " 基础 "
         if self.consumable:
             addition_str += " 消耗 "
         return f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str}{addition_str}) {conditions_str}"
+    
+    def __str__(self) -> str:
+        return self.get_colored_str(get_color=False)

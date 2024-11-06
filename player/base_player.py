@@ -1,17 +1,18 @@
 # /player/base_player.py
 
 from character.base_character import BaseCharacter
-from character.character_define import CharacterStatusType, CharacterAttributeType
+from data.pycard_define import CharacterStatusType, CharacterAttributeType
 from data.character import character_library_instance
 from card.card_manager import CardManager
 from card.base_card import BaseCard
-from card.card_define import CardType
+from data.pycard_define import CardType
 from utils.draw_text import center_text, color_text
-from player.policy.policy_define import PolicyFactory
+from data.pycard_define import PolicyType
 import copy
 from utils.logger import Logger
 import gc
-from scene.scene_define import BattlePhase
+from data.pycard_define import BattlePhase
+from player.policy.base_policy import PolicyFactory
 
 
 class BasePlayer:

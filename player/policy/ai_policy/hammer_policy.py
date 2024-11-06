@@ -1,7 +1,7 @@
-from card.card_define import CardType
+from data.pycard_define import CardType
 from player.policy.base_policy import BasePolicy
 import random
-from character.character_define import CharacterStatusType
+from data.pycard_define import CharacterStatusType
 
 
 class HammerPolicy(BasePolicy):

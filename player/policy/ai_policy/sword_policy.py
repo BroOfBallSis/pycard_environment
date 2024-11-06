@@ -1,4 +1,4 @@
-from card.card_define import CardType
+from data.pycard_define import CardType
 from player.policy.base_policy import BasePolicy
 import random
 
