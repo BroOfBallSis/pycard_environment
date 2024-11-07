@@ -57,18 +57,22 @@
         "time_cost": 6,
         "conditions": [
             {
-                "condition_type": "pay_mana",
-                "amount": 1,
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 2,
                 "effects": [
                     {
                         "effect_type": "recover_hp",
                         "amount": 5
-                    }
-                ]
-            },
-            {
-                "condition_type": "true",
-                "effects": [
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 5
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 2
+                    },
                     {
                         "effect_type": "reduce_delay",
                         "amount": 2
@@ -88,29 +92,31 @@
         "time_cost": 5,
         "conditions": [
             {
-                "condition_type": "pay_mana",
-                "amount": 1,
+                "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 4
                     }
                 ]
             },
             {
-                "condition_type": "true",
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 1,
                 "effects": [
                     {
-                        "effect_type": "resist_damage",
-                        "amount": 2,
-                        "immediate": true
+                        "effect_type": "damage_hp",
+                        "amount": 2
                     },
                     {
-                        "effect_type": "resist_stun",
-                        "amount": 2
+                        "effect_type": "reduce_delay",
+                        "amount": 1,
+                        "immediate": true
                     }
                 ]
             }
+
         ]
     }
 }

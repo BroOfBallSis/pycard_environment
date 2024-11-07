@@ -1,5 +1,5 @@
 from enum import Enum
-from card.effect.effect import Effect
+from card.effect.base_effect import BaseEffect
 from data.pycard_define import CardType, ConditionType, MockResult
 from character.status.base_status import CharacterStatusType
 from typing import Any, List, Dict
@@ -9,7 +9,7 @@ from utils.logger import Logger
 
 class BaseCondition:
     def __init__(
-        self, player, card, condition_type: ConditionType, effects: List[Effect], condition_context=None
+        self, player, card, condition_type: ConditionType, effects: List[BaseEffect], condition_context=None
     ) -> None:
         self.condition_type = condition_type
         self.effects = effects
@@ -56,7 +56,7 @@ class BaseCondition:
                 for skip_status in [CharacterStatusType.BREAK, CharacterStatusType.DEAD]:
                     if source.character.has_status(skip_status):
                         self.logger.increase_depth()
-                        self.logger.info(f"{effect} [*{skip_status.value}*]")
+                        self.logger.info(f"{color_text(effect, 'gray')} [*{skip_status.value}*]")
                         self.logger.decrease_depth()
                         skip_effect = True
                         break

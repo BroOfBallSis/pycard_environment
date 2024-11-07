@@ -100,7 +100,7 @@ class BasePlayer:
         self.round_info = {}
 
         # 补充手牌至上限
-        self.card_manager.draw_cards(self.character.hand_limit.value, self.character.hand_limit.value)
+        self.card_manager.draw_card(self.character.hand_limit.value, self.character.hand_limit.value)
 
     def start_turn(self):
         """
@@ -159,9 +159,10 @@ class BasePlayer:
         current_phase = battle_info["current_phase"]
         # 更新手牌信息
         self.update_hand()
+
         # 拥有破绽, 跳过出牌
         flaws_status = self.character.has_status(CharacterStatusType.FLAWS)
-        if flaws_status:
+        if flaws_status and current_phase == BattlePhase.PLAY_PHASE:
             return -1
 
         # 通过策略获取出牌索引

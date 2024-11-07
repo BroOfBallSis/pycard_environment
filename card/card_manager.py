@@ -32,7 +32,11 @@ class CardManager:
                 self.deck.append(card)
         random.shuffle(self.deck)  # 洗牌
 
-    def draw_cards(self, n: int, hand_limit: int = 10) -> None:
+    def add_card(self, card_id):
+        card = BaseCard.from_json(self.player, card_id)
+        self.hand.append(card)
+
+    def draw_card(self, n: int, hand_limit: int = 10) -> None:
         """
         从牌堆抽 n 张牌，且手牌总数不超过 hand_limit 张
 
@@ -56,14 +60,24 @@ class CardManager:
         self.logger.info(f"手牌数量: {old_value} ↑ {right_value_str}")
         self.logger.decrease_depth()
 
-    def discard_played_card(self, card) -> None:
+    def clear_temporary_card(self):
+        """移除手牌中的临时卡牌"""
+        to_remove_cards = [card for card in self.hand if card.temporary]
+
+        for card in to_remove_cards:
+            self.logger.increase_depth()
+            self.logger.info(f"移除 {card.name}")
+            self.hand.remove(card)
+            self.logger.decrease_depth()
+
+    def discard_played_card(self, card:BaseCard) -> None:
         self.logger.increase_depth()
         """将卡牌从手牌移到弃牌堆"""
         if not card.is_base and card in self.hand:
             self.hand.remove(card)
-        if not card.consumable and not card.is_base:
+        if not card.consumable and not card.temporary and not card.is_base:
             self.discard_pile.append(card)
-        elif card.consumable:
+        elif card.consumable or card.temporary:
             self.logger.info(f"消耗 {card.name}")
         self.logger.decrease_depth()
 
@@ -72,12 +86,12 @@ class CardManager:
         if 0 <= hand_index < len(self.hand):
             card = self.hand[hand_index]
             if card.is_base:
-                self.logger.info(f"无法弃置 '基础' 卡牌: {card.name}")
+                self.logger.info(f"无法弃置 '基础' 卡牌: {card.name}\n")
             else:
                 self.hand.remove(card)
                 self.discard_pile.append(card)
                 if self.player.policy_name == "terminal":
-                    self.logger.info(f"弃置: {card.name}")
+                    self.logger.info(f"弃置: {card.name}\n")
         else:
             print(color_text(f"\t无效的索引, 请重新输入", "yellow"))
 
@@ -98,9 +112,9 @@ class CardManager:
 if __name__ == "__main__":
     card_manager = CardManager(["mw01_0001", "sw01_0001", "mw01_0001", "sw01_0001"])
     print(card_manager)
-    card_manager.draw_cards(2)
+    card_manager.draw_card(2)
     print(card_manager)
     card_manager.discard_card_by_hand_index(0)
     print(card_manager)
-    card_manager.draw_cards(3)
+    card_manager.draw_card(3)
     print(card_manager)

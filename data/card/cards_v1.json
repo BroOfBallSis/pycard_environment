@@ -48,12 +48,53 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 4
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "i0003_01": {
+        "name": "捕熊陷阱",
+        "card_type": "shadow",
+        "ep_cost": 0,
+        "time_cost": 5,
+        "consumable": true,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "cause_delay",
+                        "amount": 6
+                    }
+                ]
+            }
+        ]
+    },
+    "i0004_01": {
+        "name": "迟缓喷雾",
+        "card_type": "shadow",
+        "ep_cost": 0,
+        "time_cost": 3,
+        "consumable": true,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "slow",
+                        "layers": 3
+                    },
+                    {
+                        "effect_type": "damage_ep",
+                        "amount": 3
                     }
                 ]
             }
@@ -70,11 +111,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 4
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 2
                     }
                 ]
@@ -100,11 +141,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 3
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 1
                     }
                 ]
@@ -130,11 +171,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 4
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 1
                     }
                 ]
@@ -155,11 +196,11 @@
                         "status": "dodge"
                     },
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 3
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 1
                     }
                 ]
@@ -186,11 +227,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 6
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 4
                     }
                 ]
@@ -208,11 +249,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 3
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 3
                     }
                 ]
@@ -239,11 +280,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 3
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 2
                     }
                 ]
@@ -264,11 +305,11 @@
                         "status": "dodge"
                     },
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 3
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 2
                     }
                 ]
@@ -295,11 +336,11 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_damage",
+                        "effect_type": "damage_hp",
                         "amount": 5
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 5
                     }
                 ]
@@ -316,16 +357,23 @@
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 4
-                    },
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
                     {
                         "effect_type": "detonate_status",
                         "status": "slow",
-                        "sub_effect": {
-                            "effect_type": "cause_damage",
-                            "amount": 2
-                        }
+                        "sub_effects": [
+                            {
+                                "effect_type": "damage_hp",
+                                "amount": 2
+                            }
+                        ]
                     }
                 ]
             }
@@ -492,7 +540,7 @@
                 "condition_type": "maintain",
                 "effects": [
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 1
                     }
                 ]
@@ -505,7 +553,7 @@
                         "amount": 3
                     },
                     {
-                        "effect_type": "cause_stun",
+                        "effect_type": "damage_rp",
                         "amount": 2
                     }
                 ]

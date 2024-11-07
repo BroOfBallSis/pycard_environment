@@ -16,6 +16,7 @@ class BaseBattle:
         self.player_list = [self.player1, self.player2]
         self.player1.opponent = self.player2
         self.player2.opponent = self.player1
+        self.is_first_round = True
         self.round_cnt = 0
         self.turn_cnt = 0
         self.current_phase = BattlePhase.INITIALIZATION
@@ -30,6 +31,16 @@ class BaseBattle:
 
             # 轮开始
             self.start_round()
+
+            if self.is_first_round:
+                input(color_text("输入回车键继续……", "gray"))
+                clear_terminal()
+                self.is_first_round = False
+                self.current_phase = BattlePhase.DISCARD_PHASE
+                for player in self.player_list:
+                    self.discard_phase(player)
+                    player_hand_limit = player.character.hand_limit.value
+                    player.card_manager.draw_card(player_hand_limit, player_hand_limit)
 
             while not self.is_round_over() and not self.is_battle_over():
 
@@ -67,21 +78,23 @@ class BaseBattle:
         self.round_cnt += 1
         self.turn_cnt = 0
         print(f"---------------- 第 {self.round_cnt} 轮 ----------------")
-        self.logger.log_to_file(f"第 {self.round_cnt} 轮:")
+        self.logger.log_to_file(f"---------------- 第 {self.round_cnt} 轮 ----------------")
         for player in self.player_list:
             player.start_round()
 
     def start_turn(self):
         self.turn_cnt += 1
         print(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
-        self.logger.log_to_file(f"-- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) --")
+        self.logger.log_to_file(
+            f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
+        )
         for player in self.player_list:
             player.start_turn()
             self.logger.log_to_file(
                 f"{player.name}: {player.character}, 架势:{player.posture.value}\t{player.card_manager}"
             )
 
-    def play_phase(self, player):
+    def play_phase(self, player: BasePlayer):
         battle_info = {
             "round_cnt": self.round_cnt,
             "turn_cnt": self.turn_cnt,
@@ -101,9 +114,9 @@ class BaseBattle:
             context = {"priority": priority, "immediate": immediate, "end": end}
             for player in self.player_list:
                 player.resolve_card_effect(context)
-            self.players_evaluate_and_update_status()
+        self.players_evaluate_and_update_status()
 
-    def resolve_asynchronous_card_effects(self, first_player=None, later_player=None):
+    def resolve_asynchronous_card_effects(self, first_player: BasePlayer = None, later_player: BasePlayer = None):
         # 结算异步效果
         if first_player:
             print(f"时 刻 {first_player.current_card.time_cost.real_value} :")
@@ -147,26 +160,28 @@ class BaseBattle:
         self.resolve_synchronous_card_effects(end=True)
 
     def end_turn(self):
-        base_delay = min(self.player1.current_card.time_cost.real_value, self.player2.current_card.time_cost.real_value)
+        real_value_1 = self.player1.current_card.time_cost.real_value
+        real_value_2 = self.player2.current_card.time_cost.real_value
+        base_delay = min(real_value_1, real_value_2)
         for player in self.player_list:
             player.end_turn(base_delay)
 
-    def discard_phase(self, player):
+    def discard_phase(self, player: BasePlayer):
         battle_info = {
             "round_cnt": self.round_cnt,
             "turn_cnt": self.turn_cnt,
             "current_phase": self.current_phase,
         }
+        player.card_manager.clear_temporary_card()
         if player.policy_name == "terminal":
             while True:
                 command = player.get_action(battle_info)
                 if command < 0:
-                    print(color_text(f"\t结束 弃牌阶段", "yellow"))
+                    print(color_text(f"结束 弃牌阶段", "yellow"))
                     break
                 else:
+                    clear_terminal()
                     player.discard_card_by_hand_index(command)
-                input(color_text("输入回车键继续……", "gray"))
-                clear_terminal()
         else:
             player.auto_discard_phase(battle_info)
 
