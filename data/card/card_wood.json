@@ -72,7 +72,7 @@
         "name": "风刃",
         "card_type": "wind",
         "ep_cost": 2,
-        "time_cost": 5,
+        "time_cost": 4,
         "conditions": [
             {
                 "condition_type": "pay",
@@ -81,7 +81,7 @@
                 "effects": [
                     {
                         "effect_type": "reduce_delay",
-                        "amount": 3,
+                        "amount": 2,
                         "immediate": true
                     }
                 ]
@@ -91,11 +91,7 @@
                 "effects": [
                     {
                         "effect_type": "damage_hp",
-                        "amount": 4
-                    },
-                    {
-                        "effect_type": "damage_rp",
-                        "amount": 1
+                        "amount": 3
                     }
                 ]
             }
@@ -104,7 +100,7 @@
     "mw03_0004": {
         "name": "暗影箭",
         "card_type": "shadow",
-        "ep_cost": 4,
+        "ep_cost": 5,
         "time_cost": 6,
         "conditions": [
             {
@@ -143,10 +139,6 @@
                         "effect_type": "gain_status",
                         "status": "mana",
                         "layers": 2
-                    },
-                    {
-                        "effect_type": "recover_rp",
-                        "amount": 2
                     },
                     {
                         "effect_type": "add_card",

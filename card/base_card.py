@@ -112,9 +112,9 @@ class BaseCard:
         else:
             time_cost_str = center_text(f"{self.time_cost}", 4)
         if get_color:
-            conditions_str = " ".join(condition.get_colored_str() for condition in self.conditions)
+            conditions_str = "\n·    ".join(condition.get_colored_str() for condition in self.conditions)
         else:
-            conditions_str = " ".join(str(condition) for condition in self.conditions)
+            conditions_str = "\n·    ".join(str(condition) for condition in self.conditions)
         addition_str = ""
         if self.is_base:
             addition_str += " 基础 "
@@ -122,7 +122,7 @@ class BaseCard:
             addition_str += " 消耗 "
         if self.temporary:
             addition_str += " 临时 "
-        return f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str}{addition_str}) {conditions_str}"
+        return f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str}{addition_str})\n·    {conditions_str}"
 
     def __str__(self) -> str:
         return self.get_colored_str(get_color=False)

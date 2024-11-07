@@ -105,21 +105,21 @@
         "class": "status",
         "target": "source",
         "function": "append_status",
-        "description": "获得{}{}{}",
+        "description": "获得{}{}'{}'",
         "priority": 1
     },
     "reduce_status": {
         "class": "status",
         "target": "source",
         "function": "reduce_status",
-        "description": "减少{}{}{}",
+        "description": "减少{}{}'{}'",
         "priority": 1
     },
     "gain_singleton_status": {
         "class": "status",
         "target": "source",
         "function": "append_status",
-        "description": "{}",
+        "description": "'{}'",
         "priority": 1
     },
     "detonate_status": {
