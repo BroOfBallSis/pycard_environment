@@ -162,7 +162,7 @@
                 "effects": [
                     {
                         "effect_type": "damage_hp",
-                        "amount": 8
+                        "amount": 7
                     },
                     {
                         "effect_type": "damage_rp",

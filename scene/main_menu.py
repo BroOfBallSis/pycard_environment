@@ -51,6 +51,66 @@ class Menu:
             print("无效的选择，请重新输入。")
             return self.display(game)
 
+from character.base_character import BaseCharacter
+from card.base_card import BaseCard
+from player.base_player import BasePlayer
+from data.character import character_library_instance
+
+class CharacterManager(Menu):
+    def __init__(self, name, title, items, parent=None):
+        self.name = name
+        self.title = title
+        self.items = items
+        self.parent = parent
+        self.characters = ["ch00001", "ch00001"]
+
+    def display(self, game):
+        self.display_character_info(self.characters[0])
+        character_data = character_library_instance.character_data
+        public_character = ["ch00001", "ch00002", "ch00003", "ch00004"]
+        print(f"请选择玩家角色, 当前选择 '{character_data[self.characters[0]]['name']}':")
+        print(f"[y] 确 认\t[n] 取 消")
+        character_index = 0
+        character_str = ""
+        for character_id in public_character:
+            character_index += 1
+            character_str += f"[{character_index}] {character_data[character_id]['name']}\t"
+        print(character_str)
+        while True:
+            try:
+                user_input = input("请输入指令: ")
+
+                if user_input.lower() == "y":
+                    continue
+                character_index = int(user_input) - 1
+                self.characters[0] = public_character[character_index]
+                clear_terminal()
+                self.display(game)
+            except ValueError:
+                print(color_text(f"\t无效的索引, 请重新输入", "yellow"))
+        return self.handle_choice(choice, game)
+    
+    def display_character_info(self, character_id):
+        color_mapping = {
+            "无": "gray",
+            "风": "cyan",
+            "火": "red",
+            "山": "brown",
+            "林": "green",
+            "阴": "purple",
+            "雷": "yellow",
+        }
+        # 根据 character_id 加载角色
+        player = BasePlayer("player1", 1, character_id, "base", self)
+        player.opponent = player
+        print(player.character)
+        same_card = []
+        for card_id in player.character.cards:
+            if card_id not in same_card:
+                card = BaseCard.from_json(player, card_id)
+                card_color = color_mapping[card.card_type.value]
+                print(color_text(card, card_color))
+            same_card.append(card_id)
 
 menu_dict = {
     "main_menu": Menu("main_menu", "主菜单", [MenuItem("进入教程", "tutorial_menu"), MenuItem("对战AI", "pve_menu")]),
@@ -63,18 +123,13 @@ menu_dict = {
         ],
         parent="main_menu",
     ),
-    "pve_menu": Menu(
+    "pve_menu": CharacterManager(
         "pve_menu",
         "选择玩家角色",
-        [
-            MenuItem("剑士", "select_character", "ch00001", 0),
-            MenuItem("近卫", "select_character", "ch00002", 0),
-            MenuItem("牧师", "select_character", "ch00003", 0),
-            MenuItem("法师(early access)", "select_character", "ch00004", 0),
-        ],
+        [],
         parent="main_menu",
     ),
-    "pve_enemy_menu": Menu(
+    "pve_enemy_menu": CharacterManager(
         "pve_enemy_menu",
         "选择对手角色",
         [MenuItem("剑士", "select_character", "ch00001", 1), MenuItem("近卫", "select_character", "ch00002", 1)],

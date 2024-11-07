@@ -37,7 +37,7 @@ class TutorialBattle1(BaseBattle):
                 if self.round_cnt == 1 and self.turn_cnt == 1:
                     print(f"\t{color_text('教程:','yellow')} 打出卡牌需要支付体力, \"长剑竖劈\" 将消耗 7点体力")
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"长剑竖劈\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [1] 并按回车键','yellow')}, 打出手牌中的 \"长剑竖劈\""
                     )
                 if self.round_cnt == 1 and self.turn_cnt == 2:
                     print(f"\t{color_text('教程:','yellow')} 卡牌实际结算的时刻 等于 卡牌时间 + 延迟 + 其他效果")
@@ -45,18 +45,18 @@ class TutorialBattle1(BaseBattle):
                         f"\t{color_text('教程:','yellow')} 你在上回合获得了 2点延迟,  时间3 的 \"长剑突刺\" 会在 时刻5 结算"
                     )
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"长剑突刺\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [1] 并按回车键','yellow')}, 打出手牌中的 \"长剑突刺\""
                     )
                 if self.round_cnt == 1 and self.turn_cnt == 3:
                     self.player2.character.delay.set_value(5)
                     print(f"\t{color_text('教程:','yellow')} 为了展示 延迟 到达上限的情况, 手动将对手的 延迟 设置为 5")
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"长剑突刺\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [1] 并按回车键','yellow')}, 打出手牌中的 \"长剑突刺\""
                     )
                 if self.round_cnt == 1 and self.turn_cnt == 4:
                     print(f"\t{color_text('教程:','yellow')} 你的对手处于 \"破绽\"状态, 放心地采取进攻, 赢得比赛胜利")
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"长剑竖劈\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [1] 并按回车键','yellow')}, 打出手牌中的 \"长剑竖劈\""
                     )
                 for player in self.player_list:
                     self.play_phase(player)

@@ -121,6 +121,6 @@ class TerminalPolicy(BasePolicy):
                     else:
                         return hand_index
                 else:
-                    print(color_text(f"\t{hand_index} 不在手牌范围内([0 ~ {len(temp_hand)-1}]), 请重新输入", "yellow"))
+                    print(color_text(f"\t{hand_index+1} 不在手牌范围内([1 ~ {len(temp_hand)}]), 请重新输入", "yellow"))
             except ValueError:
                 print(color_text(f"\t无效的索引, 请重新输入", "yellow"))

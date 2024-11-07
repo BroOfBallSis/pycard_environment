@@ -16,8 +16,7 @@
                     },
                     {
                         "effect_type": "recover_ep",
-                        "amount": 4,
-                        "immediate": true
+                        "amount": 4
                     },
                     {
                         "effect_type": "recover_rp",

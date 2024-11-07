@@ -484,7 +484,7 @@
         "name": "格挡",
         "card_type": "mountain",
         "is_base": true,
-        "ep_cost": 5,
+        "ep_cost": 4,
         "time_cost": 5,
         "conditions": [
             {
