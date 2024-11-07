@@ -23,8 +23,9 @@ class TerminalPolicy(BasePolicy):
                 index_color = "gray"
             else:
                 index_color = "green"
-
+            hand_str.append(f"--------------------------------------------------------------")
             hand_str.append(f"{color_text(f'[{index+1}]', index_color)} {card.get_colored_str()}")
+            # hand_str.append(f"{color_text(f'[{index+1}]', index_color)} {card.get_colored_str()}")
         print("\n".join(hand_str))
 
     def display_deck(self) -> str:

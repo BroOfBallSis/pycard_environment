@@ -84,9 +84,9 @@ class BaseBattle:
 
     def start_turn(self):
         self.turn_cnt += 1
-        print(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
+        print(f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) ----------------")
         self.logger.log_to_file(
-            f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------"
+            f"---------------- 开 始 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) ----------------"
         )
         for player in self.player_list:
             player.start_turn()
@@ -134,7 +134,7 @@ class BaseBattle:
             self.resolve_synchronous_card_effects()
 
     def resolve_phase(self):
-        print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 )----------------")
+        print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) ----------------")
         for player in self.player_list:
             print(f"{player.name_with_color} : {player.current_card}")
             self.logger.log_to_file(f"{player.name} : {player.current_card}")
