@@ -56,20 +56,20 @@ class BaseCard:
             effects = []
             for effect_data in effects_data:
                 effect_type = effect_data["effect_type"]
-                effect_param_list = ["amount", "immediate", "status", "layers", "sub_effect"]
+                effect_param_list = ["amount", "immediate", "status", "layers", "sub_effects", "status_amount"]
                 context = {key: effect_data[key] for key in effect_param_list if key in effect_data}
                 effect = EffectFactory.create_effect(player, card, effect_type, context)
                 effects.append(effect)
 
                 # 使用效果工厂创建子效果实例
-                sub_effect = context.get("sub_effect", None)
-                if sub_effect:
-                    sub_effect_type = sub_effect["effect_type"]
+                sub_effects = context.get("sub_effects", [])
+                for sub_effect in sub_effects:
+                    sub_effects_type = sub_effect["effect_type"]
                     sub_context = {key: sub_effect[key] for key in effect_param_list if key in sub_effect}
-                    effect.sub_effect = EffectFactory.create_effect(player, card, sub_effect_type, sub_context)
+                    effect.sub_effects.append(EffectFactory.create_effect(player, card, sub_effects_type, sub_context))
 
             # 使用条件工厂创建条件实例
-            condition_param_list = ["amount", "immediate", "status", "layers", "sub_condition"]
+            condition_param_list = ["amount", "immediate", "status", "layers", "sub_condition", "status_amount"]
             condition_context = {key: cond[key] for key in condition_param_list if key in cond}
             condition = ConditionFactory.create_condition(player, card, condition_type, effects, condition_context)
             card.conditions.append(condition)

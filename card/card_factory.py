@@ -1,4 +1,7 @@
-from card.effect.effect import Effect
+from card.effect.base_effect import effect_config, BaseEffect
+from card.effect.attribute_effect import AttributeEffect
+from card.effect.card_effect import CardEffect
+from card.effect.status_effect import StatusEffect
 from data.pycard_define import CardType, ConditionType, EffectType
 from typing import Any, List, Dict
 from card.condition.base_condition import BaseCondition
@@ -8,7 +11,7 @@ from card.condition.pay_condition import PayCondition
 
 class ConditionFactory:
     @staticmethod
-    def create_condition(player, card, condition_type: str, effects: List[Effect], condition_context) -> BaseCondition:
+    def create_condition(player, card, condition_type: str, effects: List[BaseEffect], condition_context) -> BaseCondition:
         """
         创建条件实例的工厂方法
 
@@ -48,9 +51,15 @@ class EffectFactory:
         :return: Effect 实例
         """
         # 将 effect_type 转换为大写，以便与枚举类型匹配
+        effect_info = effect_config.get(effect_type_str, None)
         effect_type_upper = effect_type_str.upper()
 
-        if effect_type_upper in EffectType.__members__:
+        if effect_info and effect_type_upper in EffectType.__members__:
             effect_type = EffectType[effect_type_upper]
-            return Effect(player, card, effect_type, context)
+            if effect_info["class"] == "attribute":
+                return AttributeEffect(player, card, effect_type, context)
+            elif effect_info["class"] == "card":
+                return CardEffect(player, card, effect_type, context)
+            elif effect_info["class"] == "status":
+                return StatusEffect(player, card, effect_type, context)
         raise ValueError(f"Unsupported effect type: {effect_type_str}")

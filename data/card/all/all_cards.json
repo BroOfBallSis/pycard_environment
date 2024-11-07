@@ -322,7 +322,7 @@
                     {
                         "effect_type": "detonate_status",
                         "status": "slow",
-                        "sub_effect": {
+                        "sub_effects": {
                             "effect_type": "damage_hp",
                             "amount": 2
                         }

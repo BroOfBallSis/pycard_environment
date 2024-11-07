@@ -70,6 +70,7 @@ menu_dict = {
             MenuItem("剑士", "select_character", "ch00001", 0),
             MenuItem("近卫", "select_character", "ch00002", 0),
             MenuItem("牧师", "select_character", "ch00003", 0),
+            MenuItem("法师(early access)", "select_character", "ch00004", 0),
         ],
         parent="main_menu",
     ),

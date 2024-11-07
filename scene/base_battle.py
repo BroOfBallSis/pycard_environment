@@ -110,7 +110,7 @@ class BaseBattle:
             context = {"priority": priority, "immediate": immediate, "end": end}
             for player in self.player_list:
                 player.resolve_card_effect(context)
-            self.players_evaluate_and_update_status()
+        self.players_evaluate_and_update_status()
 
     def resolve_asynchronous_card_effects(self, first_player=None, later_player=None):
         # 结算异步效果

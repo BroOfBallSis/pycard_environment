@@ -1,5 +1,5 @@
 from enum import Enum
-from card.effect.effect import Effect
+from card.effect.base_effect import BaseEffect
 from data.pycard_define import CardType, ConditionType, MockResult
 from character.status.base_status import CharacterStatusType
 from typing import Any, List, Dict
@@ -9,7 +9,7 @@ from utils.logger import Logger
 
 class BaseCondition:
     def __init__(
-        self, player, card, condition_type: ConditionType, effects: List[Effect], condition_context=None
+        self, player, card, condition_type: ConditionType, effects: List[BaseEffect], condition_context=None
     ) -> None:
         self.condition_type = condition_type
         self.effects = effects

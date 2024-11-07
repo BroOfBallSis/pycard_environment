@@ -1,117 +1,132 @@
 {
     "damage_hp": {
+        "class": "attribute",
         "target": "target",
-        "component": "character",
         "attribute": "hp",
         "function": "decrease",
         "description": "伤害{}点生命",
         "priority": 2
     },
     "damage_ep": {
+        "class": "attribute",
         "target": "target",
-        "component": "character",
         "attribute": "ep",
         "function": "decrease",
         "description": "伤害{}点体力",
         "priority": 2
     },
     "damage_rp": {
+        "class": "attribute",
         "target": "target",
-        "component": "character",
         "attribute": "rp",
         "function": "decrease",
         "description": "伤害{}点韧性",
         "priority": 2
     },
     "cause_delay": {
+        "class": "attribute",
         "target": "target",
-        "component": "character",
         "attribute": "delay",
         "function": "increase",
         "description": "造成{}点延迟",
         "priority": 2
     },
     "resist_damage": {
+        "class": "attribute",
         "target": "source",
-        "component": "character",
         "attribute": "hp",
         "function": "increase_resist",
-        "description": "抵抗{}点伤害",
+        "description": "抵抗{}点生命伤害",
         "priority": 0
     },
     "resist_stun": {
+        "class": "attribute",
         "target": "source",
-        "component": "character",
         "attribute": "rp",
         "function": "increase_resist",
         "description": "抵抗{}点韧性伤害",
         "priority": 0
     },
     "recover_hp": {
+        "class": "attribute",
         "target": "source",
-        "component": "character",
         "attribute": "hp",
         "function": "increase",
         "description": "恢复{}点生命",
         "priority": 3
     },
     "recover_ep": {
+        "class": "attribute",
         "target": "source",
-        "component": "character",
         "attribute": "ep",
         "function": "increase",
         "description": "恢复{}点体力",
         "priority": 3
     },
     "recover_rp": {
+        "class": "attribute",
         "target": "source",
-        "component": "character",
         "attribute": "rp",
         "function": "increase",
         "description": "恢复{}点韧性",
         "priority": 3
     },
     "reduce_delay": {
+        "class": "attribute",
         "target": "source",
-        "component": "character",
         "attribute": "delay",
         "function": "decrease",
         "description": "减少{}点延迟",
-        "priority": 0
+        "priority": 3
+    },
+    "increase_delay": {
+        "class": "attribute",
+        "target": "source",
+        "attribute": "delay",
+        "function": "increase",
+        "description": "增加{}点延迟",
+        "priority": 3
     },
     "draw_card": {
+        "class": "card",
         "target": "source",
-        "component": "card_manager",
         "function": "draw_cards",
         "description": "抽{}张牌",
         "priority": 3
     },
     "gain_status": {
+        "class": "status",
         "target": "source",
-        "component": "character",
         "function": "append_status",
         "description": "获得{}{}{}",
         "priority": 1
     },
     "reduce_status": {
+        "class": "status",
         "target": "source",
-        "component": "character",
         "function": "reduce_status",
         "description": "减少{}{}{}",
         "priority": 1
     },
     "gain_singleton_status": {
+        "class": "status",
         "target": "source",
-        "component": "character",
         "function": "append_status",
         "description": "{}",
         "priority": 1
     },
     "detonate_status": {
+        "class": "status",
         "target": "target",
-        "component": "character",
         "function": "detonate_status",
-        "description": "引爆{}:每层{}",
+        "description": "触发'{}':每层",
+        "priority": 4
+    },
+    "activate_status": {
+        "class": "status",
+        "target": "source",
+        "function": "detonate_status",
+        "description": "支付{}{}'{}':每层",
         "priority": 4
     }
 }

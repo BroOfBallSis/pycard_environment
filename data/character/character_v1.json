@@ -43,5 +43,20 @@
             "it00002"
         ],
         "cards": []
+    },
+    "ch00004": {
+        "name": "法师",
+        "hp": 56,
+        "ep": 24,
+        "rp": 6,
+        "delay": 5,
+        "hand_limit": 7,
+        "main_weapon": "mw00003",
+        "sub_weapon": "sw00003",
+        "items": [
+            "it00001",
+            "it00002"
+        ],
+        "cards": []
     }
 }

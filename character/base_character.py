@@ -157,7 +157,7 @@ class BaseCharacter:
             status = self.has_status(status_type)
             status.decrease(layers)
 
-    def detonate_status(self, status_type_str, sub_effect=None):
+    def detonate_status(self, status_type_str, sub_effects=[], effect_target="target"):
         status_type_upper = status_type_str.upper()
         if status_type_upper in CharacterStatusType.__members__:
             status_type = CharacterStatusType[status_type_upper]
@@ -165,10 +165,11 @@ class BaseCharacter:
             for status in self.statuses:
                 if status.status_type == status_type:
                     to_remove_status = status
-                    while status.layers > 0:
+                    for _ in range(status.layers):
                         status.on_trigger()
-                        if sub_effect:
-                            sub_effect.execute(self.player.opponent, self.player)
+                        for sub_effect in sub_effects:
+                            source = self.player.opponent if effect_target == "target" else self.player
+                            sub_effect.execute(source, source.opponent)
 
             if to_remove_status:
                 self.logger.increase_depth()

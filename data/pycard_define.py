@@ -44,6 +44,7 @@ class MockResult(Enum):
 
 class EffectType(Enum):
     DAMAGE_HP = "damage_hp"
+    DAMAGE_EP = "damage_ep"
     DAMAGE_RP = "damage_rp"
     CAUSE_DELAY = "cause_delay"
     RESIST_DAMAGE = "resist_damage"
@@ -58,6 +59,8 @@ class EffectType(Enum):
     GAIN_STATUS = "gain_status"
     REDUCE_STATUS = "reduce_status"
     DETONATE_STATUS = "detonate_status"
+    INCREASE_DELAY = "increase_delay"
+    ACTIVATE_STATUS = "activate_status"
 
 
 class CharacterAttributeType(Enum):

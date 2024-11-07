@@ -1,31 +1,10 @@
 {
     "mw03_0001": {
-        "name": "打击",
+        "name": "引导",
         "card_type": "wind",
         "is_base": true,
-        "ep_cost": 4,
+        "ep_cost": 3,
         "time_cost": 5,
-        "conditions": [
-            {
-                "condition_type": "true",
-                "effects": [
-                    {
-                        "effect_type": "damage_hp",
-                        "amount": 3
-                    },
-                    {
-                        "effect_type": "damage_rp",
-                        "amount": 3
-                    }
-                ]
-            }
-        ]
-    },
-    "mw03_0002": {
-        "name": "引导魔力",
-        "card_type": "wind",
-        "ep_cost": 4,
-        "time_cost": 4,
         "conditions": [
             {
                 "condition_type": "switch",
@@ -42,17 +21,54 @@
                 "effects": [
                     {
                         "effect_type": "damage_hp",
-                        "amount": 3
+                        "amount": 2
                     },
                     {
                         "effect_type": "damage_rp",
-                        "amount": 1
+                        "amount": 3
                     }
                 ]
             }
         ]
     },
-    "mw02_0003": {
+    "mw03_0002": {
+        "name": "奥术飞弹",
+        "card_type": "thunder",
+        "ep_cost": 3,
+        "time_cost": 3,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "increase_delay",
+                        "status_amount": "mana",
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "activate_status",
+                        "status": "mana",
+                        "sub_effects": [
+                            {
+                                "effect_type": "damage_hp",
+                                "amount": 2
+                            },
+                            {
+                                "effect_type": "damage_rp",
+                                "amount": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0003": {
         "name": "侧身打击",
         "card_type": "shadow",
         "ep_cost": 4,
@@ -77,7 +93,7 @@
             }
         ]
     },
-    "mw02_0004": {
+    "mw03_0004": {
         "name": "重锤打击",
         "card_type": "fire",
         "ep_cost": 6,
@@ -108,7 +124,7 @@
             }
         ]
     },
-    "mw02_0005": {
+    "mw03_0005": {
         "name": "下颚粉碎",
         "card_type": "thunder",
         "ep_cost": 6,
@@ -120,14 +136,21 @@
                     {
                         "effect_type": "damage_rp",
                         "amount": 4
-                    },
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
                     {
                         "effect_type": "detonate_status",
                         "status": "slow",
-                        "sub_effect": {
-                            "effect_type": "damage_hp",
-                            "amount": 2
-                        }
+                        "sub_effects": [
+                            {
+                                "effect_type": "damage_hp",
+                                "amount": 2
+                            }
+                        ]
                     }
                 ]
             }

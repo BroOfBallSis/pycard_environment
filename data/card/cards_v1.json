@@ -359,14 +359,21 @@
                     {
                         "effect_type": "damage_rp",
                         "amount": 4
-                    },
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
                     {
                         "effect_type": "detonate_status",
                         "status": "slow",
-                        "sub_effect": {
-                            "effect_type": "damage_hp",
-                            "amount": 2
-                        }
+                        "sub_effects": [
+                            {
+                                "effect_type": "damage_hp",
+                                "amount": 2
+                            }
+                        ]
                     }
                 ]
             }

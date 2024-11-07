@@ -45,7 +45,7 @@ class CharacterStatus:
 
     def start_round(self):
         if self.status_type == CharacterStatusType.MANA:
-            pass
+            self.set_value(self.layers//2)
         else:
             self.set_value(0)
 

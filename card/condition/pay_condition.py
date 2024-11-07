@@ -3,7 +3,7 @@ from card.condition.base_condition import *
 
 class PayCondition(BaseCondition):
     def __init__(
-        self, player, card, condition_type: ConditionType, effects: List[Effect], condition_context=None
+        self, player, card, condition_type: ConditionType, effects: List[BaseEffect], condition_context=None
     ) -> None:
         super().__init__(player, card, condition_type, effects, condition_context)
         self.amount = condition_context["amount"]
