@@ -25,10 +25,11 @@ class CharacterAttribute:
         self.logger.info(f"{self.name}: {old_value} ↑ {right_value_str}")
 
         # 生命 统计增加的值
-        if self.attribute_type == CharacterAttributeType.HP and self.attribute_type in self.player.round_info:
-            self.player.round_info[self.attribute_type] += amount
-        else:
-            self.player.round_info[self.attribute_type] = amount
+        if self.attribute_type == CharacterAttributeType.HP:
+            if self.attribute_type in self.player.round_info:
+                self.player.round_info[self.attribute_type] += amount
+            else:
+                self.player.round_info[self.attribute_type] = amount
 
         self.logger.decrease_depth()
 
