@@ -15,15 +15,20 @@ class CharacterAttribute:
     def increase(self, amount: int):
         self.logger.increase_depth()
         old_value = self.value
-        self.value = min(self.value + amount, self.max_value)
+        self.value = self.value + amount
+
+        # 延迟 无上限
+        if self.attribute_type != CharacterAttributeType.DELAY:
+            self.value = min(self.value + amount, self.max_value)
+
         right_value_str = f"{self.value} (max)" if self.value == self.max_value else f"{self.value}"
         self.logger.info(f"{self.name}: {old_value} ↑ {right_value_str}")
 
-        # 不统计增加的值
-        # if self.attribute_type in self.player.round_info:
-        #     self.player.round_info[self.attribute_type] += amount
-        # else:
-        #     self.player.round_info[self.attribute_type] = amount
+        # 生命 统计增加的值
+        if self.attribute_type == CharacterAttributeType.HP and self.attribute_type in self.player.round_info:
+            self.player.round_info[self.attribute_type] += amount
+        else:
+            self.player.round_info[self.attribute_type] = amount
 
         self.logger.decrease_depth()
 
@@ -42,13 +47,12 @@ class CharacterAttribute:
             self.logger.info(f"抵抗生效: {amount} ↓ {real_amount}")
 
         self.value = self.value - real_amount
-        if self.attribute_type == CharacterAttributeType.EP:
-            self.value = max(self.value, 0)
         self.logger.info(f"{self.name}: {old_value} ↓ {self.value}")
 
-        if self.attribute_type == CharacterAttributeType.RP and self.value < 0:
+        # 体力, 韧性 的溢出转化
+        if self.attribute_type in [CharacterAttributeType.EP, CharacterAttributeType.RP] and self.value < 0:
             self.logger.increase_depth()
-            self.logger.info(f"负数韧性 转化为 缓慢 ")
+            self.logger.info(f"溢出的{self.attribute_type.value}伤害 转化为 缓慢 ")
             layers = -self.player.character.rp.value
             self.set_value(0)
             self.player.character.append_status("slow", layers)

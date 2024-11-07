@@ -39,7 +39,7 @@ class StatusEffect(BaseEffect):
 
         if effect_function:
             if self.sub_effects:
-                effect_function(self.status, self.sub_effects, self.effect_target)
+                effect_function(self.status, self.effect_target, self.sub_effects)
             else:
                 effect_function(self.status, self.layers)
         else:
@@ -59,32 +59,45 @@ class StatusEffect(BaseEffect):
             if effect_target.character.has_status(self.status_type):
                 return True
         return False
-        
+
     def get_colored_str(self, get_color=True) -> str:
         effect_target, _ = self.get_effect_function(self.player, self.player.opponent)
-        # 状态
+
+        # 状态字符串初始化
+        effect_str = ""
+
+        # 状态处理
         if self.effect_type in [EffectType.DETONATE_STATUS, EffectType.GAIN_SINGLETON_STATUS]:
             effect_str = self.description.format(self.status_type.value)
-        # 获得, 减少状态
+
+        # 获得或减少状态
         elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.REDUCE_STATUS]:
-            if self.status_type in [CharacterStatusType.MANA]:
-                effect_str = self.description.format(self.layers, "点", self.status_type.value)
-            else:
-                effect_str = self.description.format(self.layers, "层", self.status_type.value)
+            unit = "点" if self.status_type in [CharacterStatusType.MANA] else "层"
+            effect_str = self.description.format(self.layers, unit, self.status_type.value)
+
         # 激活状态
         elif self.effect_type == EffectType.ACTIVATE_STATUS:
             status = effect_target.character.has_status(self.status_type)
+            layers_value = status.layers if status else None
+
             if get_color:
-                layers_value = status.layers if status else 0
-                layers_str = color_text(layers_value,"cyan")
+                layers_str = color_text(layers_value or "X", "cyan" if layers_value else "gray")
             else:
-                layers_str = f"'{self.status_type.value}'"
+                layers_str = layers_value if layers_value else "X"
+
             effect_str = self.description.format(layers_str, "点", self.status_type.value)
+
+        # 处理子效果
         if self.sub_effects:
-            sub_effect_str = ', '.join(str(sub_effect) for sub_effect in self.sub_effects)
+            sub_effect_str = ", ".join(str(sub_effect) for sub_effect in self.sub_effects)
             effect_str += sub_effect_str
+
+        # 处理立即效果标记
         if self.immediate:
             effect_str += "(立即)"
+
+        # 处理颜色
         if get_color and self.mock_execute():
             effect_str = color_text(effect_str, "green")
+
         return effect_str

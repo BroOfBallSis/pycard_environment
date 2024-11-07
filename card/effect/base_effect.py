@@ -6,6 +6,7 @@ from data.pycard_define import CharacterStatusType
 from data.pycard_define import EffectType
 from utils.draw_text import color_text
 from utils.logger import Logger
+from data.card import card_library_instance
 
 # 获取当前脚本文件的目录
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,8 +39,9 @@ class BaseEffect:
         self.immediate = context.get("immediate", False)
         self.end = context.get("end", False)
         self.status = context.get("status", None)
-        self.status_amount = context.get("status_amount", None) 
+        self.status_amount = context.get("status_amount", None)
         self.layers = context.get("layers", -1)
+        self.next_card_id = context.get("next_card_id", None) 
         self.sub_effects = []
 
         # config: 取决于效果类型
@@ -66,7 +68,7 @@ class BaseEffect:
             status_type_upper = self.status_amount.upper()
             if status_type_upper in CharacterStatusType.__members__:
                 self.status_amount_type = CharacterStatusType[status_type_upper]
-    
+
     def skip_execute(self, source, target_object) -> bool:
         # 闪避, 撤离 状态下跳过效果结算
         if target_object != source:
@@ -79,7 +81,7 @@ class BaseEffect:
                     self.logger.decrease_depth()
                     return True
         return False
-                
+
     def execute(self, source: Any, target: Any, context: Any = None) -> bool:
         """
         执行效果的方法
@@ -92,28 +94,41 @@ class BaseEffect:
 
     def mock_execute(self) -> bool:
         return False
-    
+
     def get_colored_str(self, get_color=True) -> str:
         effect_target, _ = self.get_effect_function(self.player, self.player.opponent)
+
+        # 状态字符串初始化
+        effect_str = ""
+
+        if self.effect_type == EffectType.ADD_CARD:
+            json_data = card_library_instance.get_card_info(self.next_card_id)
+            card_name = json_data["name"]
+            effect_str = self.description.format(card_name)
+
         # 基于数值
-        if self.amount:
+        elif self.amount:
             effect_str = self.description.format(self.amount)
+
         # 基于状态层数
         elif self.status_amount_type:
             status = effect_target.character.has_status(self.status_amount_type)
+            layers_value = status.layers if status else None
+
             if get_color:
-                layers_value = status.layers if status else 0
-                layers_str = color_text(layers_value,"cyan")
+                layers_str = color_text(
+                    layers_value or f"'{self.status_amount_type.value}'", "cyan" if layers_value else "gray"
+                )
             else:
-                layers_str = f"'{self.status_amount_type.value}'"
+                layers_str = layers_value if layers_value else f"'{self.status_amount_type.value}'"
+
             effect_str = self.description.format(layers_str)
-        else:
-            print(self.effect_type)
+
         if self.immediate:
             effect_str += "(立即)"
         if get_color and self.mock_execute():
             effect_str = color_text(effect_str, "green")
         return effect_str
-    
+
     def __str__(self) -> str:
         return self.get_colored_str(get_color=False)

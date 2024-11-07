@@ -37,11 +37,12 @@ class CardEffect(BaseEffect):
             return False
         self.logger.info(f"{source.name_with_color} -> {effect_target.name_with_color}: {self}", show_source=False)
 
-        if effect_function:
-            effect_function(self.amount)        
+        if self.effect_type == EffectType.DRAW_CARD:
+            effect_function(self.amount)
+        elif self.effect_type == EffectType.ADD_CARD:
+            effect_function(self.next_card_id)
         else:
             raise ValueError(f"Does not have function {effect_function}")
 
         self.logger.decrease_depth()
         return True
-

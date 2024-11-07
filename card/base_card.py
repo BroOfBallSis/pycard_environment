@@ -16,6 +16,7 @@ class BaseCard:
         card_type: CardType,
         is_base: bool,
         consumable: bool,
+        temporary: bool,
         ep_cost: int,
         time_cost: int,
         conditions: List[BaseCondition],
@@ -29,6 +30,7 @@ class BaseCard:
         self.conditions = conditions
         self.is_base = is_base
         self.consumable = consumable
+        self.temporary = temporary
 
     @classmethod
     def from_json(cls, player, card_id) -> "BaseCard":
@@ -45,7 +47,8 @@ class BaseCard:
         time_cost = json_data["time_cost"]
         is_base = json_data.get("is_base", False)
         consumable = json_data.get("consumable", False)
-        card = cls(player, card_id, name, card_type, is_base, consumable, ep_cost, time_cost, [])
+        temporary = json_data.get("temporary", False)
+        card = cls(player, card_id, name, card_type, is_base, consumable, temporary, ep_cost, time_cost, [])
 
         # 解析 conditions
         for cond in json_data["conditions"]:
@@ -56,7 +59,7 @@ class BaseCard:
             effects = []
             for effect_data in effects_data:
                 effect_type = effect_data["effect_type"]
-                effect_param_list = ["amount", "immediate", "status", "layers", "sub_effects", "status_amount"]
+                effect_param_list = ["amount", "immediate", "status", "layers", "sub_effects", "status_amount", "next_card_id"]
                 context = {key: effect_data[key] for key in effect_param_list if key in effect_data}
                 effect = EffectFactory.create_effect(player, card, effect_type, context)
                 effects.append(effect)
@@ -69,7 +72,15 @@ class BaseCard:
                     effect.sub_effects.append(EffectFactory.create_effect(player, card, sub_effects_type, sub_context))
 
             # 使用条件工厂创建条件实例
-            condition_param_list = ["amount", "immediate", "status", "layers", "sub_condition", "status_amount"]
+            condition_param_list = [
+                "amount",
+                "immediate",
+                "status",
+                "layers",
+                "sub_condition",
+                "status_amount",
+                "currency",
+            ]
             condition_context = {key: cond[key] for key in condition_param_list if key in cond}
             condition = ConditionFactory.create_condition(player, card, condition_type, effects, condition_context)
             card.conditions.append(condition)
@@ -109,6 +120,8 @@ class BaseCard:
             addition_str += " 基础 "
         if self.consumable:
             addition_str += " 消耗 "
+        if self.temporary:
+            addition_str += " 临时 "
         return f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str}{addition_str}) {conditions_str}"
 
     def __str__(self) -> str:

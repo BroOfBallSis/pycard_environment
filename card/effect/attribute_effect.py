@@ -43,7 +43,7 @@ class AttributeEffect(BaseEffect):
                 effect_function(self.amount)
             elif self.status_amount_type:
                 status = effect_target.character.has_status(self.status_amount_type)
-                effect_function(status.layers)              
+                effect_function(status.layers)
         else:
             raise ValueError(f"Does not have function {effect_function}")
 

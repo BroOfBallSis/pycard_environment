@@ -57,7 +57,8 @@
         "time_cost": 6,
         "conditions": [
             {
-                "condition_type": "pay_mana",
+                "condition_type": "pay",
+                "currency": "mana",
                 "amount": 2,
                 "effects": [
                     {
@@ -88,10 +89,20 @@
         "name": "念力迸发",
         "card_type": "thunder",
         "ep_cost": 2,
-        "time_cost": 4,
+        "time_cost": 5,
         "conditions": [
             {
-                "condition_type": "pay_mana",
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 4
+                    }
+                ]
+            },
+            {
+                "condition_type": "pay",
+                "currency": "mana",
                 "amount": 1,
                 "effects": [
                     {
@@ -99,11 +110,13 @@
                         "amount": 2
                     },
                     {
-                        "effect_type": "damage_rp",
-                        "amount": 4
+                        "effect_type": "reduce_delay",
+                        "amount": 1,
+                        "immediate": true
                     }
                 ]
             }
+
         ]
     }
 }

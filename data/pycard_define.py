@@ -33,7 +33,7 @@ class ConditionType(Enum):
     MAINTAIN = "保持"
     START = "启动"
     OPPONENT_SWITCH = "识破"
-    PAY_MANA = "支付{}点魔力"
+    PAY = "支付{}点{}"
 
 
 class MockResult(Enum):
@@ -61,6 +61,7 @@ class EffectType(Enum):
     DETONATE_STATUS = "detonate_status"
     INCREASE_DELAY = "increase_delay"
     ACTIVATE_STATUS = "activate_status"
+    ADD_CARD = "add_card"
 
 
 class CharacterAttributeType(Enum):

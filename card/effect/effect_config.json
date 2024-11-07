@@ -90,8 +90,15 @@
     "draw_card": {
         "class": "card",
         "target": "source",
-        "function": "draw_cards",
+        "function": "draw_card",
         "description": "抽{}张牌",
+        "priority": 3
+    },
+    "add_card": {
+        "class": "card",
+        "target": "source",
+        "function": "add_card",
+        "description": "获得'{}'",
         "priority": 3
     },
     "gain_status": {

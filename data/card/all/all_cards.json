@@ -595,7 +595,8 @@
         "time_cost": 6,
         "conditions": [
             {
-                "condition_type": "pay_mana",
+                "condition_type": "pay",
+                "currency": "mana",
                 "amount": 1,
                 "effects": [
                     {
@@ -626,7 +627,8 @@
         "time_cost": 5,
         "conditions": [
             {
-                "condition_type": "pay_mana",
+                "condition_type": "pay",
+                "currency": "mana",
                 "amount": 1,
                 "effects": [
                     {

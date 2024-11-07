@@ -5,6 +5,7 @@ from data.item import item_library_instance
 from typing import Dict, Any, List
 from character.status.base_status import CharacterStatus, CharacterStatusType
 from character.character_attribute import CharacterAttribute, CharacterAttributeType
+from character import character_status_methods
 from utils.logger import Logger
 
 
@@ -99,99 +100,25 @@ class BaseCharacter:
         self.check_break_status()
 
     def check_death_status(self):
-        self.logger.increase_depth()
-        """检查角色是否死亡并更新状态"""
-        if self.hp.value <= 0 and not self.has_status(CharacterStatusType.DEAD):
-            status = CharacterStatus(self.player, CharacterStatusType.DEAD, -1)
-            self.statuses.append(status)
-            self.logger.info(f"获得 {status}")
-        self.logger.decrease_depth()
+        character_status_methods.check_death_status(self)
 
     def check_break_status(self):
-        self.logger.increase_depth()
-        """检查角色是否打断并更新状态"""
-        if self.rp.value <= 0 and not self.has_status(CharacterStatusType.BREAK) and not self.has_status(CharacterStatusType.DEAD):
-            status = CharacterStatus(self.player, CharacterStatusType.BREAK, -1)
-            self.statuses.append(status)
-            self.logger.info(f"获得 {status}")
-        self.logger.decrease_depth()
+        character_status_methods.check_break_status(self)
 
     def check_flaws_status(self):
-        self.logger.increase_depth()
-        """检查角色是否破绽并更新状态"""
-        if self.delay.value >= self.delay.max_value and not self.has_status(CharacterStatusType.FLAWS):
-            status = CharacterStatus(self.player, CharacterStatusType.FLAWS, 1)
-            self.statuses.append(status)
-            self.logger.info(f"获得 {status}")
-            self.logger.increase_depth()
-            self.logger.info(f"清空 延迟")
-            self.delay.set_value(0)
-            self.logger.decrease_depth()
-        self.logger.decrease_depth()
+        character_status_methods.check_flaws_status(self)
 
     def append_status(self, status_type_str, layers=None):
-
-        status_type_upper = status_type_str.upper()
-        if layers is None:
-            layers = 1
-
-        if status_type_upper in CharacterStatusType.__members__:
-            status_type = CharacterStatusType[status_type_upper]
-            status = self.has_status(status_type)
-            if status:
-                status.increase(layers)
-            else:
-                status = CharacterStatus(self.player, status_type, layers)
-                self.statuses.append(status)
-                self.logger.increase_depth()
-                self.logger.info(f"获得 {status}")
-                self.logger.decrease_depth()
+        character_status_methods.append_status(self, status_type_str, layers)
 
     def reduce_status(self, status_type_str, layers=None):
-        status_type_upper = status_type_str.upper()
-        if layers is None:
-            layers = 1
-
-        if status_type_upper in CharacterStatusType.__members__:
-            status_type = CharacterStatusType[status_type_upper]
-            status = self.has_status(status_type)
-            status.decrease(layers)
-
-    def detonate_status(self, status_type_str, sub_effects=[], effect_target="target"):
-        status_type_upper = status_type_str.upper()
-        if status_type_upper in CharacterStatusType.__members__:
-            status_type = CharacterStatusType[status_type_upper]
-            to_remove_status = None
-            for status in self.statuses:
-                if status.status_type == status_type:
-                    to_remove_status = status
-                    for _ in range(status.layers):
-                        status.on_trigger()
-                        for sub_effect in sub_effects:
-                            source = self.player.opponent if effect_target == "target" else self.player
-                            sub_effect.execute(source, source.opponent)
-
-            if to_remove_status:
-                self.logger.increase_depth()
-                self.logger.info(f"移除 {to_remove_status}")
-                to_remove_status.on_remove()
-                self.statuses.remove(to_remove_status)
-                self.logger.decrease_depth()
+        character_status_methods.reduce_status(self, status_type_str, layers)
 
     def update_status(self):
-        to_remove_statuses = []
-        for status in self.statuses:
-            if status.layers > 0:
-                status.on_trigger()
-            if status.layers <= 0:
-                self.logger.increase_depth()
-                to_remove_statuses.append(status)
-                self.logger.info(f"移除 {status}")
-                status.on_remove()
-                self.logger.decrease_depth()
+        character_status_methods.update_status(self)
 
-        for status in to_remove_statuses:
-            self.statuses.remove(status)
+    def detonate_status(self, status_type_str, effect_target="target", sub_effects=[]):
+        character_status_methods.detonate_status(self, status_type_str, effect_target, sub_effects)
 
     @classmethod
     def from_json(cls, player, json_data: Dict[str, Any]) -> "BaseCharacter":

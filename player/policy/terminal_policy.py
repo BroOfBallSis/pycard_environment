@@ -24,7 +24,7 @@ class TerminalPolicy(BasePolicy):
             else:
                 index_color = "green"
 
-            hand_str.append(f"{color_text(f'[{index}]', index_color)} {card.get_colored_str()}")
+            hand_str.append(f"{color_text(f'[{index+1}]', index_color)} {card.get_colored_str()}")
         print("\n".join(hand_str))
 
     def display_deck(self) -> str:
@@ -105,7 +105,7 @@ class TerminalPolicy(BasePolicy):
                     return -1
 
                 # 尝试将输入转换为整数
-                hand_index = int(user_input)
+                hand_index = int(user_input) - 1
 
                 temp_hand = self.player.card_manager.hand
                 if 0 <= hand_index < len(temp_hand):

@@ -45,7 +45,7 @@ class CharacterStatus:
 
     def start_round(self):
         if self.status_type == CharacterStatusType.MANA:
-            self.set_value(self.layers//2)
+            self.set_value(self.layers // 2)
         else:
             self.set_value(0)
 
@@ -74,7 +74,7 @@ class CharacterStatus:
         self.logger.decrease_depth()
 
     def __str__(self) -> str:
-        if self.layers > 0:
+        if self.layers >= 0:
             return f"{self.status_type.value}({self.layers})"
         else:
             return f"{self.status_type.value}"

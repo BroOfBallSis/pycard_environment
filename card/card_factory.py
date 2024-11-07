@@ -11,7 +11,9 @@ from card.condition.pay_condition import PayCondition
 
 class ConditionFactory:
     @staticmethod
-    def create_condition(player, card, condition_type: str, effects: List[BaseEffect], condition_context) -> BaseCondition:
+    def create_condition(
+        player, card, condition_type: str, effects: List[BaseEffect], condition_context
+    ) -> BaseCondition:
         """
         创建条件实例的工厂方法
 
@@ -35,7 +37,7 @@ class ConditionFactory:
                 ConditionType.OPPONENT_SWITCH,
             ]:
                 return TypeConversionCondition(player, card, condition_enum, effects)
-            elif condition_enum in [ConditionType.PAY_MANA]:
+            elif condition_enum in [ConditionType.PAY]:
                 return PayCondition(player, card, condition_enum, effects, condition_context)
         raise ValueError(f"Unsupported condition type: {condition_type}")
 
