@@ -54,6 +54,7 @@ class BaseBattle:
                 self.current_phase = BattlePhase.PLAY_PHASE
                 for player in self.player_list:
                     self.play_phase(player)
+                clear_terminal()
 
                 # 结算阶段
                 self.current_phase = BattlePhase.RESOLVE_PHASE
@@ -136,11 +137,16 @@ class BaseBattle:
     def resolve_phase(self):
         print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) ----------------")
         for player in self.player_list:
+            print(f"{player.name_with_color}: {player.character}, 架势:{player.posture.value}\t{player.card_manager}")
+            if player.character.statuses:
+                print(f"  ∟ 状态: {', '.join(str(statu) for statu in player.character.statuses)}")
+        print("\n出 牌:")
+        for player in self.player_list:
             print(f"{player.name_with_color} : {player.current_card}")
             self.logger.log_to_file(f"{player.name} : {player.current_card}")
 
         # 执行 priority 为 0 的效果，如(立即)的效果
-        print(f"开 始:")
+        print(f"\n开 始:")
         self.resolve_synchronous_card_effects(immediate=True)
 
         # 执行 priority 为 1 的效果

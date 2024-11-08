@@ -146,6 +146,9 @@ class BaseCharacter:
     def __str__(self) -> str:
         return f"{self.name}\t {', '.join(str(attr) for attr in [self.hp, self.ep, self.rp, self.delay])}"
 
+    def display_character_info(self):
+        return f"{self.name}\t {', '.join(f"{attr.name}:{attr.max_value}" for attr in [self.hp, self.ep, self.rp, self.delay, self.hand_limit])}"
+
 
 if __name__ == "__main__":
     character_info = character_library_instance.get_character_info("ch00001")

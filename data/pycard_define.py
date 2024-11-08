@@ -23,6 +23,17 @@ class CardType(Enum):
     THUNDER = "雷"
 
 
+card_type_color_mapping = {
+    "无": "gray",
+    "风": "cyan",
+    "火": "red",
+    "山": "brown",
+    "林": "green",
+    "阴": "purple",
+    "雷": "yellow",
+}
+
+
 class ConditionType(Enum):
     TRUE = ""
     FALSE = "恒假"

@@ -59,7 +59,15 @@ class BaseCard:
             effects = []
             for effect_data in effects_data:
                 effect_type = effect_data["effect_type"]
-                effect_param_list = ["amount", "immediate", "status", "layers", "sub_effects", "status_amount", "next_card_id"]
+                effect_param_list = [
+                    "amount",
+                    "immediate",
+                    "status",
+                    "layers",
+                    "sub_effects",
+                    "status_amount",
+                    "next_card_id",
+                ]
                 context = {key: effect_data[key] for key in effect_param_list if key in effect_data}
                 effect = EffectFactory.create_effect(player, card, effect_type, context)
                 effects.append(effect)
@@ -122,7 +130,9 @@ class BaseCard:
             addition_str += " 消耗 "
         if self.temporary:
             addition_str += " 临时 "
-        return f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str}{addition_str})\n·    {conditions_str}"
+        return (
+            f"{name_str} ({card_type_str} 时间:{time_cost_str} 体力:{ep_cost_str}{addition_str})\n·    {conditions_str}"
+        )
 
     def __str__(self) -> str:
         return self.get_colored_str(get_color=False)

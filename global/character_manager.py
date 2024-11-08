@@ -2,6 +2,7 @@ from character.base_character import BaseCharacter
 from card.base_card import BaseCard
 from data.character import character_library_instance
 
+
 class CharacterManager:
     def __init__(self) -> None:
         pass

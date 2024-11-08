@@ -2,7 +2,7 @@ from utils.draw_text import color_text, center_text, clear_terminal, display_hel
 from data.pycard_define import CharacterStatusType
 from player.policy.base_policy import BasePolicy
 import copy
-from data.pycard_define import BattlePhase
+from data.pycard_define import BattlePhase, card_type_color_mapping
 
 
 class TerminalPolicy(BasePolicy):
@@ -48,17 +48,8 @@ class TerminalPolicy(BasePolicy):
         print(f"{card_manager_command_0} {card_manager_command_1}")
 
     def display_player(self, player):
-        color_mapping = {
-            "无": "gray",
-            "风": "cyan",
-            "火": "red",
-            "山": "brown",
-            "林": "green",
-            "阴": "purple",
-            "雷": "yellow",
-        }
         posture_str = player.posture.value
-        posture_color = color_mapping[posture_str]
+        posture_color = card_type_color_mapping[posture_str]
         print(
             f"{player.name_with_color}: {player.character}, 架势:{color_text(posture_str, posture_color)}\t{player.card_manager}"
         )

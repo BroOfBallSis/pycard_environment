@@ -60,6 +60,7 @@ class TutorialBattle1(BaseBattle):
                     )
                 for player in self.player_list:
                     self.play_phase(player)
+                clear_terminal()
 
                 # 结算阶段
                 self.current_phase = BattlePhase.RESOLVE_PHASE
