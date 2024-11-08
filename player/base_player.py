@@ -25,8 +25,8 @@ class BasePlayer:
         :param character_id: 控制的角色ID
         :param policy: 使用的策略
         """
-        self.name = name
-        self.name_with_color = color_text(name, "blue" if camp == 1 else "red")
+        self.name = center_text(name, 8)
+        self.name_with_color = color_text(self.name, "blue" if camp == 1 else "red")
         self.camp = camp
         policy_context = None
         self.policy = PolicyFactory.create_policy(self, policy, policy_context)

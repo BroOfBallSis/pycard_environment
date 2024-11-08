@@ -89,7 +89,7 @@ class TerminalPolicy(BasePolicy):
                 # 获取用户输入
                 if current_phase == BattlePhase.DISCARD_PHASE:
                     print(f"{color_text('[e]', 'green')} {center_text('结束弃牌', 12)}")
-                user_input = input("请输入指令: ")
+                user_input = input(f"'{current_phase_str}' 请输入指令: ")
 
                 # 检查用户是否想要查看手牌
                 if user_input.lower() == "q":

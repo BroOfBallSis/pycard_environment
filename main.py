@@ -32,6 +32,7 @@ clear_terminal()
 class Game:
     def __init__(self, menu_dict):
         self.characters = ["ch00001", "ch00001"]
+        self.players = ["player", "BOT"]
         self.menu_dict = menu_dict
         self.current_menu = self.menu_dict["main_menu"]
         self.pass_time_and_resilience_tutorial = False
@@ -54,7 +55,7 @@ class Game:
     def time_and_resilience_tutorial(self):
 
         # 创建战斗实例
-        battle = TutorialBattle1(["th00001", "th00001"])
+        battle = TutorialBattle1(self.players, ["th00001", "th00001"])
 
         # 初始化战斗
         battle.initialize_battle()
@@ -70,7 +71,7 @@ class Game:
     def dodge_and_retreat_tutorial(self):
 
         # 创建战斗实例
-        battle = TutorialBattle2(["th00001", "th00001"])
+        battle = TutorialBattle2(self.players, ["th00001", "th00001"])
 
         # 初始化战斗
         battle.initialize_battle()
@@ -93,7 +94,7 @@ class Game:
     def start_battle(self):
         print("开始对战！")
         # 创建战斗实例
-        battle = BaseBattle(self.characters)
+        battle = BaseBattle(self.players, self.characters)
 
         # 初始化战斗
         battle.initialize_battle()

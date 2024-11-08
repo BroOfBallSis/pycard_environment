@@ -2,17 +2,17 @@ from enum import Enum
 from player.base_player import BasePlayer
 from character.status.base_status import CharacterStatusType
 import time
-from utils.draw_text import color_text, clear_terminal
+from utils.draw_text import center_text, color_text, clear_terminal
 from utils.debug import print_memory_info
 from data.pycard_define import BattlePhase, character_to_policy
 from utils.logger import Logger
 
 
 class BaseBattle:
-    def __init__(self, characters):
-        self.player1 = BasePlayer("player1", 1, characters[0], "terminal", self)
+    def __init__(self, players, characters):
+        self.player1 = BasePlayer(players[0], 1, characters[0], "terminal", self)
         enemy_ai = character_to_policy[characters[1]]
-        self.player2 = BasePlayer("player2", 2, characters[1], enemy_ai, self)
+        self.player2 = BasePlayer(players[1], 2, characters[1], enemy_ai, self)
         self.player_list = [self.player1, self.player2]
         self.player1.opponent = self.player2
         self.player2.opponent = self.player1
