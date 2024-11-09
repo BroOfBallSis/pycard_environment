@@ -19,7 +19,7 @@ class CharacterAttribute:
 
         # 延迟 无上限
         if self.attribute_type != CharacterAttributeType.DELAY:
-            self.value = min(self.value + amount, self.max_value)
+            self.value = min(self.value, self.max_value)
 
         right_value_str = f"{self.value} (max)" if self.value == self.max_value else f"{self.value}"
         self.logger.info(f"{self.name}: {old_value} ↑ {right_value_str}")
@@ -56,7 +56,7 @@ class CharacterAttribute:
             self.logger.info(f"溢出的{self.attribute_type.value}伤害 转化为 缓慢 ")
             layers = -self.player.character.rp.value
             self.set_value(0)
-            self.player.character.append_status("slow", layers)
+            self.player.character.append_status("slow", {"layers": layers})
             self.logger.decrease_depth()
 
         # 回合统计

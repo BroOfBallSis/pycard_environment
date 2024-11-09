@@ -16,6 +16,9 @@ class BaseCondition:
         self.card = card
         self.player = player
         self.logger = Logger(self.player.name)
+        self.temporary = False
+        if condition_context:
+            self.temporary = condition_context.get("temporary", False)
 
     def reset(self):
         pass
@@ -61,7 +64,12 @@ class BaseCondition:
                         skip_effect = True
                         break
                 if not skip_effect:
+                    if self.temporary:
+                        self.logger.increase_depth()
+                        self.logger.info("额外效果:")
                     effect.execute(source, target, context)
+                    if self.temporary:
+                        self.logger.decrease_depth()
 
     def get_condition_type_str(self):
         return self.condition_type.value

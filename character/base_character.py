@@ -48,7 +48,6 @@ class BaseCharacter:
         self.items = items[::]  # 道具列表
         self.cards = cards[::]  # 卡牌列表
         self.statuses = []  # 状态列表
-        self.new_statuses = []  # 状态列表
         self.logger = Logger(self.player.name)
         self._init_cards()
 
@@ -108,8 +107,8 @@ class BaseCharacter:
     def check_flaws_status(self):
         character_status_methods.check_flaws_status(self)
 
-    def append_status(self, status_type_str, layers=None):
-        character_status_methods.append_status(self, status_type_str, layers)
+    def append_status(self, status_type_str, context=None):
+        character_status_methods.append_status(self, status_type_str, context)
 
     def reduce_status(self, status_type_str, layers=None):
         character_status_methods.reduce_status(self, status_type_str, layers)
@@ -147,7 +146,7 @@ class BaseCharacter:
         return f"{self.name}\t {', '.join(str(attr) for attr in [self.hp, self.ep, self.rp, self.delay])}"
 
     def display_character_info(self):
-        return f"{self.name}\t {', '.join(f"{attr.name}:{attr.max_value}" for attr in [self.hp, self.ep, self.rp, self.delay, self.hand_limit])}"
+        return f"{self.name}\t {', '.join(f"{attr.name}:{attr.max_value}" for attr in [self.hp, self.ep, self.rp, self.delay])}, {self.hand_limit.name}:{self.hand_limit.value}"
 
 
 if __name__ == "__main__":

@@ -136,15 +136,7 @@ menu_dict = {
     "pve_enemy_menu": CharacterMenu(
         "pve_enemy_menu",
         "选择对手角色",
-        [MenuItem("确认选择", "pve_start_menu"), MenuItem("返回上一级", "pve_player_menu")],
+        [MenuItem("确认选择", "start_battle"), MenuItem("返回上一级", "pve_player_menu")],
         1,
-    ),
-    "pve_start_menu": Menu(
-        "pve_start_menu",
-        "开始对战",
-        [
-            MenuItem("开始对战", "start_battle"),
-            MenuItem("返回上一级", "pve_enemy_menu"),
-        ],
     ),
 }

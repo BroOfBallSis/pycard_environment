@@ -210,7 +210,7 @@
     "mw01_0005": {
         "name": "长剑竖劈",
         "card_type": "fire",
-        "ep_cost": 7,
+        "ep_cost": 6,
         "time_cost": 7,
         "conditions": [
             {
@@ -232,7 +232,7 @@
                     },
                     {
                         "effect_type": "damage_rp",
-                        "amount": 4
+                        "amount": 3
                     }
                 ]
             }
@@ -374,6 +374,179 @@
                                 "amount": 2
                             }
                         ]
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0001": {
+        "name": "引导",
+        "card_type": "wind",
+        "is_base": true,
+        "ep_cost": 4,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "switch",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "mana",
+                        "layers": 1
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0002": {
+        "name": "奥术飞弹",
+        "card_type": "thunder",
+        "ep_cost": 3,
+        "time_cost": 3,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "increase_delay",
+                        "status_amount": "mana",
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "activate_status",
+                        "status": "mana",
+                        "sub_effects": [
+                            {
+                                "effect_type": "damage_hp",
+                                "amount": 2
+                            },
+                            {
+                                "effect_type": "damage_rp",
+                                "amount": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0003": {
+        "name": "风刃",
+        "card_type": "wind",
+        "ep_cost": 2,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 2,
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0004": {
+        "name": "暗影箭",
+        "card_type": "shadow",
+        "ep_cost": 5,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "dodge",
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 5
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0005": {
+        "name": "魔力聚集",
+        "card_type": "forest",
+        "ep_cost": 0,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "mana",
+                        "layers": 2
+                    },
+                    {
+                        "effect_type": "add_card",
+                        "next_card_id": "mw03_0005_1"
+                    }
+                ]
+            }
+        ]
+    },
+    "mw03_0005_1": {
+        "name": "火球术",
+        "card_type": "fire",
+        "ep_cost": 4,
+        "time_cost": 6,
+        "temporary": true,
+        "conditions": [
+            {
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 7
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 4
                     }
                 ]
             }
@@ -580,6 +753,124 @@
                     {
                         "effect_type": "recover_ep",
                         "amount": 6
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0001": {
+        "name": "祷告",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "mana",
+                        "layers": 1
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0002": {
+        "name": "撤离",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "retreat"
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 4,
+                        "immediate": true
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0003": {
+        "name": "生命涌动",
+        "card_type": "forest",
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 2,
+                "effects": [
+                    {
+                        "effect_type": "recover_hp",
+                        "amount": 5
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 5
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "draw_card",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "sw03_0004": {
+        "name": "念力迸发",
+        "card_type": "thunder",
+        "ep_cost": 2,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 4
+                    }
+                ]
+            },
+            {
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 1,
+                        "immediate": true
                     }
                 ]
             }

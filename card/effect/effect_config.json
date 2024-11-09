@@ -108,6 +108,13 @@
         "description": "获得{}{}'{}'",
         "priority": 1
     },
+    "gain_buff": {
+        "class": "status",
+        "target": "source",
+        "function": "append_status",
+        "description": "获得{}层增益:打出'{}', 额外{}",
+        "priority": 1
+    },
     "reduce_status": {
         "class": "status",
         "target": "source",

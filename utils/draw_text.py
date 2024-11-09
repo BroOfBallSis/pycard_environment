@@ -28,7 +28,9 @@ def display_help():
     print(help_str)
 
 
-def clear_terminal():
+def clear_terminal(confirm=False):
+    if confirm:
+        input(color_text("输入回车键继续……", "gray"))
     # 检测操作系统并执行相应的清空命令
     if os.name == "nt":  # Windows
         os.system("cls")

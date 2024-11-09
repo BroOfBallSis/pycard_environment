@@ -1,0 +1,200 @@
+{
+    "mw05_0001": {
+        "name": "大剑挥砍",
+        "card_type": "wind",
+        "is_base": true,
+        "ep_cost": 5,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 5
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "m w_0002": {
+        "name": "招架",
+        "card_type": "mountain",
+        "is_base": true,
+        "ep_cost": 2,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "resist_damage",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "resist_stun",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0003": {
+        "name": "撤离",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "retreat"
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 4,
+                        "immediate": true
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0004": {
+        "name": "顺势斩",
+        "card_type": "wind",
+        "ep_cost": 4,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "maintain",
+                "effects": [
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 1,
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 4
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0005": {
+        "name": "横扫",
+        "card_type": "wind",
+        "ep_cost": 6,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "maintain",
+                "effects": [
+                    {
+                        "effect_type": "resist_damage",
+                        "amount": 2,
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 4
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 2
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0006": {
+        "name": "大剑竖劈",
+        "card_type": "fire",
+        "ep_cost": 7,
+        "time_cost": 7,
+        "conditions": [
+            {
+                "condition_type": "switch",
+                "effects": [
+                    {
+                        "effect_type": "reduce_delay",
+                        "amount": 1,
+                        "immediate": true
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 6
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 5
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0007": {
+        "name": "蓄势待发",
+        "card_type": "mountain",
+        "ep_cost": 4,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_buff",
+                        "status": "buff",
+                        "buff_posture": "fire",
+                        "buff_effect": "damage_hp",
+                        "amount": 4,
+                        "layers": 1
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_buff",
+                        "status": "buff",
+                        "buff_posture": "fire",
+                        "buff_effect": "damage_rp",
+                        "amount": 2,
+                        "layers": 1
+                    }
+                ]
+            }
+        ]
+    }
+}

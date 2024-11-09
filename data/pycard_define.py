@@ -73,6 +73,7 @@ class EffectType(Enum):
     INCREASE_DELAY = "increase_delay"
     ACTIVATE_STATUS = "activate_status"
     ADD_CARD = "add_card"
+    GAIN_BUFF = "gain_buff"
 
 
 class CharacterAttributeType(Enum):
@@ -96,6 +97,7 @@ class CharacterStatusType(Enum):
     DULL = "迟钝"
     FLAWS = "破绽"
     MANA = "魔力"
+    BUFF = "增益"
 
 
 class BattlePhase(Enum):

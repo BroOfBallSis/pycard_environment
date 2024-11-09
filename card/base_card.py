@@ -5,6 +5,7 @@ from card.card_factory import ConditionFactory, EffectFactory
 from utils.draw_text import center_text
 from card.card_attribute import CardAttribute
 from data.card import card_library_instance
+from utils.logger import Logger
 
 
 class BaseCard:
@@ -31,6 +32,8 @@ class BaseCard:
         self.is_base = is_base
         self.consumable = consumable
         self.temporary = temporary
+        self.temporary_condition = ConditionFactory.create_condition(self.player, self, "true", [], {"temporary": True})
+        self.logger = Logger(self.player.name)
 
     @classmethod
     def from_json(cls, player, card_id) -> "BaseCard":
@@ -67,6 +70,8 @@ class BaseCard:
                     "sub_effects",
                     "status_amount",
                     "next_card_id",
+                    "buff_posture",
+                    "buff_effect",
                 ]
                 context = {key: effect_data[key] for key in effect_param_list if key in effect_data}
                 effect = EffectFactory.create_effect(player, card, effect_type, context)
@@ -106,6 +111,7 @@ class BaseCard:
         :param target: 目标对象
         :param context: 上下文信息
         """
+        self.temporary_condition.execute_effects(source, target, context)
         for condition in self.conditions:
             if condition.is_met(source, target, context):
                 condition.execute_effects(source, target, context)

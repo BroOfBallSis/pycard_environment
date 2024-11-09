@@ -30,22 +30,10 @@ class BaseBattle:
         while not self.is_battle_over():
 
             # 轮开始
-            self.start_round()
-
-            if self.is_first_round:
-                input(color_text("输入回车键继续……", "gray"))
-                clear_terminal()
-                self.is_first_round = False
-                self.current_phase = BattlePhase.DISCARD_PHASE
-                for player in self.player_list:
-                    self.discard_phase(player)
-                    player_hand_limit = player.character.hand_limit.value
-                    player.card_manager.draw_card(player_hand_limit, player_hand_limit)
+            self.start_round(add_discard=True)
 
             while not self.is_round_over() and not self.is_battle_over():
-
-                input(color_text("输入回车键继续……", "gray"))
-                clear_terminal()
+                clear_terminal(confirm=True)
 
                 # 回合开始
                 self.start_turn()
@@ -65,23 +53,31 @@ class BaseBattle:
 
             # 弃牌阶段
             if not self.is_battle_over():
-                input(color_text("输入回车键继续……", "gray"))
-                clear_terminal()
+                clear_terminal(confirm=True)
                 self.current_phase = BattlePhase.DISCARD_PHASE
                 for player in self.player_list:
                     self.discard_phase(player)
-                input(color_text("输入回车键继续……", "gray"))
-                clear_terminal()
+                clear_terminal(confirm=True)
 
         return self.conclude_battle()
 
-    def start_round(self):
+    def start_round(self, add_discard=False):
         self.round_cnt += 1
         self.turn_cnt = 0
         print(f"---------------- 第 {self.round_cnt} 轮 ----------------")
         self.logger.log_to_file(f"---------------- 第 {self.round_cnt} 轮 ----------------")
         for player in self.player_list:
             player.start_round()
+
+        # 第 1 轮, 增加 弃牌阶段
+        if self.is_first_round and add_discard:
+            clear_terminal(confirm=True)
+            self.is_first_round = False
+            self.current_phase = BattlePhase.DISCARD_PHASE
+            for player in self.player_list:
+                self.discard_phase(player)
+                player_hand_limit = player.character.hand_limit.value
+                player.card_manager.draw_card(player_hand_limit, player_hand_limit)
 
     def start_turn(self):
         self.turn_cnt += 1
@@ -96,12 +92,7 @@ class BaseBattle:
             )
 
     def play_phase(self, player: BasePlayer):
-        battle_info = {
-            "round_cnt": self.round_cnt,
-            "turn_cnt": self.turn_cnt,
-            "current_phase": self.current_phase,
-        }
-        command = player.get_action(battle_info)
+        command = player.get_action(self.get_battle_info())
         player.play_card_by_hand_index(command)
 
     def players_evaluate_and_update_status(self):
@@ -109,30 +100,35 @@ class BaseBattle:
             player.character.evaluate_and_update_status()
             player.update_hand()
 
-    def resolve_synchronous_card_effects(self, immediate=False, end=False):
+    def resolve_character_status(self):
+        for player in self.player_list:
+            for status in player.character.statuses:
+                status.on_resolve()
+
+    def resolve_card_effects(self, player_list, immediate=False, end=False):
+        if immediate:
+            print(f"\n开 始:")
+            self.resolve_character_status()
+        elif end:
+            print(f"结 束:")
+        else:
+            print(f"时 刻 {player_list[0].current_card.time_cost.real_value} :")
+
         # 结算同步效果
         for priority in range(10):
             context = {"priority": priority, "immediate": immediate, "end": end}
-            for player in self.player_list:
+            for player in player_list:
                 player.resolve_card_effect(context)
+
         self.players_evaluate_and_update_status()
 
     def resolve_asynchronous_card_effects(self, first_player: BasePlayer = None, later_player: BasePlayer = None):
         # 结算异步效果
         if first_player:
-            print(f"时 刻 {first_player.current_card.time_cost.real_value} :")
-            for priority in range(10):
-                first_player.resolve_card_effect({"priority": priority})
-            self.players_evaluate_and_update_status()
-
-            print(f"时 刻 {later_player.current_card.time_cost.real_value} :")
-            for priority in range(10):
-                later_player.resolve_card_effect({"priority": priority})
-            self.players_evaluate_and_update_status()
-
+            self.resolve_card_effects([first_player])
+            self.resolve_card_effects([later_player])
         else:
-            print(f"时 刻 {self.player1.current_card.time_cost.real_value} :")
-            self.resolve_synchronous_card_effects()
+            self.resolve_card_effects(self.player_list)
 
     def resolve_phase(self):
         print(f"---------------- 结 算 阶 段 ( 第 {self.round_cnt} 轮 - 第 {self.turn_cnt} 回 合 ) ----------------")
@@ -145,25 +141,16 @@ class BaseBattle:
             print(f"{player.name_with_color} : {player.current_card}")
             self.logger.log_to_file(f"{player.name} : {player.current_card}")
 
-        # 执行 priority 为 0 的效果，如(立即)的效果
-        print(f"\n开 始:")
-        self.resolve_synchronous_card_effects(immediate=True)
-
-        # 执行 priority 为 1 的效果
+        self.resolve_card_effects(self.player_list, immediate=True)
         card_1_time_cost = self.player1.current_card.time_cost.real_value
         card_2_time_cost = self.player2.current_card.time_cost.real_value
-        first_player = None
-        later_player = None
-        if card_1_time_cost < card_2_time_cost:
-            first_player = self.player1
-            later_player = self.player2
-        elif card_1_time_cost > card_2_time_cost:
-            first_player = self.player2
-            later_player = self.player1
+        first_player, later_player = (
+            (self.player1, self.player2)
+            if card_1_time_cost < card_2_time_cost
+            else (self.player2, self.player1) if card_1_time_cost > card_2_time_cost else (None, None)
+        )
         self.resolve_asynchronous_card_effects(first_player, later_player)
-
-        print(f"结 束:")
-        self.resolve_synchronous_card_effects(end=True)
+        self.resolve_card_effects(self.player_list, end=True)
 
     def end_turn(self):
         real_value_1 = self.player1.current_card.time_cost.real_value
@@ -173,15 +160,10 @@ class BaseBattle:
             player.end_turn(base_delay)
 
     def discard_phase(self, player: BasePlayer):
-        battle_info = {
-            "round_cnt": self.round_cnt,
-            "turn_cnt": self.turn_cnt,
-            "current_phase": self.current_phase,
-        }
         player.card_manager.clear_temporary_card()
         if player.policy_name == "terminal":
             while True:
-                command = player.get_action(battle_info)
+                command = player.get_action(self.get_battle_info())
                 if command < 0:
                     print(color_text(f"结束 弃牌阶段", "yellow"))
                     break
@@ -189,7 +171,14 @@ class BaseBattle:
                     clear_terminal()
                     player.discard_card_by_hand_index(command)
         else:
-            player.auto_discard_phase(battle_info)
+            player.auto_discard_phase(self.get_battle_info())
+
+    def get_battle_info(self):
+        return {
+            "round_cnt": self.round_cnt,
+            "turn_cnt": self.turn_cnt,
+            "current_phase": self.current_phase,
+        }
 
     def is_battle_over(self):
         return not self.player1.character.is_alive() or not self.player2.character.is_alive()
@@ -200,16 +189,10 @@ class BaseBattle:
         )
 
     def conclude_battle(self):
-        if not self.player1.character.is_alive():
-            print(f"{self.player1.name} has been defeated! {self.player2.name} wins!")
-            input(color_text("输入回车键继续……", "gray"))
-            clear_terminal()
-            return False
-        elif not self.player2.character.is_alive():
-            print(f"{self.player2.name} has been defeated! {self.player1.name} wins!")
-            input(color_text("输入回车键继续……", "gray"))
-            clear_terminal()
-            return True
+        winner = self.player1 if not self.player2.character.is_alive() else self.player2
+        print(f"{winner.opponent.name_with_color} has been defeated! {winner.name_with_color} wins!")
+        clear_terminal(confirm=True)
+        return winner is self.player1
 
 
 if __name__ == "__main__":
