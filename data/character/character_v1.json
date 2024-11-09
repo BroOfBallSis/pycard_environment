@@ -58,5 +58,20 @@
             "it00002"
         ],
         "cards": []
+    },
+    "ch00005": {
+        "name": "冠 军(early access)",
+        "hp": 56,
+        "ep": 24,
+        "rp": 6,
+        "delay": 5,
+        "hand_limit": 7,
+        "main_weapon": "mw00005",
+        "sub_weapon": "",
+        "items": [
+            "it00001",
+            "it00002"
+        ],
+        "cards": []
     }
 }

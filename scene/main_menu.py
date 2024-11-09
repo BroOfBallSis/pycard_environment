@@ -51,7 +51,9 @@ class CharacterMenu(Menu):
         player = color_text(game.players[self.player_index], player_color)
         character_data = character_library_instance.character_data
         public_character = (
-            ["ch00001", "ch00002", "ch00003", "ch00004"] if self.player_index == 0 else ["ch00001", "ch00002"]
+            ["ch00001", "ch00002", "ch00003", "ch00004", "ch00005"]
+            if self.player_index == 0
+            else ["ch00001", "ch00002"]
         )
 
         while True:
@@ -60,15 +62,18 @@ class CharacterMenu(Menu):
             print(
                 f"{color_text('[y]','green')} 确 认\t{color_text('[n]','green')} 取 消\t{color_text('[i]','green')} 信 息"
             )
-            self.display_character_options(public_character, character_data)
+            self.display_character_options(public_character, character_data, character, player_color)
             user_input = input("\n请输入指令: ")
             if not self.handle_user_input(user_input, game, public_character, character_data):
                 break
 
-    def display_character_options(self, public_character, character_data):
+    def display_character_options(self, public_character, character_data, current_character, player_color):
         character_str = ""
         for index, character_id in enumerate(public_character, start=1):
-            character_str += f"{color_text(f'[{index}]','green')} {character_data[character_id]['name']}\t"
+            character_name = character_data[character_id]["name"]
+            if character_id == current_character:
+                character_name = color_text(f"> {character_name} <", player_color)
+            character_str += f"{color_text(f'[{index}]','green')} {character_name}\t"
         print(character_str)
 
     def handle_user_input(self, user_input, game, public_character, character_data):

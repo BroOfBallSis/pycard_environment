@@ -15,13 +15,13 @@
                     },
                     {
                         "effect_type": "damage_rp",
-                        "amount": 3
+                        "amount": 2
                     }
                 ]
             }
         ]
     },
-    "m w_0002": {
+    "mw05_0002": {
         "name": "招架",
         "card_type": "mountain",
         "is_base": true,
@@ -80,8 +80,8 @@
                 "condition_type": "maintain",
                 "effects": [
                     {
-                        "effect_type": "reduce_delay",
-                        "amount": 1,
+                        "effect_type": "resist_stun",
+                        "amount": 2,
                         "immediate": true
                     }
                 ]
@@ -133,6 +133,31 @@
         ]
     },
     "mw05_0006": {
+        "name": "大剑上挑",
+        "card_type": "fire",
+        "ep_cost": 6,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "increase_delay",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 4
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0007": {
         "name": "大剑竖劈",
         "card_type": "fire",
         "ep_cost": 7,
@@ -163,11 +188,11 @@
             }
         ]
     },
-    "mw05_0007": {
+    "mw05_0008": {
         "name": "蓄势待发",
         "card_type": "mountain",
-        "ep_cost": 4,
-        "time_cost": 6,
+        "ep_cost": 2,
+        "time_cost": 4,
         "conditions": [
             {
                 "condition_type": "true",
@@ -192,6 +217,40 @@
                         "buff_effect": "damage_rp",
                         "amount": 2,
                         "layers": 1
+                    }
+                ]
+            },
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 5
+                    }
+                ]
+            }
+        ]
+    },
+    "mw05_0009": {
+        "name": "重整旗鼓",
+        "card_type": "mountain",
+        "ep_cost": 0,
+        "time_cost": 4,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "draw_card",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 6
                     }
                 ]
             }
