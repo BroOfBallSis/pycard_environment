@@ -17,16 +17,8 @@ from player.policy.base_policy import PolicyFactory
 
 class BasePlayer:
     def __init__(self, name, camp, character_id, policy, scene):
-        """
-        初始化玩家基类
-
-        :param name: 玩家名称
-        :param camp: 阵营
-        :param character_id: 控制的角色ID
-        :param policy: 使用的策略
-        """
-        self.name = name
-        self.name_with_color = color_text(name, "blue" if camp == 1 else "red")
+        self.name = center_text(name, 8)
+        self.name_with_color = color_text(self.name, "blue" if camp == 1 else "red")
         self.camp = camp
         policy_context = None
         self.policy = PolicyFactory.create_policy(self, policy, policy_context)
@@ -47,12 +39,6 @@ class BasePlayer:
         self.round_info = {}
 
     def play_card_by_hand_index(self, hand_index) -> BaseCard:
-        """
-        根据手牌索引出牌
-
-        :param hand_index: 手牌索引
-        :return: 出牌的卡牌实例
-        """
         if hand_index == -1:
             self.current_card = BaseCard.from_json(self, "flaws")
         elif 0 <= hand_index < len(self.card_manager.hand):
@@ -61,31 +47,16 @@ class BasePlayer:
             raise IndexError("无效的手牌索引")
 
     def discard_card_by_hand_index(self, hand_index) -> BaseCard:
-        """
-        根据手牌索引弃牌
-
-        :param hand_index: 手牌索引
-        :return: 出牌的卡牌实例
-        """
         if 0 <= hand_index < len(self.card_manager.hand):
             self.card_manager.discard_card_by_hand_index(hand_index)
         else:
             print(color_text(f"\t无效的索引, 请重新输入", "yellow"))
 
     def resolve_card_effect(self, context):
-        """
-        结算卡牌效果
-
-        :param player_card: 自己的卡牌
-        :param context: 上下文
-        """
         player_card = self.current_card
         player_card.play(self, self.opponent, context)
 
     def start_round(self):
-        """
-        每轮对战开始时的操作
-        """
         self.logger.set_depth(0)
         round_info_str = ""
         for attr in [CharacterAttributeType.HP, CharacterAttributeType.EP, CharacterAttributeType.RP]:
@@ -103,9 +74,6 @@ class BasePlayer:
         self.card_manager.draw_card(self.character.hand_limit.value, self.character.hand_limit.value)
 
     def start_turn(self):
-        """
-        每回合对战开始时的操作
-        """
         self.character.start_turn()
         self.policy.start_turn()
         self.logger.set_depth(0)
@@ -115,9 +83,6 @@ class BasePlayer:
                 condition.reset()
 
     def end_turn(self, base_delay):
-        """
-        每回合对战结束时的操作
-        """
         if self.current_card:
             # 弃牌
             self.card_manager.discard_played_card(self.current_card)
@@ -132,6 +97,7 @@ class BasePlayer:
             self.previous_card_id = self.current_card.card_id
 
             # 清空当前卡牌
+            self.current_card.temporary_condition.effects = []
             self.current_card = None
         self.policy.end_turn()
 
@@ -143,17 +109,11 @@ class BasePlayer:
             # 根据延迟调整卡牌的时间消耗
             card.time_cost.increase_mod(self.character.delay.value)
 
-            # 根据角色状态调整卡牌的属性
-            # 根据角色的装备调整卡牌的属性
-
         if self.current_card:
             self.current_card.clear_mod()
 
             # 根据延迟调整卡牌的时间消耗
             self.current_card.time_cost.increase_mod(self.character.delay.value)
-
-            # 根据角色状态调整卡牌的属性
-            # 根据角色的装备调整卡牌的属性
 
     def get_action(self, battle_info):
         current_phase = battle_info["current_phase"]
@@ -190,9 +150,6 @@ class BasePlayer:
         self.policy.auto_discard_phase(battle_info)
 
     def __str__(self) -> str:
-        """
-        返回 BasePlayer 的字符串表示，显示玩家名称、阵营和角色信息
-        """
         return f"Player: {self.player_name}, Camp: {self.camp}, Character: {self.character}"
 
 

@@ -1,10 +1,12 @@
 # /status/base_status.py
-from data.pycard_define import CharacterStatusType
+from data.pycard_define import CharacterStatusType, CardType
+from card.card_factory import EffectFactory, ConditionFactory
+from card.effect.base_effect import effect_config
 from utils.logger import Logger
 
 
 class CharacterStatus:
-    def __init__(self, player, status_type: CharacterStatusType, layers: int = 1):
+    def __init__(self, player, status_type: CharacterStatusType, context):
         """
         初始化角色状态
 
@@ -13,7 +15,10 @@ class CharacterStatus:
         """
         self.player = player
         self.status_type = status_type
-        self.layers = layers
+        self.amount = context.get("amount", 0)
+        self.layers = context.get("layers", -1)
+        self.buff_posture = context.get("buff_posture", None)
+        self.buff_effect = context.get("buff_effect", None)
         self.logger = Logger(self.player.name)
 
     def increase(self, amount: int) -> None:
@@ -73,7 +78,32 @@ class CharacterStatus:
             self.decrease(1)
         self.logger.decrease_depth()
 
+    def on_resolve(self):
+        self.logger.increase_depth()
+        """当状态被触发时调用"""
+        if self.status_type == CharacterStatusType.BUFF:
+            card = self.player.current_card
+            buff_posture = CardType[self.buff_posture.upper()]
+            if card.card_type == buff_posture:
+                context = {"amount": self.amount}
+                buff_effect = EffectFactory.create_effect(
+                    self.player, self.player.current_card, self.buff_effect, context
+                )
+                self.player.current_card.temporary_condition.effects.append(buff_effect)
+                buff_effect = effect_config.get(self.buff_effect)
+                buff_effect_str = buff_effect["description"].format(self.amount)
+                self.logger.info(f"打出'{buff_posture.value}', 额外{buff_effect_str}")
+            else:
+                self.logger.info(f"条件不满足: 打出'{buff_posture.value}'")
+            self.decrease(1)
+        self.logger.decrease_depth()
+
     def __str__(self) -> str:
+        if self.status_type == CharacterStatusType.BUFF:
+            buff_posture_str = CardType[self.buff_posture.upper()].value
+            buff_effect = effect_config.get(self.buff_effect)
+            buff_effect_str = buff_effect["description"].format(self.amount)
+            return f"打出'{buff_posture_str}', 额外{buff_effect_str}({self.layers})"
         if self.layers >= 0:
             return f"{self.status_type.value}({self.layers})"
         else:

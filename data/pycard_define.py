@@ -23,6 +23,17 @@ class CardType(Enum):
     THUNDER = "雷"
 
 
+card_type_color_mapping = {
+    "无": "gray",
+    "风": "cyan",
+    "火": "red",
+    "山": "brown",
+    "林": "green",
+    "阴": "purple",
+    "雷": "yellow",
+}
+
+
 class ConditionType(Enum):
     TRUE = ""
     FALSE = "恒假"
@@ -57,11 +68,13 @@ class EffectType(Enum):
     DRAW_CARD = "draw_card"
     GAIN_SINGLETON_STATUS = "gain_singleton_status"  # 单例状态
     GAIN_STATUS = "gain_status"
+    CAUSE_STATUS = "cause_status"
     REDUCE_STATUS = "reduce_status"
     DETONATE_STATUS = "detonate_status"
     INCREASE_DELAY = "increase_delay"
     ACTIVATE_STATUS = "activate_status"
     ADD_CARD = "add_card"
+    GAIN_BUFF = "gain_buff"
 
 
 class CharacterAttributeType(Enum):
@@ -85,6 +98,7 @@ class CharacterStatusType(Enum):
     DULL = "迟钝"
     FLAWS = "破绽"
     MANA = "魔力"
+    BUFF = "增益"
 
 
 class BattlePhase(Enum):

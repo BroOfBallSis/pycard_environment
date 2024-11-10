@@ -2,8 +2,7 @@ from enum import Enum
 from typing import Any, Dict
 import json
 import os
-from data.pycard_define import CharacterStatusType
-from data.pycard_define import EffectType
+from data.pycard_define import EffectType, CardType, CharacterStatusType
 from utils.draw_text import color_text
 from utils.logger import Logger
 from card.effect.base_effect import effect_config, BaseEffect
@@ -38,8 +37,21 @@ class StatusEffect(BaseEffect):
         self.logger.info(f"{source.name_with_color} -> {effect_target.name_with_color}: {self}", show_source=False)
 
         if effect_function:
-            if self.sub_effects:
+            if self.effect_type in [EffectType.DETONATE_STATUS, EffectType.ACTIVATE_STATUS]:
                 effect_function(self.status, self.effect_target, self.sub_effects)
+            elif self.effect_type in [
+                EffectType.GAIN_STATUS,
+                EffectType.GAIN_BUFF,
+                EffectType.GAIN_SINGLETON_STATUS,
+                EffectType.CAUSE_STATUS,
+            ]:
+                context = {
+                    "amount": self.amount,
+                    "layers": self.layers,
+                    "buff_posture": self.buff_posture,
+                    "buff_effect": self.buff_effect,
+                }
+                effect_function(self.status, context)
             else:
                 effect_function(self.status, self.layers)
         else:
@@ -71,9 +83,16 @@ class StatusEffect(BaseEffect):
             effect_str = self.description.format(self.status_type.value)
 
         # 获得或减少状态
-        elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.REDUCE_STATUS]:
+        elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.REDUCE_STATUS, EffectType.CAUSE_STATUS]:
             unit = "点" if self.status_type in [CharacterStatusType.MANA] else "层"
             effect_str = self.description.format(self.layers, unit, self.status_type.value)
+
+        # 获得增益: "获得{}层增益:'{}'{}"
+        elif self.effect_type in [EffectType.GAIN_BUFF]:
+            buff_posture_str = CardType[self.buff_posture.upper()].value
+            buff_effect = effect_config.get(self.buff_effect)
+            buff_effect_str = buff_effect["description"].format(self.amount)
+            effect_str = self.description.format(self.layers, buff_posture_str, buff_effect_str)
 
         # 激活状态
         elif self.effect_type == EffectType.ACTIVATE_STATUS:

@@ -70,7 +70,7 @@ class CardManager:
             self.hand.remove(card)
             self.logger.decrease_depth()
 
-    def discard_played_card(self, card:BaseCard) -> None:
+    def discard_played_card(self, card: BaseCard) -> None:
         self.logger.increase_depth()
         """将卡牌从手牌移到弃牌堆"""
         if not card.is_base and card in self.hand:

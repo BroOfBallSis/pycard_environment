@@ -33,13 +33,13 @@ class TutorialBattle2(BaseBattle):
                 if self.round_cnt == 1 and self.turn_cnt == 1:
                     print(f"\t{color_text('教程:','yellow')} \"先手\"条件, 要求 卡牌在对手卡牌之前的时刻结算")
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"先发制人\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [1] 并按回车键','yellow')}, 打出手牌中的 \"先发制人\""
                     )
                 if self.round_cnt == 1 and self.turn_cnt == 2:
                     print(f"\t{color_text('教程:','yellow')} 角色的 架势 记录了角色上一回合出牌的 卡牌类型")
                     print(f"\t{color_text('教程:','yellow')} \"切换\"条件, 要求 卡牌类型 与 你当前的架势 不同")
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [0] 并按回车键','yellow')}, 打出手牌中的 \"翻滚\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [1] 并按回车键','yellow')}, 打出手牌中的 \"翻滚\""
                     )
                 if self.round_cnt == 1 and self.turn_cnt == 3:
                     print(f"\t{color_text('教程:','yellow')} 为了展示 \"撤离\" 的效果, 手动将 你的体力 设置为 0")
@@ -49,13 +49,14 @@ class TutorialBattle2(BaseBattle):
                         f"\t{color_text('教程:','yellow')} \"挥砍\", \"翻滚\", \"撤离\" 都是 基础卡牌, 会常驻在手牌中"
                     )
                     print(
-                        f"\t{color_text('教程:','yellow')} {color_text('输入 [2] 并按回车键','yellow')}, 打出手牌中的 \"撤离\""
+                        f"\t{color_text('教程:','yellow')} {color_text('输入 [3] 并按回车键','yellow')}, 打出手牌中的 \"撤离\""
                     )
                 if self.round_cnt == 2 and self.turn_cnt == 1:
                     print(f"\t{color_text('教程:','yellow')} 你已经完成了当前教程的内容, 请尝试击败对手")
 
                 for player in self.player_list:
                     self.play_phase(player)
+                clear_terminal()
 
                 # 结算阶段
                 self.current_phase = BattlePhase.RESOLVE_PHASE

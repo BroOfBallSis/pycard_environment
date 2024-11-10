@@ -1,6 +1,6 @@
 {
     "ch00001": {
-        "name": "剑士",
+        "name": "剑 士",
         "hp": 56,
         "ep": 24,
         "rp": 5,
@@ -15,7 +15,7 @@
         "cards": []
     },
     "ch00002": {
-        "name": "近卫",
+        "name": "近 卫",
         "hp": 56,
         "ep": 24,
         "rp": 6,
@@ -30,7 +30,7 @@
         "cards": []
     },
     "ch00003": {
-        "name": "牧师",
+        "name": "牧 师",
         "hp": 56,
         "ep": 24,
         "rp": 6,
@@ -39,14 +39,14 @@
         "main_weapon": "mw00002",
         "sub_weapon": "sw00003",
         "items": [
-            "it00001",
-            "it00002"
+            "it00002",
+            "it00004"
         ],
         "cards": []
     },
     "ch00004": {
-        "name": "法师",
-        "hp": 56,
+        "name": "法 师",
+        "hp": 52,
         "ep": 16,
         "rp": 5,
         "delay": 6,
@@ -56,6 +56,21 @@
         "items": [
             "it00001",
             "it00002"
+        ],
+        "cards": []
+    },
+    "ch00005": {
+        "name": "冠 军(early access)",
+        "hp": 56,
+        "ep": 24,
+        "rp": 6,
+        "delay": 5,
+        "hand_limit": 7,
+        "main_weapon": "mw00005",
+        "sub_weapon": "",
+        "items": [
+            "it00003",
+            "it00004"
         ],
         "cards": []
     }

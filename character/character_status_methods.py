@@ -6,7 +6,7 @@ def check_death_status(character):
     character.logger.increase_depth()
     """检查角色是否死亡并更新状态"""
     if character.hp.value <= 0 and not character.has_status(CharacterStatusType.DEAD):
-        status = CharacterStatus(character.player, CharacterStatusType.DEAD, -1)
+        status = CharacterStatus(character.player, CharacterStatusType.DEAD, {"layers": -1})
         character.statuses.append(status)
         character.logger.info(f"获得 {status}")
     character.logger.decrease_depth()
@@ -20,7 +20,7 @@ def check_break_status(character):
         and not character.has_status(CharacterStatusType.BREAK)
         and not character.has_status(CharacterStatusType.DEAD)
     ):
-        status = CharacterStatus(character.player, CharacterStatusType.BREAK, -1)
+        status = CharacterStatus(character.player, CharacterStatusType.BREAK, {"layers": -1})
         character.statuses.append(status)
         character.logger.info(f"获得 {status}")
     character.logger.decrease_depth()
@@ -30,7 +30,7 @@ def check_flaws_status(character):
     character.logger.increase_depth()
     """检查角色是否破绽并更新状态"""
     if character.delay.value >= character.delay.max_value and not character.has_status(CharacterStatusType.FLAWS):
-        status = CharacterStatus(character.player, CharacterStatusType.FLAWS, 1)
+        status = CharacterStatus(character.player, CharacterStatusType.FLAWS, {"layers": 1})
         character.statuses.append(status)
         character.logger.info(f"获得 {status}")
         character.logger.increase_depth()
@@ -41,6 +41,8 @@ def check_flaws_status(character):
 
 
 def update_status(character):
+    # 通常在每回合结束调用
+    # 触发每个状态
     to_remove_statuses = []
     for status in character.statuses:
         if status.layers > 0:
@@ -56,18 +58,20 @@ def update_status(character):
         character.statuses.remove(status)
 
 
-def append_status(character, status_type_str, layers):
+def append_status(character, status_type_str, context):
+    # 通常由卡牌效果调用
     status_type_upper = status_type_str.upper()
+    layers = context.get("layers", None)
     if layers is None:
         layers = 1
 
     if status_type_upper in CharacterStatusType.__members__:
         status_type = CharacterStatusType[status_type_upper]
         status = character.has_status(status_type)
-        if status:
+        if status and status_type != CharacterStatusType.BUFF:
             status.increase(layers)
         else:
-            status = CharacterStatus(character.player, status_type, layers)
+            status = CharacterStatus(character.player, status_type, context)
             character.statuses.append(status)
             character.logger.increase_depth()
             character.logger.info(f"获得 {status}")
@@ -75,6 +79,7 @@ def append_status(character, status_type_str, layers):
 
 
 def reduce_status(character, status_type_str, layers):
+    # 通常由卡牌效果调用
     status_type_upper = status_type_str.upper()
     if layers is None:
         layers = 1
@@ -86,6 +91,7 @@ def reduce_status(character, status_type_str, layers):
 
 
 def detonate_status(character, status_type_str, effect_target, sub_effects):
+    # 通常由卡牌效果调用
     status_type_upper = status_type_str.upper()
     if status_type_upper in CharacterStatusType.__members__:
         status_type = CharacterStatusType[status_type_upper]

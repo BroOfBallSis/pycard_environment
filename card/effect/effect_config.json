@@ -4,7 +4,7 @@
         "target": "target",
         "attribute": "hp",
         "function": "decrease",
-        "description": "伤害{}点生命",
+        "description": "造成{}点生命伤害",
         "priority": 2
     },
     "damage_ep": {
@@ -12,7 +12,7 @@
         "target": "target",
         "attribute": "ep",
         "function": "decrease",
-        "description": "伤害{}点体力",
+        "description": "造成{}点体力伤害",
         "priority": 2
     },
     "damage_rp": {
@@ -20,7 +20,7 @@
         "target": "target",
         "attribute": "rp",
         "function": "decrease",
-        "description": "伤害{}点韧性",
+        "description": "造成{}点韧性伤害",
         "priority": 2
     },
     "cause_delay": {
@@ -106,6 +106,20 @@
         "target": "source",
         "function": "append_status",
         "description": "获得{}{}'{}'",
+        "priority": 1
+    },
+    "cause_status": {
+        "class": "status",
+        "target": "target",
+        "function": "append_status",
+        "description": "造成{}{}'{}'",
+        "priority": 1
+    },
+    "gain_buff": {
+        "class": "status",
+        "target": "source",
+        "function": "append_status",
+        "description": "获得{}层增益:打出'{}', 额外{}",
         "priority": 1
     },
     "reduce_status": {

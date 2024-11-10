@@ -1,0 +1,145 @@
+{
+    "mw04_0001": {
+        "name": "打击",
+        "card_type": "wind",
+        "is_base": true,
+        "ep_cost": 4,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw04_0002": {
+        "name": "招架",
+        "card_type": "mountain",
+        "is_base": true,
+        "ep_cost": 2,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "resist_damage",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "resist_stun",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "recover_rp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw04_0003": {
+        "name": "撤离",
+        "card_type": "forest",
+        "is_base": true,
+        "ep_cost": 0,
+        "time_cost": 6,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_singleton_status",
+                        "status": "retreat"
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 4,
+                        "immediate": true
+                    }
+                ]
+            }
+        ]
+    },
+    "mw04_0004": {
+        "name": "十字击",
+        "card_type": "fire",
+        "ep_cost": 6,
+        "time_cost": 7,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 3,
+                        "immediate": true
+                    },
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 3
+                    }
+                ]
+            }
+        ]
+    },
+    "mw04_0005": {
+        "name": "魔力聚集",
+        "card_type": "forest",
+        "ep_cost": 0,
+        "time_cost": 5,
+        "conditions": [
+            {
+                "condition_type": "true",
+                "effects": [
+                    {
+                        "effect_type": "gain_status",
+                        "status": "mana",
+                        "layers": 2
+                    },
+                    {
+                        "effect_type": "add_card",
+                        "next_card_id": "mw03_0005_1"
+                    }
+                ]
+            }
+        ]
+    },
+    "mw04_0005_1": {
+        "name": "火球术",
+        "card_type": "fire",
+        "ep_cost": 4,
+        "time_cost": 6,
+        "temporary": true,
+        "conditions": [
+            {
+                "condition_type": "pay",
+                "currency": "mana",
+                "amount": 1,
+                "effects": [
+                    {
+                        "effect_type": "damage_hp",
+                        "amount": 7
+                    },
+                    {
+                        "effect_type": "damage_rp",
+                        "amount": 4
+                    }
+                ]
+            }
+        ]
+    }
+}

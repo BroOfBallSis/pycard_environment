@@ -12,7 +12,7 @@ from card.condition.pay_condition import PayCondition
 class ConditionFactory:
     @staticmethod
     def create_condition(
-        player, card, condition_type: str, effects: List[BaseEffect], condition_context
+        player, card, condition_type: str, effects: List[BaseEffect] = [], condition_context={}
     ) -> BaseCondition:
         """
         创建条件实例的工厂方法
@@ -27,7 +27,7 @@ class ConditionFactory:
         if condition_type_upper in ConditionType.__members__:
             condition_enum = ConditionType[condition_type_upper]
             if condition_enum in [ConditionType.TRUE, ConditionType.FALSE]:
-                return ConstantCondition(player, card, condition_enum, effects)
+                return ConstantCondition(player, card, condition_enum, effects, condition_context)
             elif condition_enum in [ConditionType.FIRST, ConditionType.SIMULTANEOUS, ConditionType.LAST]:
                 return TimedCondition(player, card, condition_enum, effects)
             elif condition_enum in [

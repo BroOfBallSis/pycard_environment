@@ -41,7 +41,9 @@ class BaseEffect:
         self.status = context.get("status", None)
         self.status_amount = context.get("status_amount", None)
         self.layers = context.get("layers", -1)
-        self.next_card_id = context.get("next_card_id", None) 
+        self.next_card_id = context.get("next_card_id", None)
+        self.buff_posture = context.get("buff_posture", None)
+        self.buff_effect = context.get("buff_effect", None)
         self.sub_effects = []
 
         # config: 取决于效果类型
