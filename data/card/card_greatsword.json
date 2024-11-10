@@ -210,7 +210,7 @@
                         "status": "buff",
                         "buff_posture": "fire",
                         "buff_effect": "damage_hp",
-                        "amount": 4,
+                        "amount": 3,
                         "layers": 1
                     }
                 ]

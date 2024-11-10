@@ -39,7 +39,7 @@
         "main_weapon": "mw00002",
         "sub_weapon": "sw00003",
         "items": [
-            "it00003",
+            "it00002",
             "it00004"
         ],
         "cards": []
@@ -55,7 +55,7 @@
         "sub_weapon": "sw00003",
         "items": [
             "it00001",
-            "it00004"
+            "it00002"
         ],
         "cards": []
     },
@@ -69,7 +69,7 @@
         "main_weapon": "mw00005",
         "sub_weapon": "",
         "items": [
-            "it00001",
+            "it00003",
             "it00004"
         ],
         "cards": []
