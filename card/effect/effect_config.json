@@ -108,6 +108,13 @@
         "description": "获得{}{}'{}'",
         "priority": 1
     },
+    "cause_status": {
+        "class": "status",
+        "target": "target",
+        "function": "append_status",
+        "description": "造成{}{}'{}'",
+        "priority": 1
+    },
     "gain_buff": {
         "class": "status",
         "target": "source",

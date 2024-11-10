@@ -73,16 +73,19 @@
     "mw05_0004": {
         "name": "顺势斩",
         "card_type": "wind",
-        "ep_cost": 4,
+        "ep_cost": 5,
         "time_cost": 5,
         "conditions": [
             {
                 "condition_type": "maintain",
                 "effects": [
                     {
-                        "effect_type": "resist_stun",
-                        "amount": 2,
-                        "immediate": true
+                        "effect_type": "recover_rp",
+                        "amount": 1
+                    },
+                    {
+                        "effect_type": "recover_ep",
+                        "amount": 2
                     }
                 ]
             },
@@ -95,7 +98,7 @@
                     },
                     {
                         "effect_type": "damage_rp",
-                        "amount": 2
+                        "amount": 3
                     }
                 ]
             }
@@ -113,6 +116,11 @@
                     {
                         "effect_type": "resist_damage",
                         "amount": 2,
+                        "immediate": true
+                    },
+                    {
+                        "effect_type": "resist_stun",
+                        "amount": 1,
                         "immediate": true
                     }
                 ]

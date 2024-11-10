@@ -60,7 +60,7 @@
         ]
     },
     "i0003_01": {
-        "name": "捕熊陷阱",
+        "name": "震撼陷阱",
         "card_type": "shadow",
         "ep_cost": 0,
         "time_cost": 5,
@@ -78,23 +78,23 @@
         ]
     },
     "i0004_01": {
-        "name": "迟缓喷雾",
+        "name": "简易诅咒",
         "card_type": "shadow",
         "ep_cost": 0,
-        "time_cost": 3,
+        "time_cost": 4,
         "consumable": true,
         "conditions": [
             {
                 "condition_type": "true",
                 "effects": [
                     {
-                        "effect_type": "gain_status",
+                        "effect_type": "cause_status",
                         "status": "slow",
                         "layers": 3
                     },
                     {
                         "effect_type": "damage_ep",
-                        "amount": 3
+                        "amount": 4
                     }
                 ]
             }

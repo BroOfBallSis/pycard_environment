@@ -39,7 +39,12 @@ class StatusEffect(BaseEffect):
         if effect_function:
             if self.effect_type in [EffectType.DETONATE_STATUS, EffectType.ACTIVATE_STATUS]:
                 effect_function(self.status, self.effect_target, self.sub_effects)
-            elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.GAIN_BUFF, EffectType.GAIN_SINGLETON_STATUS]:
+            elif self.effect_type in [
+                EffectType.GAIN_STATUS,
+                EffectType.GAIN_BUFF,
+                EffectType.GAIN_SINGLETON_STATUS,
+                EffectType.CAUSE_STATUS,
+            ]:
                 context = {
                     "amount": self.amount,
                     "layers": self.layers,
@@ -78,12 +83,12 @@ class StatusEffect(BaseEffect):
             effect_str = self.description.format(self.status_type.value)
 
         # 获得或减少状态
-        elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.REDUCE_STATUS]:
+        elif self.effect_type in [EffectType.GAIN_STATUS, EffectType.REDUCE_STATUS, EffectType.CAUSE_STATUS]:
             unit = "点" if self.status_type in [CharacterStatusType.MANA] else "层"
             effect_str = self.description.format(self.layers, unit, self.status_type.value)
 
         # 获得增益: "获得{}层增益:'{}'{}"
-        elif self.effect_type == EffectType.GAIN_BUFF:
+        elif self.effect_type in [EffectType.GAIN_BUFF]:
             buff_posture_str = CardType[self.buff_posture.upper()].value
             buff_effect = effect_config.get(self.buff_effect)
             buff_effect_str = buff_effect["description"].format(self.amount)

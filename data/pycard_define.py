@@ -68,6 +68,7 @@ class EffectType(Enum):
     DRAW_CARD = "draw_card"
     GAIN_SINGLETON_STATUS = "gain_singleton_status"  # 单例状态
     GAIN_STATUS = "gain_status"
+    CAUSE_STATUS = "cause_status"
     REDUCE_STATUS = "reduce_status"
     DETONATE_STATUS = "detonate_status"
     INCREASE_DELAY = "increase_delay"

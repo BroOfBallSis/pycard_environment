@@ -97,6 +97,7 @@ class BasePlayer:
             self.previous_card_id = self.current_card.card_id
 
             # 清空当前卡牌
+            self.current_card.temporary_condition.effects = []
             self.current_card = None
         self.policy.end_turn()
 
