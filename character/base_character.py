@@ -146,7 +146,8 @@ class BaseCharacter:
         return f"{self.name}\t {', '.join(str(attr) for attr in [self.hp, self.ep, self.rp, self.delay])}"
 
     def display_character_info(self):
-        return f"{self.name}\t {', '.join(f"{attr.name}:{attr.max_value}" for attr in [self.hp, self.ep, self.rp, self.delay])}, {self.hand_limit.name}:{self.hand_limit.value}"
+        attr_values = ', '.join(f"{attr.name}:{attr.max_value}" for attr in [self.hp, self.ep, self.rp, self.delay])
+        return f"{self.name}\t {attr_values}, {self.hand_limit.name}:{self.hand_limit.value}"
 
 
 if __name__ == "__main__":
