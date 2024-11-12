@@ -120,7 +120,7 @@ class BaseCharacter:
         character_status_methods.detonate_status(self, status_type_str, effect_target, sub_effects)
 
     @classmethod
-    def from_json(cls, player, json_data: Dict[str, Any]) -> "BaseCharacter":
+    def from_json(cls, player, json_data) -> "BaseCharacter":
         """
         从 JSON 数据创建角色实例
 

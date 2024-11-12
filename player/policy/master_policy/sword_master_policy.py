@@ -3,10 +3,11 @@ from player.policy.base_policy import BasePolicy
 import random
 
 
-class SwordPolicy(BasePolicy):
+class SwordMasterPolicy(BasePolicy):
     def __init__(self, player, policy_context):
         super().__init__(player, policy_context)
         self.available_hand = {}
+        print("SwordMasterPolicy")
 
     def get_available_hand(self):
         self.available_hand = {}
@@ -33,6 +34,14 @@ class SwordPolicy(BasePolicy):
                 card_index += 1  # 只有在没有弃置时才增加索引
 
         self.player.logger.info(f"弃置 {discard_cnt} 张手牌")
+
+    def display_hands(self):
+        hand_str = f"{self.player.name_with_color}: "
+        # 获取当前体力可用的手牌索引
+        for i in range(len(self.player.card_manager.hand)):
+            hand_str += self.player.card_manager.hand[i].name + ", "
+        print(hand_str)
+
 
     def update_available_hand(self, priority_dict):
         for hand_index in self.available_hand:

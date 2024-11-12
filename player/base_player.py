@@ -38,7 +38,7 @@ class BasePlayer:
         self.posture = CardType.NONE
         self.round_info = {}
 
-    def play_card_by_hand_index(self, hand_index) -> BaseCard:
+    def play_card_by_hand_index(self, hand_index) -> None:
         if hand_index == -1:
             self.current_card = BaseCard.from_json(self, "flaws")
         elif 0 <= hand_index < len(self.card_manager.hand):
@@ -46,7 +46,7 @@ class BasePlayer:
         else:
             raise IndexError("无效的手牌索引")
 
-    def discard_card_by_hand_index(self, hand_index) -> BaseCard:
+    def discard_card_by_hand_index(self, hand_index) -> None:
         if 0 <= hand_index < len(self.card_manager.hand):
             self.card_manager.discard_card_by_hand_index(hand_index)
         else:
@@ -54,7 +54,8 @@ class BasePlayer:
 
     def resolve_card_effect(self, context):
         player_card = self.current_card
-        player_card.play(self, self.opponent, context)
+        if player_card:
+            player_card.play(self, self.opponent, context)
 
     def start_round(self):
         self.logger.set_depth(0)

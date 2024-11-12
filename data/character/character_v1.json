@@ -1,8 +1,8 @@
 {
     "ch00001": {
         "name": "剑 士",
-        "hp": 56,
-        "ep": 24,
+        "hp": 50,
+        "ep": 6,
         "rp": 5,
         "delay": 6,
         "hand_limit": 7,
@@ -14,10 +14,35 @@
         ],
         "cards": []
     },
+    "master_ch00001": {
+        "name": "剑 圣",
+        "hp": 55,
+        "ep": 5,
+        "rp": 5,
+        "delay": 6,
+        "hand_limit": 7,
+        "cards": [
+            "master_mw01_0001",
+            "master_mw01_0002",
+            "master_mw01_0002",
+            "master_mw01_0003",
+            "master_mw01_0003",
+            "master_mw01_0004",
+            "master_mw01_0004",
+            "master_mw01_0005",
+            "master_mw01_0005",
+            "master_sw01_0001",
+            "master_sw01_0002",
+            "master_sw01_0003",
+            "master_sw01_0003",
+            "master_sw01_0004",
+            "master_sw01_0004"
+        ]
+    },
     "ch00002": {
         "name": "近 卫",
-        "hp": 56,
-        "ep": 24,
+        "hp": 50,
+        "ep": 6,
         "rp": 6,
         "delay": 5,
         "hand_limit": 7,
@@ -31,8 +56,8 @@
     },
     "ch00003": {
         "name": "牧 师",
-        "hp": 56,
-        "ep": 24,
+        "hp": 50,
+        "ep": 6,
         "rp": 6,
         "delay": 5,
         "hand_limit": 7,
@@ -46,8 +71,8 @@
     },
     "ch00004": {
         "name": "法 师",
-        "hp": 52,
-        "ep": 16,
+        "hp": 50,
+        "ep": 4,
         "rp": 5,
         "delay": 6,
         "hand_limit": 7,
@@ -61,8 +86,8 @@
     },
     "ch00005": {
         "name": "冠 军(early access)",
-        "hp": 56,
-        "ep": 24,
+        "hp": 50,
+        "ep": 6,
         "rp": 6,
         "delay": 5,
         "hand_limit": 7,

@@ -1,6 +1,6 @@
 from enum import Enum
 
-character_to_policy = {"ch00001": "SWORD_AI", "ch00002": "HAMMER_AI", "th00001": "SWORD_AI"}
+character_to_policy = {"ch00001": "SWORD_AI", "master_ch00001": "SWORD_MASTER_AI", "ch00002": "HAMMER_AI", "th00001": "SWORD_AI"}
 
 
 class PolicyType(Enum):
@@ -11,6 +11,7 @@ class PolicyType(Enum):
     TERMINAL = ("terminal_policy", "TerminalPolicy")
     SWORD_AI = ("ai_policy.sword_policy", "SwordPolicy")
     HAMMER_AI = ("ai_policy.hammer_policy", "HammerPolicy")
+    SWORD_MASTER_AI = ("master_policy.sword_master_policy", "SwordMasterPolicy") 
 
 
 class CardType(Enum):

@@ -75,7 +75,9 @@ class TerminalPolicy(BasePolicy):
         self.display_player(self.player)
         self.display_player(self.player.opponent)
         self.display_card_manager_with_command(phase_color)
+        self.player.opponent.policy.display_hands()
         self.display_hand(current_phase)
+
         while True:
             try:
                 # 获取用户输入

@@ -103,7 +103,7 @@ class BaseCard:
         self.ep_cost.set_mod(0)
         self.time_cost.set_mod(0)
 
-    def play(self, source: Dict[str, Any], target: Dict[str, Any], context: Any) -> None:
+    def play(self, source, target, context: Any) -> None:
         """
         执行卡牌的效果
 

@@ -40,7 +40,7 @@
     "i0002_01": {
         "name": "便携手弩",
         "card_type": "thunder",
-        "ep_cost": 1,
+        "ep_cost": 0,
         "time_cost": 4,
         "consumable": true,
         "conditions": [
@@ -104,7 +104,7 @@
         "name": "挥砍",
         "card_type": "wind",
         "is_base": true,
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -125,7 +125,7 @@
     "mw01_0002": {
         "name": "长剑突刺",
         "card_type": "wind",
-        "ep_cost": 3,
+        "ep_cost": 0,
         "time_cost": 3,
         "conditions": [
             {
@@ -155,7 +155,7 @@
     "mw01_0003": {
         "name": "先发制人",
         "card_type": "wind",
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -176,7 +176,7 @@
                     },
                     {
                         "effect_type": "damage_rp",
-                        "amount": 1
+                        "amount": 2
                     }
                 ]
             }
@@ -185,7 +185,7 @@
     "mw01_0004": {
         "name": "长剑上挑",
         "card_type": "shadow",
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -201,7 +201,7 @@
                     },
                     {
                         "effect_type": "damage_rp",
-                        "amount": 1
+                        "amount": 2
                     }
                 ]
             }
@@ -210,7 +210,7 @@
     "mw01_0005": {
         "name": "长剑竖劈",
         "card_type": "fire",
-        "ep_cost": 6,
+        "ep_cost": 2,
         "time_cost": 7,
         "conditions": [
             {
@@ -242,7 +242,7 @@
         "name": "打击",
         "card_type": "wind",
         "is_base": true,
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -263,7 +263,7 @@
     "mw02_0002": {
         "name": "前倾打击",
         "card_type": "wind",
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 4,
         "conditions": [
             {
@@ -294,7 +294,7 @@
     "mw02_0003": {
         "name": "侧身打击",
         "card_type": "shadow",
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -319,7 +319,7 @@
     "mw02_0004": {
         "name": "重锤打击",
         "card_type": "fire",
-        "ep_cost": 6,
+        "ep_cost": 2,
         "time_cost": 7,
         "conditions": [
             {
@@ -350,7 +350,7 @@
     "mw02_0005": {
         "name": "下颚粉碎",
         "card_type": "thunder",
-        "ep_cost": 6,
+        "ep_cost": 2,
         "time_cost": 6,
         "conditions": [
             {
@@ -383,7 +383,7 @@
         "name": "引导",
         "card_type": "wind",
         "is_base": true,
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -414,7 +414,7 @@
     "mw03_0002": {
         "name": "奥术飞弹",
         "card_type": "thunder",
-        "ep_cost": 3,
+        "ep_cost": 1,
         "time_cost": 3,
         "conditions": [
             {
@@ -451,7 +451,7 @@
     "mw03_0003": {
         "name": "风刃",
         "card_type": "wind",
-        "ep_cost": 2,
+        "ep_cost": 0,
         "time_cost": 4,
         "conditions": [
             {
@@ -480,7 +480,7 @@
     "mw03_0004": {
         "name": "暗影箭",
         "card_type": "shadow",
-        "ep_cost": 5,
+        "ep_cost": 1,
         "time_cost": 6,
         "conditions": [
             {
@@ -531,7 +531,7 @@
     "mw03_0005_1": {
         "name": "火球术",
         "card_type": "fire",
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 6,
         "temporary": true,
         "conditions": [
@@ -556,7 +556,7 @@
         "name": "翻滚",
         "card_type": "forest",
         "is_base": true,
-        "ep_cost": 4,
+        "ep_cost": 0,
         "time_cost": 4,
         "conditions": [
             {
@@ -595,7 +595,7 @@
                     },
                     {
                         "effect_type": "recover_ep",
-                        "amount": 4,
+                        "amount": 2,
                         "immediate": true
                     }
                 ]
@@ -605,7 +605,7 @@
     "sw01_0003": {
         "name": "保持戒备",
         "card_type": "forest",
-        "ep_cost": 2,
+        "ep_cost": 0,
         "time_cost": 4,
         "conditions": [
             {
@@ -647,7 +647,7 @@
                     },
                     {
                         "effect_type": "recover_ep",
-                        "amount": 6
+                        "amount": 2
                     }
                 ]
             }
@@ -657,7 +657,7 @@
         "name": "格挡",
         "card_type": "mountain",
         "is_base": true,
-        "ep_cost": 4,
+        "ep_cost": 1,
         "time_cost": 5,
         "conditions": [
             {
@@ -696,7 +696,7 @@
                     },
                     {
                         "effect_type": "recover_ep",
-                        "amount": 4,
+                        "amount": 2,
                         "immediate": true
                     }
                 ]
@@ -706,7 +706,7 @@
     "sw02_0003": {
         "name": "顶盾撞击",
         "card_type": "mountain",
-        "ep_cost": 3,
+        "ep_cost": 1,
         "time_cost": 4,
         "conditions": [
             {
@@ -801,7 +801,7 @@
                     },
                     {
                         "effect_type": "recover_ep",
-                        "amount": 4,
+                        "amount": 2,
                         "immediate": true
                     }
                 ]
@@ -846,7 +846,7 @@
     "sw03_0004": {
         "name": "念力迸发",
         "card_type": "thunder",
-        "ep_cost": 2,
+        "ep_cost": 0,
         "time_cost": 5,
         "conditions": [
             {

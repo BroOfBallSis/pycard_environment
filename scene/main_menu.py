@@ -53,7 +53,7 @@ class CharacterMenu(Menu):
         public_character = (
             ["ch00001", "ch00002", "ch00003", "ch00004", "ch00005"]
             if self.player_index == 0
-            else ["ch00001", "ch00002"]
+            else ["master_ch00001", "ch00002"]
         )
 
         while True:
