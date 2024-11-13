@@ -87,10 +87,6 @@
                     {
                         "effect_type": "damage_hp",
                         "amount": 3
-                    },
-                    {
-                        "effect_type": "damage_rp",
-                        "amount": 1
                     }
                 ]
             }
@@ -200,11 +196,6 @@
                     {
                         "effect_type": "gain_singleton_status",
                         "status": "dodge"
-                    },
-                    {
-                        "effect_type": "reduce_delay",
-                        "amount": 1,
-                        "immediate": true
                     }
                 ]
             },

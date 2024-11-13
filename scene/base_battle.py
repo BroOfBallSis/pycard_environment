@@ -42,7 +42,7 @@ class BaseBattle:
                 self.current_phase = BattlePhase.PLAY_PHASE
                 for player in self.player_list:
                     self.play_phase(player)
-                clear_terminal()
+                # clear_terminal()
 
                 # 结算阶段
                 self.current_phase = BattlePhase.RESOLVE_PHASE

@@ -16,10 +16,10 @@
     },
     "master_ch00001": {
         "name": "剑 圣",
-        "hp": 55,
+        "hp": 60,
         "ep": 5,
         "rp": 5,
-        "delay": 6,
+        "delay": 5,
         "hand_limit": 7,
         "cards": [
             "master_mw01_0001",
